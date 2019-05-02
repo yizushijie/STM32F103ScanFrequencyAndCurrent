@@ -1,45 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="STMF103RET6Project|Win32">
-      <Configuration>STMF103RET6Project</Configuration>
+    <ProjectConfiguration Include="STM32F103VGT6Project|Win32">
+      <Configuration>STM32F103VGT6Project</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8B16E607-77FA-A65D-E05A-A1B0CC5D91DF}</ProjectGuid>
+    <ProjectGuid>{36DCBBD8-226B-45A2-CB89-599DB7F75548}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>STMF103RET6Project</RootNamespace>
+    <RootNamespace>STM32F103VGT6Project</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STMF103RET6Project|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STM32F103VGT6Project|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='STMF103RET6Project|Win32'">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='STM32F103VGT6Project|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STMF103RET6Project|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STM32F103VGT6Project|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>bin\STMF103RET6Project\</OutDir>
+    <OutDir>bin\STM32F103VGT6Project\</OutDir>
     <IntDir>obj\</IntDir>
-    <TargetName>STMF103RET6Project</TargetName>
+    <TargetName>STM32F103VGT6Project</TargetName>
     <TargetExt>.exe</TargetExt>
     <IncludePath>$(VC_IncludePath);$(IncludePath)</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STMF103RET6Project|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STM32F103VGT6Project|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>USE_FULL_LL_DRIVER;USE_HAL_DRIVER;STM32F103xE;HSE_VALUE=8000000UL;HSE_STARTUP_TIMEOUT=100;LSE_STARTUP_TIMEOUT=5000;LSE_VALUE=32768;HSI_VALUE=8000000;LSI_VALUE=40000;PREFETCH_ENABLE=1;_IAR_;__ICCARM__;_Pragma(x)=;__interrupt=;__packed=__attribute__((__packed__));__weak=__attribute__((weak));%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\Drivers\STM32F1xx_HAL_Driver\Src;..\Drivers\CMSIS\Include;..\Complier;..\STARTUP;..\STM32F1xx;..\Doc;..\Application\AD5593;..\Application\ADC;..\Application\ADS8688;..\Application\APP;..\Application\AT24Cxx;..\Application\CRC;..\Application\Delay;..\Application\DHT11;..\Application\DS18B20;..\Application\EEPROM;..\Application\FLASH;..\Application\GPIO;..\Application\HMC830;..\Application\I2C;..\Application\IAP;..\Application\ISP;..\Application\IWDG;..\Application\Key;..\Application\LED;..\Application\LCD1602;..\Application\OneWire;..\Application\PCF8563;..\Application\Power;..\Application\Random;..\Application\RFASK;..\Application\SPI;..\Application\SysTick;..\Application\Timer;..\Application\USART;..\Application\WM8510;..\Application\NRF2401;..\Application\OLED;..\Application\WWDG;..\Application\SHT2x;..\Application\BKP;..\Application\CSS;..\Application\Decode;..\Application\W25Qxx;..\Application\DS1302;..\Application\RFASKHW;..\Application\ENC28J60;..\Application\PID;..\Application\ADS1256;..\Application\PVD;..\Application\RTC;..\Application\MyMalloc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_FULL_LL_DRIVER;USE_HAL_DRIVER;STM32F103xG;HSE_VALUE=8000000;HSE_STARTUP_TIMEOUT=100;LSE_STARTUP_TIMEOUT=5000;LSE_VALUE=32768;HSI_VALUE=8000000;LSI_VALUE=40000;_IAR_;__ICCARM__;_Pragma(x)=;__interrupt=;__packed=__attribute__((__packed__));__weak=__attribute__((weak));%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Drivers\STM32F1xx_HAL_Driver\Inc;..\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy;..\Drivers\STM32F1xx_HAL_Driver\Src;..\Drivers\CMSIS\Include;..\Complier;..\STARTUP;..\STM32F1xx;..\Doc;..\Application\AD5593;..\Application\ADC;..\Application\ADS8688;..\Application\APP;..\Application\AT24Cxx;..\Application\CRC;..\Application\Delay;..\Application\DHT11;..\Application\DS18B20;..\Application\EEPROM;..\Application\FLASH;..\Application\GPIO;..\Application\HMC830;..\Application\I2C;..\Application\IAP;..\Application\ISP;..\Application\IWDG;..\Application\Key;..\Application\LED;..\Application\LCD1602;..\Application\OneWire;..\Application\PCF8563;..\Application\Power;..\Application\Random;..\Application\RFASK;..\Application\SPI;..\Application\SysTick;..\Application\Timer;..\Application\USART;..\Application\WM8510;..\Application\NRF2401;..\Application\OLED;..\Application\WWDG;..\Application\SHT2x;..\Application\BKP;..\Application\CSS;..\Application\Decode;..\Application\W25Qxx;..\Application\DS1302;..\Application\RFASKHW;..\Application\ENC28J60;..\Application\PID;..\Application\ADS1256;..\Application\PVD;..\Application\RTC;..\Application\MyMalloc;..\Application\Encode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
@@ -94,12 +94,18 @@
     <ClInclude Include="..\Application\ENC28J60\enc28j60_cfg.h" />
     <ClInclude Include="..\Application\ENC28J60\enc28j60_lib.h" />
     <ClInclude Include="..\Application\ENC28J60\enc28j60_task.h" />
+    <ClInclude Include="..\Application\Encode\encode_cfg.h" />
+    <ClInclude Include="..\Application\Encode\encode_lib.h" />
+    <ClInclude Include="..\Application\Encode\encode_task.h" />
     <ClInclude Include="..\Application\FLASH\flash_cfg.h" />
     <ClInclude Include="..\Application\FLASH\flash_lib.h" />
     <ClInclude Include="..\Application\FLASH\flash_task.h" />
     <ClInclude Include="..\Application\GPIO\gpio_cfg.h" />
     <ClInclude Include="..\Application\GPIO\gpio_lib.h" />
     <ClInclude Include="..\Application\GPIO\gpio_task.h" />
+    <ClInclude Include="..\Application\HMC472\hmc472_cfg.h" />
+    <ClInclude Include="..\Application\HMC472\hmc472_lib.h" />
+    <ClInclude Include="..\Application\HMC472\hmc472_task.h" />
     <ClInclude Include="..\Application\HMC830\hmc830_cfg.h" />
     <ClInclude Include="..\Application\HMC830\hmc830_lib.h" />
     <ClInclude Include="..\Application\HMC830\hmc830_task.h" />
@@ -200,7 +206,7 @@
     <ClInclude Include="..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_tim.h" />
     <ClInclude Include="..\STM32F1xx\stm32_assert.h" />
     <ClInclude Include="..\STM32F1xx\stm32_cfg.h" />
-    <ClInclude Include="..\STM32F1xx\stm32f103xe.h" />
+    <ClInclude Include="..\STM32F1xx\stm32f103xg.h" />
     <ClInclude Include="..\STM32F1xx\stm32f1xx.h" />
     <ClInclude Include="..\STM32F1xx\stm32f1xx_it.h" />
     <ClInclude Include="..\STM32F1xx\stm32f1xx_ll.h" />
@@ -253,12 +259,18 @@
     <ClCompile Include="..\Application\ENC28J60\enc28j60_cfg.c" />
     <ClCompile Include="..\Application\ENC28J60\enc28j60_lib.c" />
     <ClCompile Include="..\Application\ENC28J60\enc28j60_task.c" />
+    <ClCompile Include="..\Application\Encode\encode_cfg.c" />
+    <ClCompile Include="..\Application\Encode\encode_lib.c" />
+    <ClCompile Include="..\Application\Encode\encode_task.c" />
     <ClCompile Include="..\Application\FLASH\flash_cfg.c" />
     <ClCompile Include="..\Application\FLASH\flash_lib.c" />
     <ClCompile Include="..\Application\FLASH\flash_task.c" />
     <ClCompile Include="..\Application\GPIO\gpio_cfg.c" />
     <ClCompile Include="..\Application\GPIO\gpio_lib.c" />
     <ClCompile Include="..\Application\GPIO\gpio_task.c" />
+    <ClCompile Include="..\Application\HMC472\hmc472_cfg.c" />
+    <ClCompile Include="..\Application\HMC472\hmc472_lib.c" />
+    <ClCompile Include="..\Application\HMC472\hmc472_task.c" />
     <ClCompile Include="..\Application\HMC830\hmc830_cfg.c" />
     <ClCompile Include="..\Application\HMC830\hmc830_lib.c" />
     <ClCompile Include="..\Application\HMC830\hmc830_task.c" />
@@ -357,7 +369,7 @@
     <ClCompile Include="..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_tim.c" />
     <ClCompile Include="..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usart.c" />
     <ClCompile Include="..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c" />
-    <ClCompile Include="..\STARTUP\EWARM\startup_stm32f103xe.s" />
+    <ClCompile Include="..\STARTUP\EWARM\startup_stm32f103xg.s" />
     <ClCompile Include="..\STM32F1xx\stm32_cfg.c" />
     <ClCompile Include="..\STM32F1xx\stm32f1xx_it.c" />
     <ClCompile Include="..\STM32F1xx\system_stm32f1xx.c" />

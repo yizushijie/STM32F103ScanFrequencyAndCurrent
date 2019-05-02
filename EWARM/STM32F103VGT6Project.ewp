@@ -2,7 +2,7 @@
 <project>
     <fileVersion>3</fileVersion>
     <configuration>
-        <name>STMF103RET6Project</name>
+        <name>STM32F103VGT6Project</name>
         <toolchain>
             <name>ARM</name>
         </toolchain>
@@ -16,15 +16,15 @@
                 <debug>1</debug>
                 <option>
                     <name>ExePath</name>
-                    <state>STMF103RET6Project/Exe</state>
+                    <state>STM32F103VGT6Project/Exe</state>
                 </option>
                 <option>
                     <name>ObjPath</name>
-                    <state>STMF103RET6Project/Obj</state>
+                    <state>STM32F103VGT6Project/Obj</state>
                 </option>
                 <option>
                     <name>ListPath</name>
-                    <state>STMF103RET6Project/List</state>
+                    <state>STM32F103VGT6Project/List</state>
                 </option>
                 <option>
                     <name>GEndianMode</name>
@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>STM32F103RE	ST STM32F103RE</state>
+                    <state>STM32F103VG	ST STM32F103VG</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -108,7 +108,7 @@
                 <option>
                     <name>GeneralMisraRules04</name>
                     <version>0</version>
-                    <state>011111111111111110111111111111011111111111111011110100111111111111111111111111111111111111111111101111111111111011111111111111111111111111111</state>
+                    <state>011111111111111110111111111111111111111111111010110100111111111111110111111111111111111111111111111111110111111011111111111111111111111111111</state>
                 </option>
                 <option>
                     <name>RTConfigPath2</name>
@@ -138,7 +138,7 @@
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>STM32F103RE	ST STM32F103RE</state>
+                    <state>STM32F103VG	ST STM32F103VG</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -226,14 +226,13 @@
                     <name>CCDefines</name>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>USE_HAL_DRIVER</state>
-                    <state>STM32F103xE</state>
-                    <state>HSE_VALUE=8000000UL</state>
+                    <state>STM32F103xG</state>
+                    <state>HSE_VALUE=8000000</state>
                     <state>HSE_STARTUP_TIMEOUT=100</state>
                     <state>LSE_STARTUP_TIMEOUT=5000</state>
                     <state>LSE_VALUE=32768</state>
                     <state>HSI_VALUE=8000000</state>
                     <state>LSI_VALUE=40000</state>
-                    <state>PREFETCH_ENABLE=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -273,7 +272,7 @@
                 </option>
                 <option>
                     <name>CCDiagSuppress</name>
-                    <state>Pa082</state>
+                    <state>Pe167,Pa082</state>
                 </option>
                 <option>
                     <name>CCDiagRemark</name>
@@ -412,7 +411,7 @@
                     <state>$PROJ_DIR$\..\Application\PVD</state>
                     <state>$PROJ_DIR$\..\Application\RTC</state>
                     <state>$PROJ_DIR$\..\Application\MyMalloc</state>
-                    <state>$PROJ_DIR$\..\Application\HMC472</state>
+                    <state>$PROJ_DIR$\..\Application\Encode</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -428,16 +427,16 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CompilerMisraRules98</name>
@@ -496,7 +495,7 @@
                 <option>
                     <name>CCOptStrategySlave</name>
                     <version>0</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCGuardCalls</name>
@@ -712,7 +711,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>STMF103RET6Project.hex</state>
+                    <state>STM32F103VGT6Project.hex</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -767,7 +766,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>STMF103RET6Project.out</state>
+                    <state>STM32F103VGT6Project.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -831,7 +830,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$/stm32f103xe_flash.icf</state>
+                    <state>$PROJ_DIR$\stm32f103xg_flash.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1064,7 +1063,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>STMF103RET6Project_import_lib.o</state>
+                    <state>STM32F103VGT6Project_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -1426,6 +1425,27 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Application\ENC28J60\enc28j60_task.h</name>
+            </file>
+        </group>
+        <group>
+            <name>Encode</name>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_cfg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_cfg.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_lib.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_lib.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_task.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_task.h</name>
             </file>
         </group>
         <group>
@@ -2193,7 +2213,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\..\STARTUP\EWARM\startup_stm32f103xe.s</name>
+                <name>$PROJ_DIR$\..\STARTUP\EWARM\startup_stm32f103xg.s</name>
             </file>
         </group>
     </group>
@@ -2209,7 +2229,7 @@
             <name>$PROJ_DIR$\..\STM32F1xx\stm32_cfg.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\STM32F1xx\stm32f103xe.h</name>
+            <name>$PROJ_DIR$\..\STM32F1xx\stm32f103xg.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\STM32F1xx\stm32f1xx.h</name>

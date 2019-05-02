@@ -2,7 +2,7 @@
 <project>
     <fileVersion>3</fileVersion>
     <configuration>
-        <name>STMF103RET6Project</name>
+        <name>STM32F103VGT6Project</name>
         <toolchain>
             <name>ARM</name>
         </toolchain>
@@ -1515,6 +1515,27 @@
             </file>
         </group>
         <group>
+            <name>Encode</name>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_cfg.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_cfg.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_lib.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_lib.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_task.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\Encode\encode_task.h</name>
+            </file>
+        </group>
+        <group>
             <name>FLASH</name>
             <file>
                 <name>$PROJ_DIR$\..\Application\FLASH\flash_cfg.c</name>
@@ -2279,7 +2300,7 @@
         <group>
             <name>EWARM</name>
             <file>
-                <name>$PROJ_DIR$\..\STARTUP\EWARM\startup_stm32f103xe.s</name>
+                <name>$PROJ_DIR$\..\STARTUP\EWARM\startup_stm32f103xg.s</name>
             </file>
         </group>
     </group>
@@ -2295,7 +2316,7 @@
             <name>$PROJ_DIR$\..\STM32F1xx\stm32_cfg.h</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\STM32F1xx\stm32f103xe.h</name>
+            <name>$PROJ_DIR$\..\STM32F1xx\stm32f103xg.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\STM32F1xx\stm32f1xx.h</name>

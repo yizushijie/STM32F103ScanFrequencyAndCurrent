@@ -2,13 +2,13 @@
 
 "D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armjlink2.dll" 
 
-"J:\STM32_MCU\STM32F103\DigtalRFSignalSource\STM32F103RET6Project\EWARM\STMF103RET6Project\Exe\STMF103RET6Project.out" 
+"J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\STM32F103VGT6Project\Exe\STM32F103VGT6Project.out" 
 
 --plugin="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armbat.dll" 
 
 --device_macro="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\debugger\ST\STM32F1xx.dmac" 
 
---flash_loader="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\flashloader\ST\FlashSTM32F10xxE.board" 
+--flash_loader="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\flashloader\ST\FlashSTM32F10xxG.board" 
 
 
 

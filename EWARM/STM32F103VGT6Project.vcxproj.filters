@@ -52,11 +52,17 @@
     <Filter Include="Application\ENC28J60">
       <UniqueIdentifier>{18A80F52-0437-991B-AD55-AD1699C3A9C1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Encode">
+      <UniqueIdentifier>{F661C4BD-E245-8513-4BA6-7F6637A96F95}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Application\FLASH">
       <UniqueIdentifier>{B6D2041D-22E9-02B3-6B60-8ED4D7B5D33A}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\GPIO">
       <UniqueIdentifier>{17DB5DF1-03D4-7C43-2C06-62C8185E5C4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\HMC472">
+      <UniqueIdentifier>{1D265CC2-090A-1D18-726A-176B5E6D079A}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\HMC830">
       <UniqueIdentifier>{9B365CC2-871A-1D18-F07A-176BDC7D079A}</UniqueIdentifier>
@@ -309,6 +315,15 @@
     <ClInclude Include="..\Application\ENC28J60\enc28j60_task.h">
       <Filter>Application\ENC28J60</Filter>
     </ClInclude>
+    <ClInclude Include="..\Application\Encode\encode_cfg.h">
+      <Filter>Application\Encode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\Encode\encode_lib.h">
+      <Filter>Application\Encode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\Encode\encode_task.h">
+      <Filter>Application\Encode</Filter>
+    </ClInclude>
     <ClInclude Include="..\Application\FLASH\flash_cfg.h">
       <Filter>Application\FLASH</Filter>
     </ClInclude>
@@ -326,6 +341,15 @@
     </ClInclude>
     <ClInclude Include="..\Application\GPIO\gpio_task.h">
       <Filter>Application\GPIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\HMC472\hmc472_cfg.h">
+      <Filter>Application\HMC472</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\HMC472\hmc472_lib.h">
+      <Filter>Application\HMC472</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Application\HMC472\hmc472_task.h">
+      <Filter>Application\HMC472</Filter>
     </ClInclude>
     <ClInclude Include="..\Application\HMC830\hmc830_cfg.h">
       <Filter>Application\HMC830</Filter>
@@ -627,7 +651,7 @@
     <ClInclude Include="..\STM32F1xx\stm32_cfg.h">
       <Filter>STM32F1xx</Filter>
     </ClInclude>
-    <ClInclude Include="..\STM32F1xx\stm32f103xe.h">
+    <ClInclude Include="..\STM32F1xx\stm32f103xg.h">
       <Filter>STM32F1xx</Filter>
     </ClInclude>
     <ClInclude Include="..\STM32F1xx\stm32f1xx.h">
@@ -782,6 +806,15 @@
     <ClCompile Include="..\Application\ENC28J60\enc28j60_task.c">
       <Filter>Application\ENC28J60</Filter>
     </ClCompile>
+    <ClCompile Include="..\Application\Encode\encode_cfg.c">
+      <Filter>Application\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\Encode\encode_lib.c">
+      <Filter>Application\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\Encode\encode_task.c">
+      <Filter>Application\Encode</Filter>
+    </ClCompile>
     <ClCompile Include="..\Application\FLASH\flash_cfg.c">
       <Filter>Application\FLASH</Filter>
     </ClCompile>
@@ -799,6 +832,15 @@
     </ClCompile>
     <ClCompile Include="..\Application\GPIO\gpio_task.c">
       <Filter>Application\GPIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\HMC472\hmc472_cfg.c">
+      <Filter>Application\HMC472</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\HMC472\hmc472_lib.c">
+      <Filter>Application\HMC472</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\HMC472\hmc472_task.c">
+      <Filter>Application\HMC472</Filter>
     </ClCompile>
     <ClCompile Include="..\Application\HMC830\hmc830_cfg.c">
       <Filter>Application\HMC830</Filter>
@@ -1094,7 +1136,7 @@
     <ClCompile Include="..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_utils.c">
       <Filter>Drivers\STM32F1xx_HAL_Driver</Filter>
     </ClCompile>
-    <ClCompile Include="..\STARTUP\EWARM\startup_stm32f103xe.s">
+    <ClCompile Include="..\STARTUP\EWARM\startup_stm32f103xg.s">
       <Filter>STARTUP\EWARM</Filter>
     </ClCompile>
     <ClCompile Include="..\STM32F1xx\stm32_cfg.c">

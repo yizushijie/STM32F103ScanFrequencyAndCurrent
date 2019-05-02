@@ -6,13 +6,11 @@
 
 "-p" 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\CONFIG\debugger\ST\STM32F103RE.ddf" 
-
-"--drv_verify_download" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\CONFIG\debugger\ST\STM32F103VG.ddf" 
 
 "--semihosting" 
 
-"--device=STM32F103RE" 
+"--device=STM32F103VG" 
 
 "--drv_communication=USB0" 
 
