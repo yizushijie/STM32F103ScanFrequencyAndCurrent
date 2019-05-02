@@ -1,0 +1,77 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.27.1.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Harry Harry, SYNOXO, LIC=LSNPC-7HJ9T-IH08E-5J3FN-19VM2-VFGL8
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.27.1.0
+Toolchain Path:  D:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.12
+Assembler:       Armasm.exe V6.12
+Linker/Locator:  ArmLink.exe V6.12
+Library Manager: ArmAr.exe V6.12
+Hex Converter:   FromElf.exe V6.12
+CPU DLL:         SARMCM3.DLL V5.27.1.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      Segger\JL2CM3.dll V2.99.35.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\MDKARM\STM32F103VGT6Project.uvprojx
+Project File Date:  05/02/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.12', folder: 'D:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'STM32F103VGT6Project'
+compiling stm32f1xx_it.c...
+compiling main.c...
+compiling decode_lib.c...
+compiling decode_task.c...
+compiling decode_cfg.c...
+../Application/HMC472/hmc472_task.c(796): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                                USART_Printf(USARTx, "=>><B4><AE><BF><DA>%d:<B7><A2><C9><FA>CRCÐ£<D1><E9><B4><ED><CE><F3><<=\r\n", (USARTx->msgIndex - 1));
+                                                         ^~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+compiling hmc472_task.c...
+compiling key_lib.c...
+compiling key_cfg.c...
+compiling key_task.c...
+../Application/RFASK/rfask_task.c(1835): warning: illegal character encoding in string literal [-Winvalid-source-encoding]
+                        USART_Printf(USARTx, "=>><B4><AE><BF><DA>%d:<B7><A2><C9><FA>CRCÐ£<D1><E9><B4><ED><CE><F3><<=\r\n", (USARTx->msgIndex - 1));
+                                                 ^~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+compiling rfask_task.c...
+linking...
+Program Size: Code=63428 RO-data=1612 RW-data=64 ZI-data=22560  
+FromELF: creating hex file...
+"STM32F103VGT6Project\STM32F103VGT6Project.axf" - 0 Error(s), 2 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.5.1.pack
+                ARM.CMSIS.5.5.1
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.2.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
+                Keil.STM32F1xx_DFP.2.3.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_STM32F103VGT6Project
+  D:\Keil_v5\ARM\PACK\ARM\CMSIS\5.5.1\CMSIS\Core\Include
+  D:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.2.0
+Build Time Elapsed:  00:00:17
+</pre>
+</body>
+</html>

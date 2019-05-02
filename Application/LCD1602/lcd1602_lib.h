@@ -1,0 +1,22 @@
+#ifndef LCD1602_LIB_H_
+#define LCD1602_LIB_H_
+//////////////////////////////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+extern "C" {
+#endif
+	//////////////////////////////////////////////////////////////////////////////////////
+#include"lcd1602_cfg.h"
+
+//===º¯Êý¶¨Òå
+	UINT8_T LCD1602Lib_Init(void);
+	UINT8_T LCD1602Lib_WriteCmd(UINT8_T cmd);
+	UINT8_T LCD1602Lib_WriteData(UINT8_T val);
+	UINT8_T LCD1602Lib_SetCursor(UINT8_T xPos, UINT8_T yPos);
+	UINT8_T LCD1602Lib_ShowChar(UINT8_T xPos, UINT8_T yPos, UINT8_T dat);
+	UINT8_T LCD1602Lib_ShowStr(UINT8_T xPos, UINT8_T yPos, UINT8_T *str);
+	//////////////////////////////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+}
+#endif
+//////////////////////////////////////////////////////////////////////////////////////
+#endif /*LCD1602_LIB_H_ */

@@ -1,0 +1,22 @@
+#ifndef LCD1602_TASK_H_
+#define LCD1602_TASK_H_
+//////////////////////////////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+extern "C" {
+#endif
+	//////////////////////////////////////////////////////////////////////////////////////
+#include "lcd1602_lib.h"
+
+//===º¯Êý¶¨Òå
+	UINT8_T LCD1602Task_Init(void);
+	UINT8_T LCD1602Task_WriteCmd(UINT8_T cmd);
+	UINT8_T LCD1602Task_WriteData(UINT8_T val);
+	UINT8_T LCD1602Task_SetCursor(UINT8_T xPos, UINT8_T yPos);
+	UINT8_T LCD1602Task_ShowChar(UINT8_T xPos, UINT8_T yPos, UINT8_T dat);
+	UINT8_T LCD1602Task_ShowStr(UINT8_T xPos, UINT8_T yPos, UINT8_T *str);
+	//////////////////////////////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+}
+#endif
+//////////////////////////////////////////////////////////////////////////////////////
+#endif /*LCD1602_TASK_H_ */

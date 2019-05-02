@@ -1,0 +1,11 @@
+#ifndef IWDG_LIB_H
+#define IWDG_LIB_H
+//////////////////////////////////////////////////////////////////////////////////////
+//---定义使用的头文件
+#include "iwdg_cfg.h"
+//---函数定义
+UINT8_T IWDGLib_Init( IWDG_HandlerType *msgIWDGx );
+UINT8_T IWDGLib_Reset( IWDG_HandlerType *msgIWDGx );
+UINT8_T IWDGLib_Task( IWDG_HandlerType *msgIWDGx, UINT8_T msg );
+//////////////////////////////////////////////////////////////////////////////////////
+#endif /*IWDG_LIB_H */
