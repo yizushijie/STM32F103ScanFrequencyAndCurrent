@@ -61,7 +61,7 @@ extern "C" {
 
 	//===A通道解码实时灯
 	#define DECA_LED_PORT								GPIOB
-	#define DECA_LED_BIT								LL_GPIO_PIN_12
+	#define DECA_LED_BIT								LL_GPIO_PIN_11
 	#define DECA_LED_STATE								GPIO_GET_STATE(DECA_LED_PORT,DECA_LED_BIT)
 	#define DECA_LED_WRITE								GPIO_SET_WRITE(DECA_LED_PORT,DECA_LED_BIT)
 	#define DECA_LED_READ								GPIO_SET_READ( DECA_LED_PORT,DECA_LED_BIT)
@@ -73,7 +73,7 @@ extern "C" {
 
 	//===B通道解码实时灯
 	#define DECB_LED_PORT								GPIOB
-	#define DECB_LED_BIT								LL_GPIO_PIN_13
+	#define DECB_LED_BIT								LL_GPIO_PIN_12
 	#define DECB_LED_STATE								GPIO_GET_STATE(DECB_LED_PORT,DECB_LED_BIT)
 	#define DECB_LED_WRITE								GPIO_SET_WRITE(DECB_LED_PORT,DECB_LED_BIT)
 	#define DECB_LED_READ								GPIO_SET_READ( DECB_LED_PORT,DECB_LED_BIT)
@@ -85,7 +85,7 @@ extern "C" {
 
 	//===C通道解码实时灯
 	#define DECC_LED_PORT								GPIOB
-	#define DECC_LED_BIT								LL_GPIO_PIN_14
+	#define DECC_LED_BIT								LL_GPIO_PIN_13
 	#define DECC_LED_STATE								GPIO_GET_STATE(DECC_LED_PORT,DECC_LED_BIT)
 	#define DECC_LED_WRITE								GPIO_SET_WRITE(DECC_LED_PORT,DECC_LED_BIT)
 	#define DECC_LED_READ								GPIO_SET_READ( DECC_LED_PORT,DECC_LED_BIT)
@@ -97,7 +97,7 @@ extern "C" {
 
 	//===D通道解码实时灯
 	#define DECD_LED_PORT								GPIOB
-	#define DECD_LED_BIT								LL_GPIO_PIN_11
+	#define DECD_LED_BIT								LL_GPIO_PIN_14
 	#define DECD_LED_STATE								GPIO_GET_STATE(DECD_LED_PORT,DECD_LED_BIT)
 	#define DECD_LED_WRITE								GPIO_SET_WRITE(DECD_LED_PORT,DECD_LED_BIT)
 	#define DECD_LED_READ								GPIO_SET_READ( DECD_LED_PORT,DECD_LED_BIT)

@@ -1,5 +1,8 @@
 #include "main.h"
 
+//===频率电流扫描的小板版本
+#define LNW_FT_ASK_FI_VERSION		2
+
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
 //////功		能：系统时钟的配置
@@ -146,6 +149,12 @@ void Sys_Init(void)
 	//---简单的增加WM8510外部时钟的自校准功能
 	WM8510Task_I2C_CalibrateClock(pWM8510Device0);
 
+	//---第二版本的频率电流小板才支持eeprom存储数据
+	#if(LNW_FT_ASK_FI_VERSION==2)
+		//---eeprom的驱动初始化，初始化要在进行eeprom参数读写的前面，否则会发生错误
+		AT24CXXTask_I2C_Init(pAT24CXXDevice0,DelayTask_us, DelayTask_ms,0);
+	#endif
+
 	//---ADC初始化
 	ADCTask_ADC_Init();
 
@@ -168,11 +177,8 @@ void Sys_Init(void)
 	//BKPTask_Init();
 
 	//---系统模拟RTC
-	SysRTCTask_SoftBuildInit(pSysSoftRTC);
-
-	//---eeprom的驱动初始化
-	//AT24CXXTask_I2C_Init(pAT24CXXDevice0,DelayTask_us, DelayTask_ms,0);
-
+	SysRTCTask_SoftBuildInit(pSysSoftRTC,3);
+	
 	//---查询解码的初始化，所有的SITE都进行解码
 	DecodeTask_QueryInit(0x0F);
 
@@ -181,13 +187,13 @@ void Sys_Init(void)
 
 	/*测试*/
 
-	WM8510Task_I2C_SetFreqHzWithAllFreqReg(pWM8510Device0, 13521270);
+	//WM8510Task_I2C_SetFreqHzWithAllFreqReg(pWM8510Device0, 13521270);
 
 	CLKA_FREQ_ON;
 	CLKB_FREQ_ON;
 	CLKC_FREQ_ON;
 	CLKD_FREQ_ON;
-
+	
 	//---开启看门狗
 	//IWDGTask_Init();
 
@@ -207,38 +213,29 @@ int main(void)
 	//---变量定义
 	UINT8_T getSOT = 0;
 	UINT8_T getRST = 0;
-
 	//---系统初始化函数
 	Sys_Init();
-
 	//---主循环
 	while (1)
 	{
 		//---获取SOT信号
 		getSOT = KeyTask_ScanSOT();
-
 		//---读取解码信号
 		getRST = DecodeTask_ScanRST();
-
 		//---判断解码信号
 		if (getRST != 0)
 		{
 			//---查询解码的初始化
 			DecodeTask_QueryInit(getRST);
 		}
-
 		//---查询解码
 		DecodeTask_Query();
-
 		//---执行频率电流扫描相关的任务---YSEL
 		RFASKTask_KeyTask(pUSART1, pRFASK, pWM8510Device0, getSOT);
-
 		//---在线调试命令
 		RFASKTask_Task(pUSART1, pRFASK, pWM8510Device0);
-
-		//---模拟RTC处理
-		SysRTCTask_SoftBuildHandle(pSysSoftRTC, SysTickTask_GetTick());
-
+		//---模拟RTC处理,并进行复位时间宽度的监控
+		SysRTCTask_SoftBuildTask(pSysSoftRTC, SysTickTask_GetTick());
 		//---喂狗
 		WDT_RESET();
 	}

@@ -845,7 +845,7 @@ UINT8_T WM8510_I2C_CalibrateClock(WM8510_HandlerType *WM8510x)
 		TimerTask_CalcFreq_Task();
 
 		//---获取当前输出的频率
-		UINT32_T freq = TimerTask_GetFreqKHz();
+		UINT32_T freq = (TimerTask_GetFreqKHz()-15);
 		
 		if(freq!=0xFFFF)
 		{

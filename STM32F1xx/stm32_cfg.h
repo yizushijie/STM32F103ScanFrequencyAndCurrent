@@ -205,7 +205,7 @@ extern "C" {
 	#define WDT_RESET()							IWDGTask_Reset();
 	
 	//===软件复位
-	#define SOFT_RESET()						( CLI(),NVIC_SystemReset() )
+	#define SOFT_RESET()						( __set_FAULTMASK(1),NVIC_SystemReset() )
 	
 	//===错误处理
 	#define Error_Handler()						_Error_Handler(__FILE__, __LINE__)

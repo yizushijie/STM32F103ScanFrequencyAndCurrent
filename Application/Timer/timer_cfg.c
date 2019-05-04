@@ -113,29 +113,22 @@ void Timer_CalcFreqMode_DeInit(void)
 void Timer_CalcFreq_Init(void)
 {
 	VLTUINT32_T tempFreq = 0;
-
 	//---计数次数
 	static UINT8_T nCount = 0;
-
 	//---定时器溢出次数
 	static UINT8_T nOverCount = 0;
-
 	//---开始计数
 	if (pCalcFreq->msgStep == 0)
 	{
 		pCalcFreq->msgFreqKHz = 0;
 		pCalcFreq->msgFreqMHz = 0;
 		pCalcFreq->msgStep = 1;
-
 		//---清零触发器中断标记
 		LL_TIM_ClearFlag_TRIG(TIM3);
-
 		//---清零更新中断标记
 		LL_TIM_ClearFlag_UPDATE(TIM3);
-
 		//---清零计数器
 		LL_TIM_SetCounter(TIM3, 0);
-		
 		//---使能计数器
 		LL_TIM_EnableCounter(TIM3);
 	}
@@ -146,22 +139,20 @@ void Timer_CalcFreq_Init(void)
 		//---触发中断
 		if (LL_TIM_IsActiveFlag_TRIG(TIM3) != 0)
 		{
-			//---清理中断标志
-			LL_TIM_ClearFlag_TRIG(TIM3);
 			//---获取当前的计数结果
 			pCalcFreq->msgFreqKHz = LL_TIM_GetCounter(TIM3);
+			//---清理中断标志
+			LL_TIM_ClearFlag_TRIG(TIM3);
 			pCalcFreq->msgStep = 2;
 			//---必须清零这两个数据，使用了类似全局变量，需要手动清除
-			nOverCount=0;
-			nCount=0;
+			nOverCount = 0;
+			nCount = 0;
 		}
 	}
 	else if (pCalcFreq->msgStep == 2)
 	{
-		
 		//---计数次数;多次计数能够提高获取频率的精准度
 		nCount++;
-
 		//---更新中断
 		if (LL_TIM_IsActiveFlag_UPDATE(TIM3) != 0)
 		{
@@ -169,29 +160,23 @@ void Timer_CalcFreq_Init(void)
 			LL_TIM_ClearFlag_UPDATE(TIM3);
 			nOverCount++;
 		}
-
 		//---触发中断
 		if (LL_TIM_IsActiveFlag_TRIG(TIM3) != 0)
 		{
 			//---清理中断标志
 			LL_TIM_ClearFlag_TRIG(TIM3);
 		}
-
 		//---读取10次后的值
 		if (nCount > 9)
 		{
 			//---获取当前的计数结果
 			tempFreq = LL_TIM_GetCounter(TIM3);
-
 			//---不使能计数器
 			LL_TIM_DisableCounter(TIM3);
-
 			//---操作完成
 			pCalcFreq->msgStep = 3;
-
 			//---计算频率
 			pCalcFreq->msgFreqKHz = (0xFFFF * nOverCount + tempFreq - pCalcFreq->msgFreqKHz);
-
 			//---必须清零这两个数据，使用了类似全局变量，需要手动清除
 			nOverCount=0;
 			nCount=0;

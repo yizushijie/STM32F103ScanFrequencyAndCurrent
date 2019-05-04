@@ -7,9 +7,9 @@
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void SysRTCLib_SoftBuildInit(RTC_HandlerType *RTCx)
+void SysRTCLib_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays)
 {
-	SysRTC_SoftBuildInit(RTCx);
+	SysRTC_SoftBuildInit(RTCx,spanDays);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ void SysRTCLib_SoftBuildInit(RTC_HandlerType *RTCx)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void SysRTCLib_SoftBuildHandle(RTC_HandlerType *RTCx, UINT32_T rtcSecond)
+void SysRTCLib_SoftBuildHandle(Soft_RTC_HandlerType*RTCx, UINT32_T rtcSecond)
 {
 	SysRTC_SoftBuildHandle(RTCx, rtcSecond);
 }
@@ -31,7 +31,19 @@ void SysRTCLib_SoftBuildHandle(RTC_HandlerType *RTCx, UINT32_T rtcSecond)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SysRTCLib_CalcWeekDay(RTC_HandlerType *RTCx)
+UINT8_T SysRTCLib_CalcWeekDay(Soft_RTC_HandlerType*RTCx)
 {
 	return SysRTC_CalcWeekDay(RTCx);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
+//////功		能：
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTCLib_WatchSpanDays(Soft_RTC_HandlerType* RTCx)
+{
+	return SysRTC_WatchSpanDays(RTCx);
 }

@@ -5,12 +5,14 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "rtc_cfg.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===函数定义
-	void SysRTCLib_SoftBuildInit(RTC_HandlerType *RTCx);
-	void SysRTCLib_SoftBuildHandle(RTC_HandlerType *RTCx, UINT32_T rtcSecond);
-	UINT8_T SysRTCLib_CalcWeekDay(RTC_HandlerType *RTCx);
+	#include "rtc_cfg.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	//===函数定义
+	void SysRTCLib_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays);
+	void SysRTCLib_SoftBuildHandle(Soft_RTC_HandlerType*RTCx, UINT32_T rtcSecond);
+	UINT8_T SysRTCLib_CalcWeekDay(Soft_RTC_HandlerType*RTCx);
+	UINT8_T SysRTCLib_WatchSpanDays(Soft_RTC_HandlerType* RTCx);
 	//////////////////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus
 }

@@ -1,8 +1,8 @@
 #include "rtc_cfg.h"
 
 //===全局变量定义
-RTC_HandlerType g_SysSoftRTC = { 0 };
-pRTC_HandlerType pSysSoftRTC = &g_SysSoftRTC;
+Soft_RTC_HandlerType g_SysSoftRTC = { 0 };
+pSoft_RTC_HandlerType pSysSoftRTC = &g_SysSoftRTC;
 
 //===每个月的天数
 const UINT8_T g_MonthDaysTab[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -14,105 +14,153 @@ const UINT8_T g_MonthDaysTab[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void SysRTC_SoftBuildInit(RTC_HandlerType *RTCx)
+void SysRTC_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays)
 {
 	//---取编译日期---年月日---__DATE__===Jul 03 2018
 
 	//---一月
 	if (__DATE__[2] == 'n')
 	{
-		RTCx->month = 1;
+		RTCx->msgSoftRTC.month = 1;
 	}
 
 	//--二月
 	else if (__DATE__[2] == 'b')
 	{
-		RTCx->month = 2;
+		RTCx->msgSoftRTC.month = 2;
 	}
 	else if (__DATE__[2] == 'r')
 	{
 		if (__DATE__[0] == 'M')
 		{
 			//---三月
-			RTCx->month = 3;
+			RTCx->msgSoftRTC.month = 3;
 		}
 		else
 		{
 			//---四月
-			RTCx->month = 4;
+			RTCx->msgSoftRTC.month = 4;
 		}
 	}
 	else if (__DATE__[2] == 'y')
 	{
 		//---五月
-		RTCx->month = 5;
+		RTCx->msgSoftRTC.month = 5;
 	}
 	else if (__DATE__[2] == 'n')
 	{
 		//---六月
-		RTCx->month = 6;
+		RTCx->msgSoftRTC.month = 6;
 	}
 	else if (__DATE__[2] == 'l')
 	{
 		//---七月
-		RTCx->month = 7;
+		RTCx->msgSoftRTC.month = 7;
 	}
 	else if (__DATE__[2] == 'g')
 	{
 		//---八月
-		RTCx->month = 8;
+		RTCx->msgSoftRTC.month = 8;
 	}
 	else if (__DATE__[2] == 'p')
 	{
 		//---九月
-		RTCx->month = 9;
+		RTCx->msgSoftRTC.month = 9;
 	}
 	else if (__DATE__[2] == 't')
 	{
 		//---十月
-		RTCx->month = 10;
+		RTCx->msgSoftRTC.month = 10;
 	}
 	else if (__DATE__[2] == 'v')
 	{
 		//---十一月
-		RTCx->month = 11;
+		RTCx->msgSoftRTC.month = 11;
 	}
 	else if (__DATE__[2] == 'c')
 	{
 		//---十二月
-		RTCx->month = 12;
+		RTCx->msgSoftRTC.month = 12;
 	}
 	else
 	{
 		//---默认是一月
-		RTCx->month = 1;
+		RTCx->msgSoftRTC.month = 1;
 	}
 
 	//---年
-	RTCx->year = (UINT8_T)((__DATE__[9] - '0') * 10 + (__DATE__[10] - '0'));
-
+	if (__DATE__[9]==0x20)
+	{
+		RTCx->msgSoftRTC.year = (UINT8_T)((__DATE__[10] - '0'));
+	}
+	else
+	{
+		RTCx->msgSoftRTC.year = (UINT8_T)((__DATE__[9] - '0') * 10 + (__DATE__[10] - '0'));
+	}
+	
 	//---日
-	RTCx->day = (UINT8_T)((__DATE__[4] - '0') * 10 + (__DATE__[5] - '0'));
+	if (__DATE__[4] == 0x20)
+	{
+		RTCx->msgSoftRTC.day = (UINT8_T)(__DATE__[5] - '0');
+	}
+	else
+	{
+		RTCx->msgSoftRTC.day = (UINT8_T)((__DATE__[4] - '0') * 10 + (__DATE__[5] - '0'));
+	}
 
 	//---世纪
-	RTCx->century = (UINT8_T)((__DATE__[7] - '0') * 10 + (__DATE__[8] - '0') + 1);
-
+	if (__DATE__[7] == 0x20)
+	{
+		RTCx->msgSoftRTC.century = (UINT8_T)((__DATE__[8] - '0')+ 1);
+	}
+	else
+	{
+		RTCx->msgSoftRTC.century = (UINT8_T)((__DATE__[7] - '0') * 10 + (__DATE__[8] - '0') + 1);
+	}
+	
 	//---计算星期
-	RTCx->week = SysRTC_CalcWeekDay(RTCx);
+	RTCx->msgSoftRTC.week = SysRTC_CalcWeekDay(RTCx);
 
 	//---取编译日期---时分秒---__TIME__=06:17:05
 
 	//---时
-	RTCx->hour = (UINT8_T)((__TIME__[0] - '0') * 10 + (__TIME__[1] - '0'));
+	if (__TIME__[0]==0x20)
+	{
+		RTCx->msgSoftRTC.hour = (UINT8_T)(__TIME__[1] - '0');
+	}
+	else
+	{
+		RTCx->msgSoftRTC.hour = (UINT8_T)((__TIME__[0] - '0') * 10 + (__TIME__[1] - '0'));
+	}
 
 	//---分
-	RTCx->minute = (UINT8_T)((__TIME__[3] - '0') * 10 + (__TIME__[4] - '0'));
+	if (__TIME__[3] == 0x20)
+	{
+		RTCx->msgSoftRTC.minute = (UINT8_T)(__TIME__[4] - '0');
+	}
+	else
+	{
+		RTCx->msgSoftRTC.minute = (UINT8_T)((__TIME__[3] - '0') * 10 + (__TIME__[4] - '0'));
+	}
 
 	//---秒
-	RTCx->second = (UINT8_T)((__TIME__[6] - '0') * 10 + (__TIME__[7] - '0'));
-
+	if (__TIME__[6] == 0x20)
+	{
+		RTCx->msgSoftRTC.second = (UINT8_T)(__TIME__[7] - '0');
+	}
+	else
+	{
+		RTCx->msgSoftRTC.second = (UINT8_T)((__TIME__[6] - '0') * 10 + (__TIME__[7] - '0'));
+	}
+	
 	//---时间格式是24H
-	RTCx->time24H = 1;
+	RTCx->msgSoftRTC.time24H = 1;
+
+	//---设定的监控天数
+	RTCx->msgWatchSpanDays = spanDays;
+
+	//---当前时间天数
+	RTCx->msgNowDay = RTCx->msgSoftRTC.day;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,105 +170,105 @@ void SysRTC_SoftBuildInit(RTC_HandlerType *RTCx)
 //////输出参数: 无
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void SysRTC_SoftBuildHandle(RTC_HandlerType *RTCx, UINT32_T rtcSecond)
+void SysRTC_SoftBuildHandle(Soft_RTC_HandlerType*RTCx, UINT32_T rtcSecond)
 {
 	UINT32_T cnt = 0;
 
 	//---判断滴答定时是否发生溢出操作
-	if (rtcSecond < (RTCx->secondTick))
+	if (rtcSecond < (RTCx->msgSoftRTC.secondTick))
 	{
-		cnt = (0xFFFFFFFF - RTCx->secondTick + rtcSecond);
+		cnt = (0xFFFFFFFF - RTCx->msgSoftRTC.secondTick + rtcSecond);
 	}
 	else
 	{
-		cnt = rtcSecond - RTCx->secondTick;
+		cnt = rtcSecond - RTCx->msgSoftRTC.secondTick;
 	}
 
 	//---计算当前年份==(世纪-1)*100+年
-	int iY = RTCx->century - 1;
-	iY = (iY * 100) + RTCx->year;
+	int iY = RTCx->msgSoftRTC.century - 1;
+	iY = (iY * 100) + RTCx->msgSoftRTC.year;
 
 	//---是否发生秒变化
 	if (cnt >= 1000)
 	{
 		//---更新秒滴答计数值
-		RTCx->secondTick = rtcSecond;
+		RTCx->msgSoftRTC.secondTick = rtcSecond;
 
 		//---默认时间基数是1ms，基数1000次，发生秒变化
-		RTCx->second += 1;
+		RTCx->msgSoftRTC.second += 1;
 
 		//---秒变化
-		if (RTCx->second > 60)
+		if (RTCx->msgSoftRTC.second > 60)
 		{
-			RTCx->minute += 1;
-			RTCx->second = 0;
+			RTCx->msgSoftRTC.minute += 1;
+			RTCx->msgSoftRTC.second = 0;
 
 			//---分变化
-			if (RTCx->minute > 60)
+			if (RTCx->msgSoftRTC.minute > 60)
 			{
-				RTCx->hour += 1;
-				RTCx->minute = 0;
+				RTCx->msgSoftRTC.hour += 1;
+				RTCx->msgSoftRTC.minute = 0;
 
 				//---时变化
-				if (RTCx->hour > 24)
+				if (RTCx->msgSoftRTC.hour > 24)
 				{
 					//---天变化
-					RTCx->day += 1;
+					RTCx->msgSoftRTC.day += 1;
 
 					//---星期变化
-					RTCx->week += 1;
+					RTCx->msgSoftRTC.week += 1;
 
 					//---一星期只有七天
-					if (RTCx->week > 7)
+					if (RTCx->msgSoftRTC.week > 7)
 					{
-						RTCx->week = 1;
+						RTCx->msgSoftRTC.week = 1;
 					}
 
 					//---清零时变化
-					RTCx->hour = 0;
+					RTCx->msgSoftRTC.hour = 0;
 
 					//---判断是不是二月
-					if (RTCx->month == 2)
+					if (RTCx->msgSoftRTC.month == 2)
 					{
 						//---年和世纪是分开的
 						if (YEAR_TYPE(iY) != 0)
 						{
 							//---天变化
-							if (RTCx->day > 29)
+							if (RTCx->msgSoftRTC.day > 29)
 							{
-								RTCx->day = 0;
-								RTCx->month += 1;
+								RTCx->msgSoftRTC.day = 0;
+								RTCx->msgSoftRTC.month += 1;
 							}
 						}
 						else
 						{
 							//---天变化
-							if (RTCx->day > 28)
+							if (RTCx->msgSoftRTC.day > 28)
 							{
-								RTCx->day = 0;
-								RTCx->month += 1;
+								RTCx->msgSoftRTC.day = 0;
+								RTCx->msgSoftRTC.month += 1;
 							}
 						}
 					}
 					else
 					{
 						//---天变化
-						if (RTCx->day > g_MonthDaysTab[RTCx->month])
+						if (RTCx->msgSoftRTC.day > g_MonthDaysTab[RTCx->msgSoftRTC.month])
 						{
-							RTCx->day = 0;
-							RTCx->month += 1;
+							RTCx->msgSoftRTC.day = 0;
+							RTCx->msgSoftRTC.month += 1;
 
 							//---年变化
-							if (RTCx->month > 12)
+							if (RTCx->msgSoftRTC.month > 12)
 							{
-								RTCx->month = 1;
-								RTCx->year += 1;
+								RTCx->msgSoftRTC.month = 1;
+								RTCx->msgSoftRTC.year += 1;
 
 								//---世纪变化
-								if (RTCx->year > 100)
+								if (RTCx->msgSoftRTC.year > 100)
 								{
-									RTCx->century += 1;
-									RTCx->year = 0;
+									RTCx->msgSoftRTC.century += 1;
+									RTCx->msgSoftRTC.year = 0;
 								}
 							}
 						}
@@ -238,14 +286,14 @@ void SysRTC_SoftBuildHandle(RTC_HandlerType *RTCx, UINT32_T rtcSecond)
 //////输出参数: 1---星期一；2---星期二；3---星期三；4---星期四；5---星期五；6---星期六；7---星期天；0---错误
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SysRTC_CalcWeekDay(RTC_HandlerType *RTCx)
+UINT8_T SysRTC_CalcWeekDay(Soft_RTC_HandlerType*RTCx)
 {
-	int iM = RTCx->month;
+	int iM = RTCx->msgSoftRTC.month;
 
 	//int iY = RTCx->year;
-	int iY = RTCx->century - 1;
-	iY = (iY * 100) + RTCx->year;
-	int iD = RTCx->day;
+	int iY = RTCx->msgSoftRTC.century - 1;
+	iY = (iY * 100) + RTCx->msgSoftRTC.year;
+	int iD = RTCx->msgSoftRTC.day;
 	int iWeekDay = -1;
 	UINT8_T _return = 0;
 	/*
@@ -288,6 +336,39 @@ UINT8_T SysRTC_CalcWeekDay(RTC_HandlerType *RTCx)
 			break;
 		default:
 			break;
+	}
+	return _return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
+//////功		能：
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTC_WatchSpanDays(Soft_RTC_HandlerType* RTCx)
+{
+	UINT8_T _return = OK_0;
+	if (RTCx->msgWatchSpanDays!=0)
+	{
+		if (RTCx->msgSoftRTC.day<RTCx->msgNowDay)
+		{
+			_return = RTCx->msgSoftRTC.day + 30 - RTCx->msgNowDay;
+		}
+		else
+		{
+			_return = RTCx->msgNowDay - RTCx->msgSoftRTC.day;
+		}
+		//---判断是否到达监控时间的阈值，如果到达，执行复位操作
+		if ((_return>RTCx->msgWatchSpanDays)||((_return== RTCx->msgWatchSpanDays)))
+		{
+			//---软件复位
+			SOFT_RESET();
+			////---硬件复位,等待看门狗启动
+			//while (1);
+		}
+		_return = OK_0;
 	}
 	return _return;
 }

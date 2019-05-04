@@ -1,5 +1,7 @@
 #include "rfask_task.h"
 
+volatile UINT8_T  g_RFASKday = 0;
+
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
 //////功		能：
@@ -59,11 +61,28 @@ UINT32_T RFASKTask_GetDeviceType(RFASK_HandlerType *rfask)
 //////////////////////////////////////////////////////////////////////////////
 UINT32_T RFASKTask_SetClockFreq(RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, UINT32_T rfX100MHz)
 {
+	UINT8_T _return = OK_0;
 	//---获取设定的晶振值
 	UINT32_T freqTemp = RFASKLib_CalcXTAL(rfask, rfX100MHz);
-
-	//---设置时钟芯片WM8510
-	return WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, freqTemp);
+	////---设置时钟芯片WM8510
+	//return WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, freqTemp);
+	//---20190504,增加设备的时钟输出的自校准功能
+	_return= WM8510Task_I2C_SetFreqHzWithAllFreqRegAndCalibrateFreqKHzOutPut(WM8510x, freqTemp);
+	if (_return!=OK_0)
+	{
+		//---复位WM8510
+		WM8510Task_I2C_Reset(WM8510x);
+		//---再次设置输出时钟并校准，如果时钟输出异常，则进行MCU的软件复位
+		_return= WM8510Task_I2C_SetFreqHzWithAllFreqRegAndCalibrateFreqKHzOutPut(WM8510x, freqTemp);
+		if (_return!=OK_0)
+		{
+			//---软件复位
+			SOFT_RESET();
+			////---硬件复位,等待看门狗启动
+			//while (1);
+		}
+	}
+	return _return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1229,14 +1248,19 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 	UINT16_T freqPointNum = 0;
 
 	//---电流点计数
-	UINT8_T   currentPointNum[FREQ_CURRENT_MAX_SITE];
+	UINT8_T   currentPointNum[FREQ_CURRENT_MAX_SITE] = {0};
 
 	//---电流点的值
-	UINT16_T  currentPointCurrent[FREQ_CURRENT_MAX_SITE];
+	UINT16_T  currentPointCurrent[FREQ_CURRENT_MAX_SITE] = {0};
 
 	//---连续相等的点
-	UINT8_T   currentEqualMinPointNum[FREQ_CURRENT_MAX_SITE];
-	UINT8_T   currentEqualMaxPointNum[FREQ_CURRENT_MAX_SITE];
+	UINT8_T   currentEqualMinPointNum[FREQ_CURRENT_MAX_SITE] = {0};
+	UINT8_T   currentEqualMaxPointNum[FREQ_CURRENT_MAX_SITE] = {0};
+
+	//---激活的SITE的上次的电流值
+	UINT16_T	siteOldCurrent[FREQ_CURRENT_MAX_SITE] = {0};
+	//---SITE连续相等点的个数
+	UINT8_T		siteCurrentEquaPointNum[FREQ_CURRENT_MAX_SITE] = { 0 };
 
 	//---历史数据的搬移
 	UINT16_T *pMsgActivateSiteCurrentHistory;
@@ -1322,20 +1346,22 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 		//	DelayTask_ms(6);
 		//}
 		//-- - 等待上电稳定
-		DelayTask_ms(4);
-		/*if (freqPointNum == 0)
+		DelayTask_ms(5);
+		
+		//---开始n个点，多等待一下
+		if (freqPointNum <3)
 		{
-			DelayTask_ms(10);
+			DelayTask_ms(1);
 		}
-		*/
+		
 
 		//---前10个点，多等几次上电稳定
-//		if (freqPointNum <10)
-//		{
-//			//---获取每个SITE的电流和ADC的采样结果
-//			RFASKTask_SitesCurrent(rfask);
-//			DelayTask_ms(10);
-//		}
+		//if (freqPointNum <10)
+		//{
+		//	//---获取每个SITE的电流和ADC的采样结果
+		//	RFASKTask_SitesCurrent(rfask);
+		//	DelayTask_ms(10);
+		//}
 
 		//---获取每个SITE的电流和ADC的采样结果
 		RFASKTask_SitesCurrent(rfask);
@@ -1372,6 +1398,28 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					currentPointCurrent[siteNum] = rfask->msgSiteCurrent[siteNum];
 				}
 				currentPointNum[siteNum]++;
+				
+				//---电流出现连续相等的状态逻辑判断开始
+				//---判断电流是否发生变化
+				if (siteOldCurrent[siteNum]!= rfask->msgSiteCurrent[siteNum])
+				{
+					siteCurrentEquaPointNum[siteNum] = 0;
+				}
+				else
+				{
+					siteCurrentEquaPointNum[siteNum] ++;
+					//---连续多个点的电流值不发生变化
+					if (siteCurrentEquaPointNum[siteNum] > 3)
+					{
+						//---判断不合格；原因是该点的电流之前的几个点小或者差值比设定合格条件最小值小，或则比设定的合格条件的最大值大
+						rfask->msgSitePass[siteNum] = 1 + freqPointNum;
+					}
+				}
+
+				//---更新SITE的电流值
+				siteOldCurrent[siteNum] = rfask->msgSiteCurrent[siteNum];
+
+				//---电流出现连续相等的状态逻辑判断结束
 
 				//---合格条件的频率点差值的计算
 				if (freqPointNum < rfaskFreqCurrent->msgADCPointNum)
@@ -1409,6 +1457,7 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					//if ((rfask->msgSiteCurrent[siteNum] < rfask->msgSiteCurrentHistory[siteNum][0]) || (detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin) || (adcPointNum > rfaskFreqCurrent->msgADCPassMax))
 
 					//if((detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin) || (detaCurrentX10uA > rfaskFreqCurrent->msgADCPassMax))
+					
 					//---小于最小值
 					if (detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin)
 					{
@@ -1481,8 +1530,13 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 	//---复位时钟芯片WM8510，需要评估一下那个比较的适合当前模式
 	WM8510Task_I2C_Reset(WM8510x);
 
-	//---启动解码
-	//DecodeTask_START();
+	//---频率电流扫描主板的第二个版本，可以支持实时解码
+	#if (LNW_FT_ASK_MBOARD_VERSION==2)
+		//---启动解码
+		DecodeTask_START();
+	#endif  
+
+	
 	//---返回值
 	return OK_0;
 }

@@ -13,7 +13,7 @@ extern "C" {
 //===每100KHz需要补偿15Hz
 //===每20KHz需要补偿3Hz
 //=== 12M时钟下最小输出频率是156KHz----单位为HZ
-#define WM8510_MCLK_HZ				12000000UL//12000000UL
+#define WM8510_MCLK_HZ				12000000UL
 #define WM8510_MCLK_KHZ				( WM8510_MCLK_HZ/1000UL )
 #define WM8510_MCLK_MHZ				( WM8510_MCLK_HZ/1000000UL )
 

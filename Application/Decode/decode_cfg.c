@@ -339,8 +339,9 @@ void Decode_DecodeTimerInit(void)
 	NVIC_SetPriority(DECODE_USE_TIM_IRQ, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
 
 	//---使能定时器中断
-	NVIC_EnableIRQ(TIM2_IRQn);
-
+	//NVIC_EnableIRQ(TIM2_IRQn);
+	NVIC_EnableIRQ(DECODE_USE_TIM_IRQ);
+	
 	//---清零标志位
 	LL_TIM_ClearFlag(DECODE_USE_TIM);
 
@@ -992,10 +993,10 @@ void  Decode_PrintfWave(UINT16_T channel, UINT16_T value)
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
-//////功		能：
+//////功		能：查询式解码
 //////输入参数:
 //////输出参数:
-//////说		明：
+//////说		明：使用查询式的方式实现解码，查询定时器的输入捕捉的脉冲宽度
 //////////////////////////////////////////////////////////////////////////////
 void Decode_Query(void)
 {
@@ -1080,7 +1081,7 @@ void Decode_Query(void)
 							//---高电平不符合连续方波的脉宽,解码步序1，复位操作
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1130,7 +1131,7 @@ void Decode_Query(void)
 							//---高电平不符合连续方波的脉宽,解码步序1，复位操作
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1188,7 +1189,7 @@ void Decode_Query(void)
 						{
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1232,7 +1233,7 @@ void Decode_Query(void)
 						{
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1269,7 +1270,7 @@ void Decode_Query(void)
 						{
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1301,7 +1302,7 @@ void Decode_Query(void)
 						{
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1366,7 +1367,7 @@ void Decode_Query(void)
 						{
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1423,7 +1424,7 @@ void Decode_Query(void)
 								g_DecodeNewStep[site] = DECODE_STEP_1;
 							}
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1484,7 +1485,7 @@ void Decode_Query(void)
 								g_DecodeNewStep[site] = DECODE_STEP_1;
 							}
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1517,7 +1518,7 @@ void Decode_Query(void)
 							//---高电平不符合条件
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1573,7 +1574,7 @@ void Decode_Query(void)
 							//---低电平不符合要求，重新解码
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 1);
 					}
 					else
@@ -1613,7 +1614,7 @@ void Decode_Query(void)
 							//---高电平不符合条件
 							g_DecodeNewStep[site] = DECODE_STEP_1;
 						}
-						//---显示的值是下一电平脉冲宽度的值
+						//---显示的值是下一电平脉冲宽度的值，打印输出波形
 						Decode_PrintfWave(site, 0);
 					}
 					else
@@ -1657,7 +1658,7 @@ void Decode_Query(void)
 								//---连续方波的高电平
 								g_DecodeNewStep[site] = DECODE_STEP_13;
 							}
-							//---显示的值是下一电平脉冲宽度的值
+							//---显示的值是下一电平脉冲宽度的值，打印输出波形
 							Decode_PrintfWave(site, 1);
 						}
 						else

@@ -805,6 +805,9 @@ UINT8_T ADC_ADCTask_START(ADC_TypeDef *ADCx)
 	if (ADCx == ADC1)
 	{
 		pABChannelADC->msgFlag = 0;
+		//---清零ADC缓存区
+		memset(pABChannelADC->msgADCConvVal, 0, ADC_CHANNEL_MAX_SIZE);
+		//---启动ADC装换
 		return ADC_ADC1_DMA_Restart();
 	}
 #ifdef ADC2
@@ -817,6 +820,9 @@ UINT8_T ADC_ADCTask_START(ADC_TypeDef *ADCx)
 	if (ADCx == ADC3)
 	{
 		pCDChannelADC->msgFlag = 0;
+		//---清零ADC缓存区
+		memset(pCDChannelADC->msgADCConvVal, 0, ADC_CHANNEL_MAX_SIZE);
+		//---启动ADC装换
 		return ADC_ADC3_DMA_Restart();
 	}
 #endif
@@ -884,9 +890,9 @@ UINT8_T ADC_HandleChannelVal(ADCASK_HandlerType *ADCASKx)
 	DescSortFun2(adcBChannel, ADC_CHANNEL_SIZE);
 
 	//---计算A通道采样值
-	ADCASKx->msgAChannelVal = CalcAvgFun1(adcAChannel, (ADC_CHANNEL_SIZE - 1), 1);
+	ADCASKx->msgAChannelVal = CalcAvgFun1(adcAChannel, (ADC_CHANNEL_SIZE - 2), 2);
 
 	//---计算B通道采样值
-	ADCASKx->msgBChannelVal = CalcAvgFun1(adcBChannel, (ADC_CHANNEL_SIZE - 1), 1);
+	ADCASKx->msgBChannelVal = CalcAvgFun1(adcBChannel, (ADC_CHANNEL_SIZE - 2), 2);
 	return OK_0;
 }

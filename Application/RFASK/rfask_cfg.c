@@ -1,7 +1,7 @@
 #include "rfask_cfg.h"
 
 //===变量定义
-RFASK_HandlerType	g_RFASK;
+RFASK_HandlerType	g_RFASK = {0};
 pRFASK_HandlerType	pRFASK = &g_RFASK;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -173,7 +173,7 @@ void RFASK_YSELInit(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
-//////功		能：
+//////功		能：参数的初始化
 //////输入参数:
 //////输出参数:
 //////说		明：
@@ -181,50 +181,54 @@ void RFASK_YSELInit(void)
 void RFASK_StructInit(RFASK_HandlerType *rfask)
 {
 	//---设备类型
-	rfask->msgDeviceType = SYN5XXR;
+	rfask->msgDeviceType = SYN5XXR;								//1Byte
 
 	//---激活的SITE信息
 	memset(rfask->msgActivateSite, 0, FREQ_CURRENT_MAX_SITE);
 
 	//---100倍放大之后的采样电阻值
-	rfask->msgSampleX100Res = FREQ_CURRENT_SAMPLE_RES;
+	rfask->msgSampleX100Res = FREQ_CURRENT_SAMPLE_RES;			//2Byte
 
 	//---放大倍数
-	rfask->msgAmpTimes = FREQ_CURRENT_AMP_TIMES;
+	rfask->msgAmpTimes = FREQ_CURRENT_AMP_TIMES;				//2Byte
 
 	//---100倍放大之后的预设频率点1
-	rfask->msgFreqX100MHzYSel1 = FREQ_YSEL1_X100MHZ;
+	rfask->msgFreqX100MHzYSel1 = FREQ_YSEL1_X100MHZ;			//4Byte
 
 	//---100倍放大之后的预设频率点2
-	rfask->msgFreqX100MHzYSel2 = FREQ_YSEL2_X100MHZ;
+	rfask->msgFreqX100MHzYSel2 = FREQ_YSEL2_X100MHZ;			//4Byte
 
 	//---100倍放大之后的预设频率点3
-	rfask->msgFreqX100MHzYSel3 = FREQ_YSEL3_X100MHZ;
+	rfask->msgFreqX100MHzYSel3 = FREQ_YSEL3_X100MHZ;			//4Byte
 
 	//---100倍放大之后的预设频率点4
-	rfask->msgFreqX100MHzYSel4 = FREQ_YSEL4_X100MHZ;
+	rfask->msgFreqX100MHzYSel4 = FREQ_YSEL4_X100MHZ;			//4Byte
 
 	memset(rfask->msgSitePass, 0, FREQ_CURRENT_MAX_SITE);
 
 	//---第一个电压下的频率电流扫描
-	rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA = FREQ_CURRENT_HIGH_START_IMAX_X100MA;
-	rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA = FREQ_CURRENT_HIGH_START_IMIN_X100MA;
-	rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA = FREQ_CURRENT_HIGH_STOP_IMAX_X100MA;
-	rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA = FREQ_CURRENT_HIGH_STOP_IMIN_X100MA;
-	rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = FREQ_CURRENT_HIGH_FSTART_X100MHZ;
-	rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz = g_RFASK.msgFreqCurrentPointOne.msgStartFreqX100MHz + FREQ_CURRENT_HIGH_FX100MHZ_NUM * FREQ_CURRENT_HIGH_FSTEP_X100MHZ;
-	rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz = FREQ_CURRENT_HIGH_FSTEP_X100MHZ;
-	rfask->msgFreqCurrentPointOne.msgFreqPointNum = FREQ_CURRENT_HIGH_FX100MHZ_NUM;
+	rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA = FREQ_CURRENT_HIGH_START_IMAX_X100MA;			//2Byte
+	rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA = FREQ_CURRENT_HIGH_START_IMIN_X100MA;			//2Byte
+	rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA = FREQ_CURRENT_HIGH_STOP_IMAX_X100MA;				//2Byte
+	rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA = FREQ_CURRENT_HIGH_STOP_IMIN_X100MA;				//2Byte
+	rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = FREQ_CURRENT_HIGH_FSTART_X100MHZ;					//4Byte
+	rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz = FREQ_CURRENT_HIGH_FSTEP_X100MHZ;						//2Byte
+	rfask->msgFreqCurrentPointOne.msgFreqPointNum = FREQ_CURRENT_HIGH_FX100MHZ_NUM;							//2Byte
+	rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz =  rfask->msgFreqCurrentPointOne.msgFreqPointNum;
+	rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz *= rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz;
+	rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz += rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz;
+	//rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz = rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz + (rfask->msgFreqCurrentPointOne.msgFreqPointNum * rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz);
+	
 
 	//---限制采样点的大小，这个值会影响上报上位机的时候数据缓存区的大小
 	if (rfask->msgFreqCurrentPointOne.msgFreqPointNum > FREQ_CURRENT_FREQ_POINT_MAX_NUM)
 	{
 		rfask->msgFreqCurrentPointOne.msgFreqPointNum = FREQ_CURRENT_FREQ_POINT_MAX_NUM;
 	}
-	rfask->msgFreqCurrentPointOne.msgFreqCurrentVoltagemV = FREQ_CURRENT_HIGH_POWER_MV;
-	rfask->msgFreqCurrentPointOne.msgADCPointNum = FREQ_CURRENT_HIGH_ADC_POINT_NUM;
-	rfask->msgFreqCurrentPointOne.msgADCPassMax = FREQ_CURRENT_HIGH_ADC_PASS_MAX;
-	rfask->msgFreqCurrentPointOne.msgADCPassMin = FREQ_CURRENT_HIGH_ADC_PASS_MIN;
+	rfask->msgFreqCurrentPointOne.msgFreqCurrentVoltagemV = FREQ_CURRENT_HIGH_POWER_MV;						//2Byte
+	rfask->msgFreqCurrentPointOne.msgADCPointNum = FREQ_CURRENT_HIGH_ADC_POINT_NUM;							//2Byte
+	rfask->msgFreqCurrentPointOne.msgADCPassMax = FREQ_CURRENT_HIGH_ADC_PASS_MAX;							//2Byte
+	rfask->msgFreqCurrentPointOne.msgADCPassMin = FREQ_CURRENT_HIGH_ADC_PASS_MIN;							//2Byte
 
 	//---判断数据是够超界
 	if (rfask->msgFreqCurrentPointOne.msgADCPointNum > FREQ_CURRENT_HISTORY_MAX_SIZE)
@@ -233,24 +237,28 @@ void RFASK_StructInit(RFASK_HandlerType *rfask)
 	}
 
 	//---第二个电压下的频率电流扫描
-	rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA = FREQ_CURRENT_LOW_START_IMAX_X100MA;
-	rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA = FREQ_CURRENT_LOW_START_IMIN_X100MA;
-	rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA = FREQ_CURRENT_LOW_STOP_IMAX_X100MA;
-	rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA = FREQ_CURRENT_LOW_STOP_IMIN_X100MA;
-	rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = FREQ_CURRENT_LOW_FSTART_X100MHZ;
-	rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz = g_RFASK.msgFreqCurrentPointTwo.msgStartFreqX100MHz + FREQ_CURRENT_LOW_FX100MHZ_NUM * FREQ_CURRENT_LOW_FSTEP_X100MHZ;
-	rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz = FREQ_CURRENT_LOW_FSTEP_X100MHZ;
-	rfask->msgFreqCurrentPointTwo.msgFreqPointNum = FREQ_CURRENT_LOW_FX100MHZ_NUM;
+	rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA = FREQ_CURRENT_LOW_START_IMAX_X100MA;			//2Byte
+	rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA = FREQ_CURRENT_LOW_START_IMIN_X100MA;			//2Byte
+	rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA = FREQ_CURRENT_LOW_STOP_IMAX_X100MA;				//2Byte
+	rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA = FREQ_CURRENT_LOW_STOP_IMIN_X100MA;				//2Byte
+	rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = FREQ_CURRENT_LOW_FSTART_X100MHZ;					//4Byte
+	rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz = FREQ_CURRENT_LOW_FSTEP_X100MHZ;						//2Byte
+	rfask->msgFreqCurrentPointTwo.msgFreqPointNum = FREQ_CURRENT_LOW_FX100MHZ_NUM;							//2Byte
+	rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz =	rfask->msgFreqCurrentPointTwo.msgFreqPointNum ;
+	rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz *=	rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz;
+	rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz += rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz;
+	//rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz = g_RFASK.msgFreqCurrentPointTwo.msgStartFreqX100MHz + (rfask->msgFreqCurrentPointTwo.msgFreqPointNum * rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz);
+	
 
 	//---限制采样点的大小，这个值会影响上报上位机的时候数据缓存区的大小
 	if (rfask->msgFreqCurrentPointTwo.msgFreqPointNum > FREQ_CURRENT_FREQ_POINT_MAX_NUM)
 	{
 		rfask->msgFreqCurrentPointTwo.msgFreqPointNum = FREQ_CURRENT_FREQ_POINT_MAX_NUM;
 	}
-	rfask->msgFreqCurrentPointTwo.msgFreqCurrentVoltagemV = FREQ_CURRENT_LOW_POWER_MV;
-	rfask->msgFreqCurrentPointTwo.msgADCPointNum = FREQ_CURRENT_LOW_ADC_POINT_NUM;
-	rfask->msgFreqCurrentPointTwo.msgADCPassMax = FREQ_CURRENT_LOW_ADC_PASS_MAX;
-	rfask->msgFreqCurrentPointTwo.msgADCPassMin = FREQ_CURRENT_LOW_ADC_PASS_MIN;
+	rfask->msgFreqCurrentPointTwo.msgFreqCurrentVoltagemV = FREQ_CURRENT_LOW_POWER_MV;						//2Byte
+	rfask->msgFreqCurrentPointTwo.msgADCPointNum = FREQ_CURRENT_LOW_ADC_POINT_NUM;							//2Byte
+	rfask->msgFreqCurrentPointTwo.msgADCPassMax = FREQ_CURRENT_LOW_ADC_PASS_MAX;							//2Byte
+	rfask->msgFreqCurrentPointTwo.msgADCPassMin = FREQ_CURRENT_LOW_ADC_PASS_MIN;							//2Byte
 
 	//---判断数据是够超界
 	if (rfask->msgFreqCurrentPointTwo.msgADCPointNum > FREQ_CURRENT_HISTORY_MAX_SIZE)
