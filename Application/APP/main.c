@@ -182,20 +182,16 @@ void Sys_Init(void)
 	//---查询解码的初始化，所有的SITE都进行解码
 	DecodeTask_QueryInit(0x0F);
 
+	////---时钟输出
+	//CLKA_FREQ_ON;
+	//CLKB_FREQ_ON;
+	//CLKC_FREQ_ON;
+	//CLKD_FREQ_ON;
+
 	//---使能Flash读保护
 	//FlashTask_LockRead();
-
-	/*测试*/
-
-	//WM8510Task_I2C_SetFreqHzWithAllFreqReg(pWM8510Device0, 13521270);
-
-	CLKA_FREQ_ON;
-	CLKB_FREQ_ON;
-	CLKC_FREQ_ON;
-	CLKD_FREQ_ON;
-	
 	//---开启看门狗
-	//IWDGTask_Init();
+	IWDGTask_Init();
 
 	//---启动解码逻辑
 	//DecodeTask_START();

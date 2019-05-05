@@ -1,7 +1,5 @@
 #include "rfask_task.h"
 
-volatile UINT8_T  g_RFASKday = 0;
-
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
 //////功		能：
@@ -107,60 +105,47 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 		case CMD_RFASK_CMD2_SET_WM8510:
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//---计算WM8510的输出频率
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置输出频率
 			_return = WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, freqTemp);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---读取WM8510设置的输出频率
 		case CMD_RFASK_CMD2_GET_WM8510:
-
 			//---外部计数模式进行脉冲的计数
 			TimerTask_CalcFreq_Task();
-
-			//---获取当前输出的频率KHz
-			freqTemp = TimerTask_GetFreqKHz();
-
+			//---获取当前输出的频率KHz,增加获取脉冲的时间为10ms，牺牲时间换取精度
+			freqTemp =(UINT32_T)(TimerTask_GetFreqKHz()/10);// TimerTask_GetFreqKHz();
 			//---获取当前输出的频率Hz
 			freqTemp *= 1000;
 			USARTTask_RealTime_AddByteSize(USARTx, 7);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---将数据填充到缓存区
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 0));
 			break;
-
 			//---复位WM8510的输出
 		case CMD_RFASK_CMD2_RESET_WM8510:
 			WM8510Task_I2C_Reset(pWM8510Device0);
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---时钟输出通道1的控制
 		case CMD_RFASK_CMD2_CHANNELA_WM8510:
-
 			//---A通道频率输出
 			if (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex] != 0x00)
 			{
@@ -172,15 +157,12 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			}
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---时钟输出通道2的控制
 		case CMD_RFASK_CMD2_CHANNELB_WM8510:
-
 			//---B通道频率输出
 			if (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex] != 0x00)
 			{
@@ -192,15 +174,12 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			}
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---时钟输出通道3的控制
 		case CMD_RFASK_CMD2_CHANNELC_WM8510:
-
 			//---C通道频率输出
 			if (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex] != 0x00)
 			{
@@ -212,15 +191,12 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			}
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---时钟输出通道4的控制
 		case CMD_RFASK_CMD2_CHANNELD_WM8510:
-
 			//---D通道频率输出
 			if (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex] != 0x00)
 			{
@@ -232,15 +208,12 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			}
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---时钟输出全部通道的控制
 		case CMD_RFASK_CMD2_CHANNELS_WM8510:
-
 			//---所有通道频率输出
 			if (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex] != 0x00)
 			{
@@ -258,7 +231,6 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			}
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
@@ -281,290 +253,214 @@ UINT8_T RFASKTask_YSELTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, W
 {
 	UINT8_T _return = OK_0;
 	UINT32_T freqTemp = 0;
-
 	//---数据发送报头
 	USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 	//---执行任务命令
 	switch (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex])
 	{
-	#ifndef USE_FT_CP_TEST
-
 		//---设置频率点1
 		case CMD_RFASK_CMD2_YSEL1_FREQ_SET:
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel1 = freqTemp;
 			break;
-
 			//---设置频率点2
 		case CMD_RFASK_CMD2_YSEL2_FREQ_SET:
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel2 = freqTemp;
 			break;
-
 			//---设置频率点3
 		case CMD_RFASK_CMD2_YSEL3_FREQ_SET:
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel3 = freqTemp;
 			break;
-
 			//---设置频率点4
 		case CMD_RFASK_CMD2_YSEL4_FREQ_SET:
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel4 = freqTemp;
 			break;
-		#endif
-
 			//---读取频率点1
 		case CMD_RFASK_CMD2_YSEL1_FREQ_GET:
 			freqTemp = rfask->msgFreqX100MHzYSel1;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 4));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回第一个默认频率1
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
 			break;
-
 			//---读取频率点2
 		case CMD_RFASK_CMD2_YSEL2_FREQ_GET:
 			freqTemp = rfask->msgFreqX100MHzYSel2;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 4));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回第一个默认频率1
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
 			break;
-
 			//---读取频率点3
 		case CMD_RFASK_CMD2_YSEL3_FREQ_GET:
 			freqTemp = rfask->msgFreqX100MHzYSel3;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 4));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回第一个默认频率1
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
 			break;
-
 			//---读取频率点4
 		case CMD_RFASK_CMD2_YSEL4_FREQ_GET:
 			freqTemp = rfask->msgFreqX100MHzYSel4;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 4));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回第一个默认频率1
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置全部频率点
 		case CMD_RFASK_CMD2_YSEL_FREQ_SET:
-
 			//---设置频率点1
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel1 = freqTemp;
-
 			//---设置频率点2
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 5];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 6];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 7];
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel2 = freqTemp;
-
 			//---设置频率点3
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 8];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 9];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 10];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 11];
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel3 = freqTemp;
-
 			//---设置频率点4
 			freqTemp = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 12];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 13];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 14];
 			freqTemp = (freqTemp << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 15];
-
 			//---保存当前设定的值
 			rfask->msgFreqX100MHzYSel4 = freqTemp;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
-
 			//---读取全部频率点
 		case CMD_RFASK_CMD2_YSEL_FREQ_GET:
 			freqTemp = rfask->msgFreqX100MHzYSel1;
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 16));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回第一个默认频率1
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
-
 			//---返回第一个默认频率2
 			freqTemp = rfask->msgFreqX100MHzYSel2;
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
-
 			//---返回第一个默认频率3
 			freqTemp = rfask->msgFreqX100MHzYSel3;
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 16));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
-
 			//---返回第一个默认频率2
 			freqTemp = rfask->msgFreqX100MHzYSel4;
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 24));
@@ -572,84 +468,58 @@ UINT8_T RFASKTask_YSELTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, W
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(freqTemp));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置输出第一个预设频率点
 		case CMD_RFASK_CMD2_YSEL1_FREQ_OUT:
-
 			//---设置输出频率
 			_return = WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, RFASKTask_CalcXTAL(rfask, rfask->msgFreqX100MHzYSel1));
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---设置输出第二个预设频率点
 		case CMD_RFASK_CMD2_YSEL2_FREQ_OUT:
-
 			//---设置输出频率
 			_return = WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, RFASKTask_CalcXTAL(rfask, rfask->msgFreqX100MHzYSel2));
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---设置输出第三个预设频率点
 		case CMD_RFASK_CMD2_YSEL3_FREQ_OUT:
-
 			//---设置输出频率
 			_return = WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, RFASKTask_CalcXTAL(rfask, rfask->msgFreqX100MHzYSel3));
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---设置输出第四个预设频率点
 		case CMD_RFASK_CMD2_YSEL4_FREQ_OUT:
-
 			//---设置输出频率
 			_return = WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, RFASKTask_CalcXTAL(rfask, rfask->msgFreqX100MHzYSel4));
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, _return);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
 		default:
 			_return = ERROR_1;
 			break;
@@ -680,10 +550,8 @@ UINT8_T  RFASKTask_SitesCurrent(RFASK_HandlerType *rfask)
 {
 	UINT8_T i = 0;
 	UINT64_T sitePower = 0;
-
 	//---获取ADC的采样结果
 	ADCTask_RFASKTask_GetADC(&rfask->msgSiteADC[0], FREQ_CURRENT_MAX_SITE);
-
 	//---装换结果为电流值
 	for (i = 0; i < FREQ_CURRENT_MAX_SITE; i++)
 	{
@@ -724,10 +592,8 @@ UINT8_T  RFASKTask_SetFreqCurrentPointCmd(FREQ_CURRENT_HandlerType *rfaskFreqCur
 UINT8_T  RFASKTask_FreqCurrentTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, UINT8_T activateSites)
 {
 	UINT8_T _return = OK_0;
-
 	//---解析频率电流扫描的激活的SITE
 	RFASKTask_ActivateSites(rfask, activateSites);
-
 	//---进行频率电流的流程处理
 	return _return;
 }
@@ -748,233 +614,160 @@ UINT8_T  RFASKTask_FreqCurrentPointOneTask(USART_HandlerType*USARTx, RFASK_Handl
 	{
 		//---获取频率电流扫描的频率参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_FREQ_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 11);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz >> 24));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz >> 16));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz >> 8));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz));
-
 			//---步进频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz >> 8));
-
 			//---步进频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz));
-
 			//---采集点的个数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgFreqPointNum >> 8));
-
 			//---采集点的个数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgFreqPointNum));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置频率电流扫描的频率参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_FREQ_SET:
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置步进频率
 			rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
 			rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz = (rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 5];
-
 			//---设置采集点的个数
 			rfask->msgFreqCurrentPointOne.msgFreqPointNum = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 6];
 			rfask->msgFreqCurrentPointOne.msgFreqPointNum = (rfask->msgFreqCurrentPointOne.msgFreqPointNum << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 7];
-
 			//---限制采样点的大小，这个值会影响上报上位机的时候数据缓存区的大小
 			if (rfask->msgFreqCurrentPointOne.msgFreqPointNum > FREQ_CURRENT_FREQ_POINT_MAX_NUM)
 			{
 				rfask->msgFreqCurrentPointOne.msgFreqPointNum = FREQ_CURRENT_FREQ_POINT_MAX_NUM;
 			}
-
 			//---计算停止频率
 			rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz = rfask->msgFreqCurrentPointOne.msgStepFreqX100MHz;
 			rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz *= rfask->msgFreqCurrentPointOne.msgFreqPointNum;
 			rfask->msgFreqCurrentPointOne.msgStopFreqX100MHz += rfask->msgFreqCurrentPointOne.msgStartFreqX100MHz;
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
-
 			//---获取频率电流扫描的电流参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_CURRENT_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 2 + 2 + 2 + 2 + 2 + 2 + 2));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---获取起始的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA >> 8));
-
 			//---获取起始的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA));
-
 			//---获取起始的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA >> 8));
-
 			//---获取起始的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA));
-
 			//---ADC间隔的点数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPointNum >> 8));
-
 			//---ADC间隔的点数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPointNum));
-
 			//---ADC合格的最大值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPassMax >> 8));
-
 			//---ADC合格的最大值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPassMax));
-
 			//---ADC合格的最小值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPassMin >> 8));
-
 			//---ADC合格的最小值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgADCPassMin));
-
 			//---获取截止的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA >> 8));
-
 			//---获取截止的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA));
-
 			//---获取截止的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA >> 8));
-
 			//---获取截止的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置频率电流扫描的电流参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_CURRENT_SET:
-
 			//---设置起始的最大电流
 			rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---设置起始的最大电流
 			rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA = (rfask->msgFreqCurrentPointOne.msgStartMaxCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---设置起始的最小电流
 			rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
-
 			//---设置起始的最小电流
 			rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA = (rfask->msgFreqCurrentPointOne.msgStartMinCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---ADC间隔的点数
 			rfask->msgFreqCurrentPointOne.msgADCPointNum = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
-
 			//---ADC间隔的点数
 			rfask->msgFreqCurrentPointOne.msgADCPointNum = (rfask->msgFreqCurrentPointOne.msgADCPointNum << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 5];
-
 			//---判断数据是够超界
 			if (rfask->msgFreqCurrentPointOne.msgADCPointNum > FREQ_CURRENT_HISTORY_MAX_SIZE)
 			{
 				rfask->msgFreqCurrentPointOne.msgADCPointNum = FREQ_CURRENT_HISTORY_MAX_SIZE;
 			}
-
 			//---ADC合格的最大值
 			rfask->msgFreqCurrentPointOne.msgADCPassMax = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 6];
-
 			//---ADC合格的最大值
 			rfask->msgFreqCurrentPointOne.msgADCPassMax = (rfask->msgFreqCurrentPointOne.msgADCPassMax << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 7];
-
 			//---ADC合格的最小值
 			rfask->msgFreqCurrentPointOne.msgADCPassMin = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 8];
-
 			//---ADC合格的最小值
 			rfask->msgFreqCurrentPointOne.msgADCPassMin = (rfask->msgFreqCurrentPointOne.msgADCPassMin << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 9];
-
 			//---设置截止的最大电流
 			rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 10];
-
 			//---设置截止的最大电流
 			rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA = (rfask->msgFreqCurrentPointOne.msgStopMaxCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 11];
-
 			//---设置截止的最小电流
 			rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 12];
-
 			//---设置截止的最小电流
 			rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA = (rfask->msgFreqCurrentPointOne.msgStopMinCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 13];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---执行频率电流扫描任务
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_DO:
 			_return = RFASKTask_FreqCurrentScan(USARTx, rfask, &rfask->msgFreqCurrentPointOne, WM8510x);
 			break;
-		#endif
 		default:
 			_return = ERROR_1;
 			break;
@@ -998,234 +791,160 @@ UINT8_T  RFASKTask_FreqCurrentPointTwoTask(USART_HandlerType*USARTx, RFASK_Handl
 	{
 		//---获取频率电流扫描的参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_FREQ_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 11);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz >> 24));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz >> 16));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz >> 8));
-
 			//---获取起始频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz));
-
 			//---步进频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz >> 8));
-
 			//---步进频率
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz));
-
 			//---采集点的个数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgFreqPointNum >> 8));
-
 			//---采集点的个数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgFreqPointNum));
-
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置频率电流扫描的参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_FREQ_SET:
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
-
 			//---设置起始频率
 			rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz = (rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---设置步进频率
 			rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
 			rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz = (rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 5];
-
 			//---设置采集点的个数
 			rfask->msgFreqCurrentPointTwo.msgFreqPointNum = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 6];
 			rfask->msgFreqCurrentPointTwo.msgFreqPointNum = (rfask->msgFreqCurrentPointTwo.msgFreqPointNum << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 7];
-
 			//---限制采样点的大小，这个值会影响上报上位机的时候数据缓存区的大小
 			if (rfask->msgFreqCurrentPointTwo.msgFreqPointNum > FREQ_CURRENT_FREQ_POINT_MAX_NUM)
 			{
 				rfask->msgFreqCurrentPointTwo.msgFreqPointNum = FREQ_CURRENT_FREQ_POINT_MAX_NUM;
 			}
-
 			//---计算停止频率
 			rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz = rfask->msgFreqCurrentPointTwo.msgStepFreqX100MHz;
 			rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz *= rfask->msgFreqCurrentPointTwo.msgFreqPointNum;
 			rfask->msgFreqCurrentPointTwo.msgStopFreqX100MHz += rfask->msgFreqCurrentPointTwo.msgStartFreqX100MHz;
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
-
 			//---获取频率电流扫描的电流参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_CURRENT_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, (3 + 2 + 2 + 2 + 2 + 2 + 2 + 2));
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---获取起始的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA >> 8));
-
 			//---获取起始的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA));
-
 			//---获取起始的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA >> 8));
-
 			//---获取起始的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA));
-
 			//---ADC间隔的点数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPointNum >> 8));
-
 			//---ADC间隔的点数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPointNum));
-
 			//---ADC合格的最大值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPassMax >> 8));
-
 			//---ADC合格的最大值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPassMax));
-
 			//---ADC合格的最小值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPassMin >> 8));
-
 			//---ADC合格的最小值
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgADCPassMin));
-
 			//---获取截止的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA >> 8));
-
 			//---获取截止的最大电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA));
-
 			//---获取截止的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA >> 8));
-
 			//---获取截止的最小电流
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置频率电流扫描的电流参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_CURRENT_SET:
-
 			//---设置起始的最大电流
 			rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---设置起始的最大电流
 			rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA = (rfask->msgFreqCurrentPointTwo.msgStartMaxCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---设置起始的最小电流
 			rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
-
 			//---设置起始的最小电流
 			rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA = (rfask->msgFreqCurrentPointTwo.msgStartMinCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
-
 			//---ADC间隔的点数
 			rfask->msgFreqCurrentPointTwo.msgADCPointNum = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
-
 			//---ADC间隔的点数
 			rfask->msgFreqCurrentPointTwo.msgADCPointNum = (rfask->msgFreqCurrentPointTwo.msgADCPointNum << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 5];
-
 			//---判断数据是够超界
 			if (rfask->msgFreqCurrentPointTwo.msgADCPointNum > FREQ_CURRENT_HISTORY_MAX_SIZE)
 			{
 				rfask->msgFreqCurrentPointTwo.msgADCPointNum = FREQ_CURRENT_HISTORY_MAX_SIZE;
 			}
-
 			//---ADC合格的最大值
 			rfask->msgFreqCurrentPointTwo.msgADCPassMax = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 6];
-
 			//---ADC合格的最大值
 			rfask->msgFreqCurrentPointTwo.msgADCPassMax = (rfask->msgFreqCurrentPointTwo.msgADCPassMax << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 7];
-
 			//---ADC合格的最小值
 			rfask->msgFreqCurrentPointTwo.msgADCPassMin = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 8];
-
 			//---ADC合格的最小值
 			rfask->msgFreqCurrentPointTwo.msgADCPassMin = (rfask->msgFreqCurrentPointTwo.msgADCPassMin << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 9];
-
 			//---设置截止的最大电流
 			rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 10];
-
 			//---设置截止的最大电流
 			rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA = (rfask->msgFreqCurrentPointTwo.msgStopMaxCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 11];
-
 			//---设置截止的最小电流
 			rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 12];
-
 			//---设置截止的最小电流
 			rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA = (rfask->msgFreqCurrentPointTwo.msgStopMinCurrentX100mA << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 13];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---执行频率电流扫描任务
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_DO:
 			_return = RFASKTask_FreqCurrentScan(USARTx, rfask, &rfask->msgFreqCurrentPointTwo, WM8510x);
 			break;
-		#endif
 		default:
 			_return = ERROR_1;
 			break;
@@ -1246,30 +965,23 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 	UINT8_T  adcPointNum = 0;
 	UINT16_T detaCurrentX10uA = 0;
 	UINT16_T freqPointNum = 0;
-
 	//---电流点计数
 	UINT8_T   currentPointNum[FREQ_CURRENT_MAX_SITE] = {0};
-
 	//---电流点的值
 	UINT16_T  currentPointCurrent[FREQ_CURRENT_MAX_SITE] = {0};
-
 	//---连续相等的点
 	UINT8_T   currentEqualMinPointNum[FREQ_CURRENT_MAX_SITE] = {0};
 	UINT8_T   currentEqualMaxPointNum[FREQ_CURRENT_MAX_SITE] = {0};
-
 	//---激活的SITE的上次的电流值
 	UINT16_T	siteOldCurrent[FREQ_CURRENT_MAX_SITE] = {0};
 	//---SITE连续相等点的个数
 	UINT8_T		siteCurrentEquaPointNum[FREQ_CURRENT_MAX_SITE] = { 0 };
-
 	//---历史数据的搬移
 	UINT16_T *pMsgActivateSiteCurrentHistory;
 	UINT32_T freqX100MHz = rfaskFreqCurrent->msgStartFreqX100MHz;
 	UINT32_T xtalHz = 0;
-
 	//---停止解码，解码使用的中断优先级比较的高，避免因为中断优先级的问题，导致频率电流扫描异常的问题
 	DecodeTask_STOP();
-
 	//---初始化合格/失效判断结果数组---初始化为合格模式
 	//memset(rfask->msgSitePass, 0, FREQ_CURRENT_MAX_SITE);
 	for (freqPointNum = 0; freqPointNum < FREQ_CURRENT_MAX_SITE; freqPointNum++)
@@ -1280,59 +992,43 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 		currentEqualMinPointNum[freqPointNum] = 0;
 		currentEqualMaxPointNum[freqPointNum] = 0;
 	}
-
 	//---发送数据的报头
 	USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 	//---设置数据大小
 	USARTTask_RealTime_AddByteSize(USARTx, 4 + ((rfaskFreqCurrent->msgFreqPointNum + 1) * 2)*FREQ_CURRENT_MAX_SITE);
-
 	//---返回的一级命令
 	USARTTask_RealTime_AddByte(USARTx, rfaskFreqCurrent->msgCMD);
-
 	//--得到返回结果
 	USARTTask_RealTime_AddByte(USARTx, 0);
-
 	//---返回的二级命令
 	USARTTask_RealTime_AddByte(USARTx, CMD_RFASK_CMD1_FREQ_CURRENT_POINT_DO);
 	freqPointNum = rfaskFreqCurrent->msgStartFreqX100MHz;
 	freqPointNum /= 2000;
 	freqPointNum = (freqPointNum << 3) + FREQ_CURRENT_MAX_SITE;
-
 	//---返回SITE数
 	USARTTask_RealTime_AddByte(USARTx, (UINT8_T)freqPointNum);
 	freqPointNum = 0;
-
 	//---打开时钟输出
 	CLK_FREQ_ON;
-
 	//---关闭电源
 	DPS_POWER_HZ;
-
 	//---进行频率电流的扫描
 	for (freqPointNum = 0; freqPointNum < rfaskFreqCurrent->msgFreqPointNum; freqPointNum++)
 	{
 		//---关闭时钟输出
 		// CLK_FREQ_OFF;
-
 		//---关闭电源
 		DPS_POWER_OFF;
-
 		//---计算时钟频率，给定的频率是RF频率，需要计算成晶振频率
 		xtalHz = RFASK_CalcXTAL(rfask, freqX100MHz);
-
 		//---输出目标频率
 		WM8510Task_I2C_SetFreqHzWithAllFreqReg(WM8510x, xtalHz);
-
 		//---下一次的频率输出
 		freqX100MHz += rfaskFreqCurrent->msgStepFreqX100MHz;
-
 		//---打开电源
 		DPS_POWER_ON;
-
 		//---打开时钟输出
 		// CLK_FREQ_ON;
-
 		//if	(rfaskFreqCurrent->msgStepFreqX100MHz<300)
 		//{
 		//
@@ -1346,15 +1042,12 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 		//	DelayTask_ms(6);
 		//}
 		//-- - 等待上电稳定
-		DelayTask_ms(5);
-		
+		DelayTask_ms(5);		
 		//---开始n个点，多等待一下
 		if (freqPointNum <3)
 		{
 			DelayTask_ms(1);
 		}
-		
-
 		//---前10个点，多等几次上电稳定
 		//if (freqPointNum <10)
 		//{
@@ -1362,10 +1055,8 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 		//	RFASKTask_SitesCurrent(rfask);
 		//	DelayTask_ms(10);
 		//}
-
 		//---获取每个SITE的电流和ADC的采样结果
 		RFASKTask_SitesCurrent(rfask);
-
 		//---轮训判断各个SITE的结果
 		for (siteNum = 0; siteNum < FREQ_CURRENT_MAX_SITE; siteNum++)
 		{
@@ -1378,7 +1069,6 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					rfask->msgSitePass[siteNum] = 1;
 				}
 			}
-
 			//---终止点
 			if ((rfask->msgSitePass[siteNum] == 0) && (freqPointNum == (rfaskFreqCurrent->msgFreqPointNum - 1)))
 			{
@@ -1388,7 +1078,6 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					rfask->msgSitePass[siteNum] = 1 + freqPointNum;
 				}
 			}
-
 			//---判断合格条件
 			if (rfask->msgSitePass[siteNum] == 0)
 			{
@@ -1397,8 +1086,7 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					//---获取当前电流值
 					currentPointCurrent[siteNum] = rfask->msgSiteCurrent[siteNum];
 				}
-				currentPointNum[siteNum]++;
-				
+				currentPointNum[siteNum]++;				
 				//---电流出现连续相等的状态逻辑判断开始
 				//---判断电流是否发生变化
 				if (siteOldCurrent[siteNum]!= rfask->msgSiteCurrent[siteNum])
@@ -1415,12 +1103,9 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 						rfask->msgSitePass[siteNum] = 1 + freqPointNum;
 					}
 				}
-
 				//---更新SITE的电流值
 				siteOldCurrent[siteNum] = rfask->msgSiteCurrent[siteNum];
-
 				//---电流出现连续相等的状态逻辑判断结束
-
 				//---合格条件的频率点差值的计算
 				if (freqPointNum < rfaskFreqCurrent->msgADCPointNum)
 				{
@@ -1436,10 +1121,8 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 						*pMsgActivateSiteCurrentHistory = *(pMsgActivateSiteCurrentHistory + 1);
 						pMsgActivateSiteCurrentHistory++;
 					}
-
 					//---最后一个数据填充为当前采集值
 					*pMsgActivateSiteCurrentHistory = rfask->msgSiteCurrent[siteNum];
-
 					//---这部分差值的计算，进行重新处理，目前发现电流的偏差很小
 					detaCurrentX10uA = 1;//---避免下限值相等的问题
 					if (rfask->msgSiteCurrent[siteNum] > rfask->msgSiteCurrentHistory[siteNum][0])
@@ -1452,12 +1135,9 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 					}
 					////---计算电流差值
 					//detaVal = (UINT16_T)(rfask->msgActivateSiteCurrent[siteNum] - rfask->msgActivateSiteCurrentHistory[siteNum][0]);
-
 					//---判断采集点合格条件
 					//if ((rfask->msgSiteCurrent[siteNum] < rfask->msgSiteCurrentHistory[siteNum][0]) || (detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin) || (adcPointNum > rfaskFreqCurrent->msgADCPassMax))
-
-					//if((detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin) || (detaCurrentX10uA > rfaskFreqCurrent->msgADCPassMax))
-					
+					//if((detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin) || (detaCurrentX10uA > rfaskFreqCurrent->msgADCPassMax))					
 					//---小于最小值
 					if (detaCurrentX10uA < rfaskFreqCurrent->msgADCPassMin)
 					{
@@ -1468,7 +1148,6 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 							rfask->msgSitePass[siteNum] = 1 + freqPointNum;
 						}
 					}
-
 					//---大于最大值
 					else if (detaCurrentX10uA > rfaskFreqCurrent->msgADCPassMax)
 					{
@@ -1486,15 +1165,12 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 						currentEqualMinPointNum[siteNum] = 0;
 						currentEqualMaxPointNum[siteNum] = 0;
 					}
-
 					//---第21个点一定要比第一个点大30uA
 					if (currentPointNum[siteNum] >= 20)
 					{
 						currentPointNum[siteNum] = 0;
-
 						//---计算电流差值
 						detaCurrentX10uA = (UINT16_T)(rfask->msgSiteCurrent[siteNum] - currentPointCurrent[siteNum]);
-
 						//---判断采集点合格条件
 						if ((detaCurrentX10uA < (5)))
 						{
@@ -1507,36 +1183,28 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSiteCurrent[siteNum] >> 8));
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSiteCurrent[siteNum]));
 		}
-
 		//---喂狗，避免长时间的，从而导致看门狗复位
 		WDT_RESET();
 	}
-
 	//---发送测试完成的结果
 	for (siteNum = 0; siteNum < FREQ_CURRENT_MAX_SITE; siteNum++)
 	{
 		USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSitePass[siteNum] >> 8));
 		USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSitePass[siteNum]));
 	}
-
 	//---关闭时钟输出
 	CLK_FREQ_OFF;
-
 	//---关闭电源
 	DPS_POWER_OFF;
-
 	//---设置频率工作在不工作的点,默认是20KHz
 	//RFASKTask_SetClockFreq(rfask, WM8510x, FREQ_YSEL_X100MHz);
 	//---复位时钟芯片WM8510，需要评估一下那个比较的适合当前模式
 	WM8510Task_I2C_Reset(WM8510x);
-
 	//---频率电流扫描主板的第二个版本，可以支持实时解码
 	#if (LNW_FT_ASK_MBOARD_VERSION==2)
 		//---启动解码
 		DecodeTask_START();
-	#endif  
-
-	
+	#endif  	
 	//---返回值
 	return OK_0;
 }
@@ -1551,217 +1219,149 @@ UINT8_T RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *r
 UINT8_T RFASKTask_FreqCurrentHandlerTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask)
 {
 	UINT8_T _return = OK_0;
-
 	//---执行任务命令
 	switch (USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex])
 	{
 		//---获取设备类型
 		case CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_TYPE_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 4);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回设备类型
 			USARTTask_RealTime_AddByte(USARTx, rfask->msgDeviceType);
 			break;
-
 			//---获取采样电阻
 		case CMD_RFASK_CMD1_FREQ_CURRENT_SAMPLE_RES_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 5);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回采样电阻的大小
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSampleX100Res >> 8));
-
 			//---返回采样电阻的大小
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSampleX100Res));
 			break;
-
 			//---获取放大倍数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_AMP_TIMES_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 5);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回放大倍数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgAmpTimes >> 8));
-
 			//---返回放大倍数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgAmpTimes));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置设备类型
 		case CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_TYPE_SET:
-
 			//---重新设置设备的类型
 			rfask->msgDeviceType = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---设置采样电阻
 		case CMD_RFASK_CMD1_FREQ_CURRENT_SAMPLE_RES_SET:
-
 			//---重新设置采样电阻的大小
 			rfask->msgSampleX100Res = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			rfask->msgSampleX100Res = (rfask->msgSampleX100Res << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-
 			//---设置放大倍数
 		case CMD_RFASK_CMD1_FREQ_CURRENT_AMP_TIMES_SET:
-
 			//---重新设置放大倍数
 			rfask->msgAmpTimes = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
 			rfask->msgAmpTimes = (rfask->msgSampleX100Res << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
-
 			//---获取设备信息
 		case CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_GET:
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 8);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
-
 			//---返回设备类型
 			USARTTask_RealTime_AddByte(USARTx, rfask->msgDeviceType);
-
 			//---返回采样电阻的大小
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSampleX100Res >> 8));
-
 			//---返回采样电阻的大小
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgSampleX100Res));
-
 			//---返回放大倍数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgAmpTimes >> 8));
-
 			//---返回放大倍数
 			USARTTask_RealTime_AddByte(USARTx, (UINT8_T)(rfask->msgAmpTimes));
 			break;
-		#ifndef USE_FT_CP_TEST
-
 			//---设置设备信息
 		case CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_SET:
-
 			//---重新设置设备的类型
 			rfask->msgDeviceType = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex];
-
 			//---重新设置采样电阻的大小
 			rfask->msgSampleX100Res = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 1];
 			rfask->msgSampleX100Res = (rfask->msgSampleX100Res << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 2];
-
 			//---重新设置放大倍数
 			rfask->msgAmpTimes = USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 3];
 			rfask->msgAmpTimes = (rfask->msgAmpTimes << 8) + USARTx->msgRxHandler.pMsgVal[USARTx->msgDataTwoIndex + 4];
-
 			//---数据发送报头
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 			//---设置数据大小
 			USARTTask_RealTime_AddByteSize(USARTx, 3);
-
 			//---返回的一级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 			//--得到返回结果
 			USARTTask_RealTime_AddByte(USARTx, 0);
-
 			//---返回的二级命令
 			USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgDataOneIndex]);
 			break;
-		#endif
 		default:
 			_return = 1;
 			break;
@@ -1779,28 +1379,21 @@ UINT8_T RFASKTask_FreqCurrentHandlerTask(USART_HandlerType*USARTx, RFASK_Handler
 UINT8_T RFASKTask_VersionTask(USART_HandlerType*USARTx)
 {
 	UINT8_T i = 0;
-
 	//---数据发送报头
 	USARTTask_RealTime_AddByte(USARTx, USARTx->msgTxID);
-
 	//---设置数据大小
 	USARTTask_RealTime_AddByteSize(USARTx, (3 + VERSION_DATE_SIZE + VERSION_TIME_SIZE));
-
 	//---返回的一级命令
 	USARTTask_RealTime_AddByte(USARTx, USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex]);
-
 	//--得到返回结果
 	USARTTask_RealTime_AddByte(USARTx, 0);
-
 	//---返回的二级命令
 	USARTTask_RealTime_AddByte(USARTx, 0xFF);
-
 	//---版本日期
 	for (i = 0; i < VERSION_DATE_SIZE; i++)
 	{
 		USARTTask_RealTime_AddByte(USARTx, g_VersionDate[i]);
 	}
-
 	//---版本时间
 	for (i = 0; i < VERSION_TIME_SIZE; i++)
 	{
@@ -1819,38 +1412,30 @@ UINT8_T RFASKTask_VersionTask(USART_HandlerType*USARTx)
 UINT8_T RFASKTask_HandlerTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x)
 {
 	UINT8_T _return = OK_0;
-
 	//---命令处理函数
 	switch (USARTx->msgRxHandler.pMsgVal[USARTx->msgCmdIndex])
 	{
 		case CMD_RFASK_CMD1_VERSIOM:
 			break;
-
 			//---WM8510时钟的控制
 		case CMD_RFASK_CMD1_FREQ_WM8510:
 			_return = RFASKTask_WM8510Task(USARTx, WM8510x);
 			break;
-
 			//---默认预设频率点的控制
 		case CMD_RFASK_CMD1_YSEL_FREQ:
 			_return = RFASKTask_YSELTask(USARTx, rfask, WM8510x);
 			break;
-
 			//---频率电流扫描的参数
 		case CMD_RFASK_CMD1_FREQ_CURRENT:
 			RFASKTask_FreqCurrentHandlerTask(USARTx, rfask);
 			break;
-
 			//---第一个电压点的频率电流扫描
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_ONE:
-
 			//---频率电流扫描
 			_return = RFASKTask_FreqCurrentPointOneTask(USARTx, rfask, WM8510x);
 			break;
-
 			//---第二个电压点的频率电流扫描
 		case CMD_RFASK_CMD1_FREQ_CURRENT_POINT_TWO:
-
 			//---频率电流扫描
 			_return = RFASKTask_FreqCurrentPointTwoTask(USARTx, rfask, WM8510x);
 			break;
@@ -1915,7 +1500,6 @@ UINT8_T  RFASKTask_ScanYSEL(void)
 UINT8_T  RFASKTask_EOTSTART(RFASK_HandlerType *rfask)
 {
 	KeyTask_EOTSTART();
-
 	//---初始化合格/失效判断结果数组---初始化为合格模式
 	memset(rfask->msgSitePass, 0, FREQ_CURRENT_MAX_SITE);
 	return OK_0;
@@ -1982,7 +1566,6 @@ UINT8_T RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM
 {
 	//---获取YSEL的值
 	UINT8_T _return = RFASKTask_ScanYSEL();
-
 	//---判断YSEL是否有效
 	if (_return == 0xFF)
 	{
@@ -1995,14 +1578,11 @@ UINT8_T RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM
 	{
 		//---设置时钟不输出
 		CLK_FREQ_OFF;
-
 		//---复位时钟芯片WM8510
 		WM8510Task_I2C_Reset(WM8510x);
-
 		//---SOT输出高
 		EOT_CTR_OUT_1;
 		BIN_CTR_OUT_1;
-
 		//---启动解码
 		DecodeTask_START();
 	}
@@ -2014,71 +1594,53 @@ UINT8_T RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM
 			//---没有SITE激活，
 			return ERROR_3;
 		}
-
 		//---SOT输出高,清楚状态标志位，避免下次进入的时候状态保留的事上一状态
 		EOT_CTR_OUT_1;
 		BIN_CTR_OUT_1;
-
 		//---获取激活的SITE信息
 		RFASKTask_ActivateSites(rfask, activateSites);
-
 		//---初始化EOT
 		RFASKTask_EOTSTART(rfask);
-
 		//---任务序号
 		switch (_return)
 		{
 			case RFASK_TASK_YSEL1:
-
 				//---设置默认频率1
 				RFASKTask_SetClockFreq(rfask, WM8510x, rfask->msgFreqX100MHzYSel1);
-
 				//---使能频率输出
 				CLK_FREQ_ON;
 				break;
 			case RFASK_TASK_YSEL2:
-
 				//---设置默认频率2
 				RFASKTask_SetClockFreq(rfask, WM8510x, rfask->msgFreqX100MHzYSel2);
-
 				//---使能频率输出
 				CLK_FREQ_ON;
 				break;
 			case RFASK_TASK_YSEL3:
-
 				//---设置默认频率3
 				RFASKTask_SetClockFreq(rfask, WM8510x, rfask->msgFreqX100MHzYSel3);
-
 				//---使能频率输出
 				CLK_FREQ_ON;
 				break;
 			case RFASK_TASK_YSEL4:
-
 				//---设置默认频率4
 				RFASKTask_SetClockFreq(rfask, WM8510x, rfask->msgFreqX100MHzYSel4);
-
 				//---使能频率输出
 				CLK_FREQ_ON;
 				break;
 			case RFASK_TASK_POINT_ONE:
-
 				//---执行频率电流扫描第一个点
 				RFASKTask_FreqCurrentScan(USARTx, rfask, &rfask->msgFreqCurrentPointOne, WM8510x);
-
 				//---不使能频率输出
 				CLK_FREQ_OFF;
-
 				//---电源高阻
 				DPS_POWER_HZ;
 				break;
 			case RFASK_TASK_POINT_TWO:
-
 				//---执行频率电流扫描第二个点
 				RFASKTask_FreqCurrentScan(USARTx, rfask, &rfask->msgFreqCurrentPointTwo, WM8510x);
-
 				//---不使能频率输出
 				CLK_FREQ_OFF;
-
 				//---电源高阻
 				DPS_POWER_HZ;
 				break;
@@ -2090,7 +1652,6 @@ UINT8_T RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM
 
 		//---执行结果
 		RFASKTask_BINPass(rfask);
-
 		//---完成EOT信号
 		RFASKTask_EOTSTOP();
 
