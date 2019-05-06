@@ -373,6 +373,7 @@ extern "C" {
 	extern pRFASK_HandlerType	pRFASK;
 
 	//===º¯Êý¶¨Òå
+	void	 RFASK_StructInit(RFASK_HandlerType* rfask);
 	void     RFASK_Init(RFASK_HandlerType *rfask);
 	UINT32_T RFASK_CalcXTAL(RFASK_HandlerType *rfask, UINT32_T rfX100MHz);
 	UINT8_T  RFASK_SetDeviceType(RFASK_HandlerType *rfask, UINT8_T deviceType);

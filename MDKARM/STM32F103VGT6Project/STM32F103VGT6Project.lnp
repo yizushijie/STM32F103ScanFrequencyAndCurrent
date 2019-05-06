@@ -131,6 +131,7 @@
 "stm32f103vgt6project\rfask_cfg.o"
 "stm32f103vgt6project\rfask_lib.o"
 "stm32f103vgt6project\rfask_task.o"
+"stm32f103vgt6project\rfask_eeprom.o"
 "stm32f103vgt6project\rfaskhw_cfg.o"
 "stm32f103vgt6project\rtc_cfg.o"
 "stm32f103vgt6project\rtc_lib.o"

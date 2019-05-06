@@ -9,12 +9,12 @@ const UINT8_T g_MonthDaysTab[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
-//////功		能：根据软件编译时间计算当前系统时钟
-//////输入参数:
+//////功		能：根据软件编译时间计算当前系统时钟,并设置系统复位的时间
+//////输入参数: watchaMode---0-不监控，1-实时监控，2-刷新监控
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void SysRTC_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays)
+void SysRTC_SoftBuildInit(Soft_RTC_HandlerType* RTCx,UINT16_T spanDays, UINT8_T watchaMode)
 {
 	//---取编译日期---年月日---__DATE__===Jul 03 2018
 
@@ -119,7 +119,7 @@ void SysRTC_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays)
 	}
 	
 	//---计算星期
-	RTCx->msgSoftRTC.week = SysRTC_CalcWeekDay(RTCx);
+	RTCx->msgSoftRTC.week = SysRTC_CalcWeekDay(&(RTCx->msgSoftRTC));
 
 	//---取编译日期---时分秒---__TIME__=06:17:05
 
@@ -158,9 +158,12 @@ void SysRTC_SoftBuildInit(Soft_RTC_HandlerType* RTCx, UINT8_T spanDays)
 
 	//---设定的监控天数
 	RTCx->msgWatchSpanDays = spanDays;
-
+	//---时间监控类型
+	RTCx->msgWatchMode = watchaMode;
 	//---当前时间天数
-	RTCx->msgNowDay = RTCx->msgSoftRTC.day;
+	RTCx->msgDay = RTCx->msgSoftRTC.day;
+	//---当前的月数
+	RTCx->msgMonth = RTCx->msgSoftRTC.month;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -286,14 +289,14 @@ void SysRTC_SoftBuildHandle(Soft_RTC_HandlerType*RTCx, UINT32_T rtcSecond)
 //////输出参数: 1---星期一；2---星期二；3---星期三；4---星期四；5---星期五；6---星期六；7---星期天；0---错误
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SysRTC_CalcWeekDay(Soft_RTC_HandlerType*RTCx)
+UINT8_T SysRTC_CalcWeekDay(RTC_HandlerType*RTCx)
 {
-	int iM = RTCx->msgSoftRTC.month;
+	int iM = RTCx->month;
 
 	//int iY = RTCx->year;
-	int iY = RTCx->msgSoftRTC.century - 1;
-	iY = (iY * 100) + RTCx->msgSoftRTC.year;
-	int iD = RTCx->msgSoftRTC.day;
+	int iY = RTCx->century - 1;
+	iY = (iY * 100) + RTCx->year;
+	int iD = RTCx->day;
 	int iWeekDay = -1;
 	UINT8_T _return = 0;
 	/*
@@ -347,22 +350,26 @@ UINT8_T SysRTC_CalcWeekDay(Soft_RTC_HandlerType*RTCx)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SysRTC_WatchSpanDays(Soft_RTC_HandlerType* RTCx)
+UINT8_T SysRTC_RealTimeSoftWatch(Soft_RTC_HandlerType* RTCx)
 {
-	UINT8_T _return = OK_0;
+	UINT16_T _return = OK_0;
 	if (RTCx->msgWatchSpanDays!=0)
 	{
-		if (RTCx->msgSoftRTC.day<RTCx->msgNowDay)
+		if (RTCx->msgSoftRTC.month < RTCx->msgMonth)
 		{
-			_return = RTCx->msgSoftRTC.day + 30 - RTCx->msgNowDay;
+			_return = RTCx->msgSoftRTC.month + 12 - RTCx->msgMonth;
 		}
 		else
 		{
-			_return = RTCx->msgNowDay - RTCx->msgSoftRTC.day;
+			_return = RTCx->msgMonth - RTCx->msgSoftRTC.month;
 		}
+		//---计算时间脉冲
+		_return = (_return * 30) + RTCx->msgSoftRTC.day - RTCx->msgDay;
 		//---判断是否到达监控时间的阈值，如果到达，执行复位操作
-		if ((_return>RTCx->msgWatchSpanDays)||((_return== RTCx->msgWatchSpanDays)))
+		if ((_return > RTCx->msgWatchSpanDays) || ((_return == RTCx->msgWatchSpanDays)))
 		{
+			//---发生复位了，给出标志位，用于其他检查，对于没有eeprom的芯片，需要增加增加eeprom的写入操作
+			RTCx->msgWatchMode = 1;
 			//---软件复位
 			SOFT_RESET();
 			////---硬件复位,等待看门狗启动
@@ -371,4 +378,72 @@ UINT8_T SysRTC_WatchSpanDays(Soft_RTC_HandlerType* RTCx)
 		_return = OK_0;
 	}
 	return _return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数： 
+//////功		能： 刷新监控
+//////输入参数: 
+//////输出参数: 
+//////说		明： 
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTC_RefreshSoftWatch(Soft_RTC_HandlerType* RTCx)
+{
+	RTCx->msgMonth=RTCx->msgSoftRTC.month;
+	RTCx->msgDay = RTCx->msgSoftRTC.day;
+	return OK_0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数： 
+//////功		能： 设置监控
+//////输入参数: 
+//////输出参数: 
+//////说		明： 
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTC_SetSoftWatch(Soft_RTC_HandlerType* RTCx,UINT16_T spanDays)
+{
+	//---设定的监控天数
+	RTCx->msgWatchSpanDays = spanDays;
+	RTCx->msgWatchMode = 0;
+	//---当前时间天数
+	RTCx->msgDay = RTCx->msgSoftRTC.day;
+	//---当前的月数
+	RTCx->msgMonth = RTCx->msgSoftRTC.month;
+	return OK_0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数： 
+//////功		能： 清除监控
+//////输入参数: 
+//////输出参数: 
+//////说		明： 
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTC_ClearSoftWatch(Soft_RTC_HandlerType* RTCx)
+{
+	RTCx->msgWatchMode = 0;
+	return OK_0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数： 
+//////功		能： 
+//////输入参数: 
+//////输出参数: 
+//////说		明： 
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysRTC_SoftWatch(Soft_RTC_HandlerType* RTCx)
+{
+	if (RTCx->msgWatchMode==1)
+	{
+		//---实时监控
+		SysRTC_RealTimeSoftWatch(RTCx);
+	}
+	else if (RTCx->msgWatchMode==2)
+	{
+		//---刷新监控
+		SysRTC_RefreshSoftWatch(RTCx);
+	}
+	return OK_0;
 }

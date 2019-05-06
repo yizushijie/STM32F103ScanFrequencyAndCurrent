@@ -76,4 +76,9 @@ stm32f103vgt6project/rfask_task.o: ..\Application\RFASK\rfask_task.c \
   ..\Application\LED\led_cfg.h ..\Application\Key\key_task.h \
   ..\Application\Key\key_lib.h ..\Application\Key\key_cfg.h \
   ..\Application\RFASK\rfask_task.h ..\Application\Decode\decode_task.h \
-  ..\Application\Decode\decode_lib.h ..\Application\Decode\decode_cfg.h
+  ..\Application\Decode\decode_lib.h ..\Application\Decode\decode_cfg.h \
+  ..\Application\RFASK\rfask_eeprom.h \
+  ..\Application\AT24Cxx\at24cxx_task.h \
+  ..\Application\AT24Cxx\at24cxx_lib.h \
+  ..\Application\AT24Cxx\at24cxx_cfg.h \
+  ..\Application\MyMalloc\my_malloc.h

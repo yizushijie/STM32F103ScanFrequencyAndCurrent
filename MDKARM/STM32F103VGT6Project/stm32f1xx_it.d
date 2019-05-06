@@ -79,5 +79,9 @@ stm32f103vgt6project/stm32f1xx_it.o: ..\STM32F1xx\stm32f1xx_it.c \
   ..\Application\Power\power_cfg.h ..\Application\LED\led_task.h \
   ..\Application\LED\led_lib.h ..\Application\LED\led_cfg.h \
   ..\Application\Key\key_task.h ..\Application\Key\key_lib.h \
-  ..\Application\Key\key_cfg.h ..\Application\PVD\pvd_task.h \
+  ..\Application\Key\key_cfg.h ..\Application\RFASK\rfask_eeprom.h \
+  ..\Application\AT24Cxx\at24cxx_task.h \
+  ..\Application\AT24Cxx\at24cxx_lib.h \
+  ..\Application\AT24Cxx\at24cxx_cfg.h \
+  ..\Application\MyMalloc\my_malloc.h ..\Application\PVD\pvd_task.h \
   ..\Application\PVD\pvd_lib.h ..\Application\PVD\pvd_cfg.h

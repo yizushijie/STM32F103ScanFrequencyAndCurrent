@@ -1952,6 +1952,12 @@
                 <name>$PROJ_DIR$\..\Application\RFASK\rfask_cfg.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Application\RFASK\rfask_eeprom.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Application\RFASK\rfask_eeprom.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Application\RFASK\rfask_lib.c</name>
             </file>
             <file>

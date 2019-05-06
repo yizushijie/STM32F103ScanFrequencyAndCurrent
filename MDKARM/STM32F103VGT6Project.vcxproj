@@ -153,6 +153,7 @@
     <ClInclude Include="..\Application\Power\power_lib.h" />
     <ClInclude Include="..\Application\Power\power_task.h" />
     <ClInclude Include="..\Application\RFASK\rfask_cfg.h" />
+    <ClInclude Include="..\Application\RFASK\rfask_eeprom.h" />
     <ClInclude Include="..\Application\RFASK\rfask_lib.h" />
     <ClInclude Include="..\Application\RFASK\rfask_task.h" />
     <ClInclude Include="..\Application\RFASKHW\rfaskhw_cfg.h" />
@@ -325,6 +326,7 @@
     <ClCompile Include="..\Application\Power\power_lib.c" />
     <ClCompile Include="..\Application\Power\power_task.c" />
     <ClCompile Include="..\Application\RFASK\rfask_cfg.c" />
+    <ClCompile Include="..\Application\RFASK\rfask_eeprom.c" />
     <ClCompile Include="..\Application\RFASK\rfask_lib.c" />
     <ClCompile Include="..\Application\RFASK\rfask_task.c" />
     <ClCompile Include="..\Application\RFASKHW\rfaskhw_cfg.c" />

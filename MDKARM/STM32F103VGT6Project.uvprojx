@@ -1963,6 +1963,16 @@
               <FileType>5</FileType>
               <FilePath>..\Application\RFASK\rfask_task.h</FilePath>
             </File>
+            <File>
+              <FileName>rfask_eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\RFASK\rfask_eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>rfask_eeprom.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Application\RFASK\rfask_eeprom.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -171,13 +171,16 @@ void Sys_Init(void)
 	DecodeTask_Init();
 
 	//---ASK的初始化
-	RFASKTask_Init(pRFASK);
-
+	#if(LNW_FT_ASK_FI_VERSION==2)
+		RFASKTask_Init(pRFASK, pAT24CXXDevice0);
+	#else
+		RFASKTask_Init(pRFASK, NULL);
+	#endif
 	//---备份域初始化
 	//BKPTask_Init();
 
 	//---系统模拟RTC
-	SysRTCTask_SoftBuildInit(pSysSoftRTC,3);
+	SysRTCTask_SoftBuildInit(pSysSoftRTC,3,0);
 	
 	//---查询解码的初始化，所有的SITE都进行解码
 	DecodeTask_QueryInit(0x0F);
@@ -229,7 +232,11 @@ int main(void)
 		//---执行频率电流扫描相关的任务---YSEL
 		RFASKTask_KeyTask(pUSART1, pRFASK, pWM8510Device0, getSOT);
 		//---在线调试命令
-		RFASKTask_Task(pUSART1, pRFASK, pWM8510Device0);
+		#if(LNW_FT_ASK_FI_VERSION==2)
+			RFASKTask_Task(pUSART1, pRFASK, pWM8510Device0,pAT24CXXDevice0);
+		#else
+			RFASKTask_Task(pUSART1, pRFASK, pWM8510Device0, NULL);
+		#endif
 		//---模拟RTC处理,并进行复位时间宽度的监控
 		SysRTCTask_SoftBuildTask(pSysSoftRTC, SysTickTask_GetTick());
 		//---喂狗

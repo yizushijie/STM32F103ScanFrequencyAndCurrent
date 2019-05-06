@@ -492,6 +492,9 @@
     <ClInclude Include="..\Application\RFASK\rfask_cfg.h">
       <Filter>Application\RFASK</Filter>
     </ClInclude>
+    <ClInclude Include="..\Application\RFASK\rfask_eeprom.h">
+      <Filter>Application\RFASK</Filter>
+    </ClInclude>
     <ClInclude Include="..\Application\RFASK\rfask_lib.h">
       <Filter>Application\RFASK</Filter>
     </ClInclude>
@@ -1002,6 +1005,9 @@
       <Filter>Application\Power</Filter>
     </ClCompile>
     <ClCompile Include="..\Application\RFASK\rfask_cfg.c">
+      <Filter>Application\RFASK</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Application\RFASK\rfask_eeprom.c">
       <Filter>Application\RFASK</Filter>
     </ClCompile>
     <ClCompile Include="..\Application\RFASK\rfask_lib.c">

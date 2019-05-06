@@ -32,7 +32,7 @@ extern "C" {
 	//===定义宏开关
 	#ifdef USE_GOBAL_RAM
 		//===定义AT24Cxx的每页直接最大值
-		#define	AT24CXX_PAGE_BYTE_MAX_SIZE		16
+		#define	AT24CXX_PAGE_BYTE_MAX_SIZE		128
 	#endif
 	//===结构体定义
 	typedef struct _AT24CXX_HandlerType AT24CXX_HandlerType;

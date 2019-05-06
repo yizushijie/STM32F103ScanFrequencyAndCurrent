@@ -81,4 +81,5 @@ stm32f103vgt6project/hmc472_task.o: ..\Application\HMC472\hmc472_task.c \
   ..\Application\ADC\adc_lib.h ..\Application\ADC\adc_cfg.h \
   ..\Application\LED\led_task.h ..\Application\LED\led_lib.h \
   ..\Application\LED\led_cfg.h ..\Application\Decode\decode_task.h \
-  ..\Application\Decode\decode_lib.h ..\Application\Decode\decode_cfg.h
+  ..\Application\Decode\decode_lib.h ..\Application\Decode\decode_cfg.h \
+  ..\Application\RFASK\rfask_eeprom.h

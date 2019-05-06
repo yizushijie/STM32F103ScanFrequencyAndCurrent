@@ -14,6 +14,7 @@ extern "C" {
 	#include "led_task.h"
 	#include "key_task.h"
 	#include "decode_task.h"
+	#include "rfask_eeprom.h" 
 	//////////////////////////////////////////////////////////////////////////////////////
 	//===获取编译时间和版本信息
 	#define CMD_RFASK_CMD1_VERSIOM								0x00
@@ -99,20 +100,20 @@ extern "C" {
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_DO					0x05
 	
 	//===函数定义
-	void     RFASKTask_Init(RFASK_HandlerType *rfask);
+	void     RFASKTask_Init(RFASK_HandlerType *rfask, AT24CXX_HandlerType* AT24CXXx);
 	UINT32_T RFASKTask_CalcXTAL(RFASK_HandlerType *rfask, UINT32_T rfX100MHz);
 	UINT8_T  RFASKTask_SetDeviceType(RFASK_HandlerType *rfask, UINT8_T deviceType);
 	UINT32_T RFASKTask_GetDeviceType(RFASK_HandlerType *rfask);
 	UINT32_T RFASKTask_SetClockFreq(RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, UINT32_T rfX100MHz);
-	UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM8510x);
-	UINT8_T  RFASKTask_YSELTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x);
+	UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM8510x, AT24CXX_HandlerType* AT24CXXx);
+	UINT8_T  RFASKTask_YSELTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, AT24CXX_HandlerType* AT24CXXx);
 	UINT8_T  RFASKTask_ActivateSites(RFASK_HandlerType *rfask, UINT8_T activateSites);
 	UINT8_T  RFASKTask_SitesCurrent(RFASK_HandlerType *rfask);
 	UINT8_T  RFASKTask_SetFreqCurrentPointCmd(FREQ_CURRENT_HandlerType *rfaskFreqCurrent, UINT8_T cmd);
 	UINT8_T  RFASKTask_FreqCurrentScan(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, FREQ_CURRENT_HandlerType *rfaskFreqCurrent, WM8510_HandlerType *WM8510x);
-	UINT8_T  RFASKTask_HandlerTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x);
+	UINT8_T  RFASKTask_HandlerTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, AT24CXX_HandlerType* AT24CXXx);
 	UINT8_T  RFASKTask_ScanYSEL(void);
-	UINT8_T  RFASKTask_Task(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x);
+	UINT8_T  RFASKTask_Task(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, AT24CXX_HandlerType* AT24CXXx);
 	UINT8_T  RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM8510_HandlerType *WM8510x, UINT8_T activateSites);
 	//////////////////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus

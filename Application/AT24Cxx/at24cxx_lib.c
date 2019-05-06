@@ -102,5 +102,5 @@ UINT8_T AT24CXXLib_I2C_ReadData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 //////////////////////////////////////////////////////////////////////////////
 UINT8_T AT24CXXLib_I2C_EraseChip(AT24CXX_HandlerType *AT24CXXx)
 {
-	return AT24CXXLib_I2C_EraseChip(AT24CXXx);
+	return AT24CXX_I2C_EraseChip(AT24CXXx);
 }

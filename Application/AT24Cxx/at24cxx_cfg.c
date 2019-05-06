@@ -4,6 +4,9 @@
 AT24CXX_HandlerType g_AT24CXXDevice0={0};
 pAT24CXX_HandlerType pAT24CXXDevice0 = &g_AT24CXXDevice0;
 
+
+UINT8_T eepromTemp[1024] = { 0 };
+
 ///////////////////////////////////////////////////////////////////////////////
 //////函	   数：
 //////功	   能：
@@ -429,11 +432,6 @@ UINT8_T AT24CXX_SWI2C_WritePageByte(AT24CXX_HandlerType *AT24CXXx, UINT16_T page
 	//---发送停止信号
 	I2CTask_MSW_STOP(&(AT24CXXx->msgI2C));
 
-	//---使能写保护
-	if (AT24CXXx->msgWP.msgGPIOPort != NULL)
-	{
-		GPIO_OUT_1(AT24CXXx->msgWP.msgGPIOPort, AT24CXXx->msgWP.msgGPIOBit);
-	}
 	//---恢复设备的地址
 	AT24CXXx->msgI2C.msgAddr = at24cxxAddr;
 	//---操作正确，进行延时等待编程结束
@@ -442,9 +440,14 @@ UINT8_T AT24CXX_SWI2C_WritePageByte(AT24CXX_HandlerType *AT24CXXx, UINT16_T page
 		//---自编程时间是5ms
 		if (AT24CXXx->msgFuncDelayms != NULL)
 		{
-			AT24CXXx->msgFuncDelayms(5);
+			AT24CXXx->msgFuncDelayms(8);
 		}
 
+	}
+	//---使能写保护
+	if (AT24CXXx->msgWP.msgGPIOPort != NULL)
+	{
+		GPIO_OUT_1(AT24CXXx->msgWP.msgGPIOPort, AT24CXXx->msgWP.msgGPIOBit);
 	}
 	return _return;
 }
@@ -495,25 +498,25 @@ UINT8_T AT24CXX_SWI2C_WriteData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 	else
 	{
 		//---按页写入
-	#ifndef USE_GOBAL_RAM
-		//---申请内存
-		UINT8_T* pAT24CxxPageByteBuffer = (UINT8_T*)MyMalloc(AT24CXXx->msgAT24CXXPageByte);
-		//---判断缓存空间申请是否成功
-		if (pAT24CxxPageByteBuffer == NULL)
-		{
-			_return = ERROR_8;
-			goto GoToExit;
-		}
-	#endif
+		#ifndef USE_GOBAL_RAM
+			//---申请内存
+			UINT8_T* pAT24CxxPageByteBuffer = (UINT8_T*)MyMalloc(AT24CXXx->msgAT24CXXPageByte);
+			//---判断缓存空间申请是否成功
+			if (pAT24CxxPageByteBuffer == NULL)
+			{
+				_return = ERROR_8;
+				goto GoToExit;
+			}
+		#endif
 		//---先把一页写满，写入的字节数不小于3个字节
 		if (pageByteNum != AT24CXXx->msgAT24CXXPageByte)
 		{
 			//---读取一页的数据
-		#ifndef USE_GOBAL_RAM
-			_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), pAT24CxxPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
-		#else
-			_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), AT24CXXx->msgPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
-		#endif
+			#ifndef USE_GOBAL_RAM
+				_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), pAT24CxxPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
+			#else
+				_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), AT24CXXx->msgPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
+			#endif
 			//---读取判断
 			if (_return != OK_0)
 			{
@@ -523,24 +526,30 @@ UINT8_T AT24CXX_SWI2C_WriteData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 			//---填充数据
 			for (i = 0; i < pageByteNum; i++)
 			{
-			#ifndef USE_GOBAL_RAM
-				pAT24CxxPageByteBuffer[i + byteIndexAddr] = *pVal;
-			#else
-				AT24CXXx->msgPageByteBuffer[i + byteIndexAddr] = *pVal;
-			#endif
+				#ifndef USE_GOBAL_RAM
+					pAT24CxxPageByteBuffer[i + byteIndexAddr] = *pVal;
+				#else
+					AT24CXXx->msgPageByteBuffer[i + byteIndexAddr] = *pVal;
+				#endif
 				//---地址偏移
 				addr++;
 				//---数据偏移
 				pVal++;
 				//---数据长度偏移
 				length--;
+				//---数据填充完成
+				if (length==0)
+				{
+					//---退出数据的填充
+					break;
+				}
 			}
 			//---按页写入数据
-		#ifndef USE_GOBAL_RAM
-			_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), pAT24CxxPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
-		#else
-			_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), AT24CXXx->msgPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
-		#endif
+			#ifndef USE_GOBAL_RAM
+				_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), pAT24CxxPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
+			#else
+				_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, (pageIndexAddr * (AT24CXXx->msgAT24CXXPageByte)), AT24CXXx->msgPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
+			#endif
 			//---写入判断
 			if (_return != OK_0)
 			{
@@ -578,11 +587,11 @@ UINT8_T AT24CXX_SWI2C_WriteData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 		if (byteNum != 0)
 		{
 			//---读取一页的数据
-		#ifndef USE_GOBAL_RAM
-			_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, addr, pAT24CxxPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
-		#else
-			_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, addr, AT24CXXx->msgPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
-		#endif
+			#ifndef USE_GOBAL_RAM
+				_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, addr, pAT24CxxPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
+			#else
+				_return = AT24CXX_SWI2C_ReadPageByte(AT24CXXx, addr, AT24CXXx->msgPageByteBuffer, (AT24CXXx->msgAT24CXXPageByte));
+			#endif
 			//---读取判断
 			if (_return != OK_0)
 			{
@@ -592,17 +601,23 @@ UINT8_T AT24CXX_SWI2C_WriteData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 			//---填充数据
 			for (i = 0; i < pageByteNum; i++)
 			{
-			#ifndef USE_GOBAL_RAM
-				pAT24CxxPageByteBuffer[i + byteIndexAddr] = *pVal;
-			#else
-				AT24CXXx->msgPageByteBuffer[i + byteIndexAddr] = *pVal;
-			#endif
+				#ifndef USE_GOBAL_RAM
+					pAT24CxxPageByteBuffer[i + byteIndexAddr] = *pVal;
+				#else
+					AT24CXXx->msgPageByteBuffer[i + byteIndexAddr] = *pVal;
+				#endif
 				//---地址偏移
-				addr++;
+				//addr++;
 				//---数据偏移
 				pVal++;
 				//---数据长度偏移
 				length--;
+				//---数据填充完成
+				if (length == 0)
+				{
+					//---退出数据的填充
+					break;
+				}
 			}
 			//---按页写入数据
 		#ifndef USE_GOBAL_RAM
@@ -617,12 +632,15 @@ UINT8_T AT24CXX_SWI2C_WriteData(AT24CXX_HandlerType *AT24CXXx, UINT16_T addr, UI
 				goto GoToExit;
 			}
 		}
-	GoToExit:
 	#ifndef USE_GOBAL_RAM
+		GoToExit :
 		//---释放内存
 		MyFree(pAT24CxxPageByteBuffer);
 	#endif
 	}
+	#ifdef USE_GOBAL_RAM
+		GoToExit :
+	#endif
 	return  _return;
 }
 
@@ -1105,24 +1123,38 @@ UINT8_T AT24CXX_I2C_EraseChip(AT24CXX_HandlerType *AT24CXXx)
 	UINT16_T i = 0;
 	UINT16_T addr = 0;
 	//---申请内存
-	UINT8_T *pAT24CxxPageByteBuffer = (UINT8_T *)MyMalloc(AT24CXXx->msgAT24CXXPageByte);
-	//---判断缓存空间申请是否成功
-	if (pAT24CxxPageByteBuffer == NULL)
-	{
-		_return = ERROR_6;
-		goto GoToExit;
-	}
+	#ifndef USE_GOBAL_RAM
+		//---申请内存
+		UINT8_T* pAT24CxxPageByteBuffer = (UINT8_T*)MyMalloc(AT24CXXx->msgAT24CXXPageByte);
+		//---判断缓存空间申请是否成功
+		if (pAT24CxxPageByteBuffer == NULL)
+		{
+			_return = ERROR_8;
+			goto GoToExit;
+		}
+	#endif
 	//---填充缓存区
 	for (i=0;i<AT24CXXx->msgAT24CXXPageByte;i++)
 	{
-		*pAT24CxxPageByteBuffer = 0xFF;
-		pAT24CxxPageByteBuffer++;
+		#ifndef USE_GOBAL_RAM
+			*pAT24CxxPageByteBuffer = 0xFF;
+			pAT24CxxPageByteBuffer++;
+		#else
+			AT24CXXx->msgPageByteBuffer[i] = 0xFF;
+		#endif
 	}
+	#ifndef USE_GOBAL_RAM
+		pAT24CxxPageByteBuffer-=AT24CXXx->msgAT24CXXPageByte;
+	#endif
 	//---擦除数据
 	for (i=0;i<AT24CXXx->msgAT24CXXPageNum;i++)
 	{
 		//---按页写入数据
-		_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, addr, pAT24CxxPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
+		#ifndef USE_GOBAL_RAM
+			_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, addr, pAT24CxxPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
+		#else
+			_return = AT24CXX_SWI2C_WritePageByte(AT24CXXx, addr, AT24CXXx->msgPageByteBuffer, AT24CXXx->msgAT24CXXPageByte);
+		#endif
 		//---地址增加
 		addr += AT24CXXx->msgAT24CXXPageByte;
 		//---判断写入是否成功
@@ -1132,8 +1164,10 @@ UINT8_T AT24CXX_I2C_EraseChip(AT24CXX_HandlerType *AT24CXXx)
 			goto GoToExit;
 		}
 	}
-    GoToExit:
-	//---释放内存
-	MyFree(pAT24CxxPageByteBuffer);
+	GoToExit:
+	#ifndef USE_GOBAL_RAM
+		//---释放内存
+		MyFree(pAT24CxxPageByteBuffer);
+	#endif
 	return _return;
 }
