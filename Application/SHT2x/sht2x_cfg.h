@@ -5,27 +5,27 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#include "delay_task.h"
-#include "i2c_task.h"
-//////////////////////////////////////////////////////////////////////////////////////
-
-#define SHT2X_CMD_TRIG_TEMP_MEASUREMENT_HM			0xE3			//===触发温度测量，保持主机
-#define SHT2X_CMD_TRIG_HUMI_MEASUREMENT_HM			0xE5			//===触发湿度测量，保持主机
-#define SHT2X_CMD_TRIG_TEMP_MEASUREMENT_POLL		0xF3			//===触发温度测量，非保持主机
-#define SHT2X_CMD_TRIG_HUMI_MEASUREMENT_POLL		0xF5			//===触发温度测量，非保持主机
-#define SHT2X_CMD_USER_WRITE_REG					0xE6            //===写用户寄存器
-#define SHT2X_CMD_USER_READ_REG						0xE7            //===读用户寄存器
-#define SHT2X_CMD_SOFT_RESET_DEVICE					0xFE            //===软件复位
-
-//===测量分辨率
-#define SHT2X_RES_12_14BIT		0x00		// RH=12bit, T=14bit
-#define SHT2X_RES_8_12BIT		0x01		// RH= 8bit, T=12bit
-#define SHT2X_RES_10_13BIT		0x80		// RH=10bit, T=13bit
-#define SHT2X_RES_11_11BIT		0x81		// RH=11bit, T=11bit
-#define SHT2X_RES_MASK			0x81		// Mask for res. bits (7,0) in user reg.
-
-//===电池状态
+	#include "complier_lib.h"
+	#include "delay_task.h"
+	#include "i2c_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	#define SHT2X_CMD_TRIG_TEMP_MEASUREMENT_HM			0xE3			//===触发温度测量，保持主机
+	#define SHT2X_CMD_TRIG_HUMI_MEASUREMENT_HM			0xE5			//===触发湿度测量，保持主机
+	#define SHT2X_CMD_TRIG_TEMP_MEASUREMENT_POLL		0xF3			//===触发温度测量，非保持主机
+	#define SHT2X_CMD_TRIG_HUMI_MEASUREMENT_POLL		0xF5			//===触发温度测量，非保持主机
+	#define SHT2X_CMD_USER_WRITE_REG					0xE6            //===写用户寄存器
+	#define SHT2X_CMD_USER_READ_REG						0xE7            //===读用户寄存器
+	#define SHT2X_CMD_SOFT_RESET_DEVICE					0xFE            //===软件复位
+	
+	//===测量分辨率
+	#define SHT2X_RES_12_14BIT		0x00		// RH=12bit, T=14bit
+	#define SHT2X_RES_8_12BIT		0x01		// RH= 8bit, T=12bit
+	#define SHT2X_RES_10_13BIT		0x80		// RH=10bit, T=13bit
+	#define SHT2X_RES_11_11BIT		0x81		// RH=11bit, T=11bit
+	#define SHT2X_RES_MASK			0x81		// Mask for res. bits (7,0) in user reg.
+	
+	//===电池状态
 	typedef enum
 	{
 		EOB_ON = 0x40,   // end of battery
@@ -63,11 +63,11 @@ extern "C" {
 	};
 
 	//===定义的任务函数
-#define SHT2X_TASK_ONE			pSHT2XDevice0
-#define SHT2X_TASK_TWO			0
-#define SHT2X_TASK_THREE		0
+	#define SHT2X_TASK_ONE			pSHT2XDevice0
+	#define SHT2X_TASK_TWO			0
+	#define SHT2X_TASK_THREE		0
 
-//===外部调用接口
+	//===外部调用接口
 	extern SHT2X_HandlerType g_SHT2XDevice0;
 	extern pSHT2X_HandlerType pSHT2XDevice0;
 

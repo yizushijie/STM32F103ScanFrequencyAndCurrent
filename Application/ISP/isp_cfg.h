@@ -5,39 +5,39 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#include "spi_task.h"
-#include "systick_task.h"
-#include "delay_task.h"
-
-//////////////////////////////////////////////////////////////////////////////////////
-//===编程可选择的时钟
-#define ISP_SCK_AUTO						0	//---自动
-#define ISP_SCK_KHZ_0_5						1	//---1ms
-#define ISP_SCK_KHZ_1						2	//---500us
-#define ISP_SCK_KHZ_2						3	//---250us
-#define ISP_SCK_KHZ_4						4	//---125us
-#define ISP_SCK_KHZ_8						5	//---64us
-#define ISP_SCK_KHZ_16						6	//---32us
-#define ISP_SCK_KHZ_32						7	//---16us
-#define ISP_SCK_KHZ_64						8	//---8us
-#define ISP_SCK_PRE_256						9	//---84M/256
-#define ISP_SCK_PRE_128						10	//---84M/128
-#define ISP_SCK_PRE_64						11	//---84M/64
-#define ISP_SCK_PRE_32						12	//---84M/32
-#define ISP_SCK_PRE_16						13	//---84M/16
-#define ISP_SCK_PRE_8						14	//---84M/8
-#define ISP_SCK_PRE_4						15	//---84M/4
-#define ISP_SCK_PRE_2						16	//---84M/2
-
-//===最大的编程时钟
-#define ISP_SCK_MAX_CLOCK					ISP_SCK_PRE_256
-#define ISP_SCK_AUTO_MAX_COUNT				16
-
-//===编程最大字节数
-#define ISP_COMM_MAX_SIZE					4
-
-//===定义结构体
+	#include "complier_lib.h"
+	#include "spi_task.h"
+	#include "systick_task.h"
+	#include "delay_task.h"
+	
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===编程可选择的时钟
+	#define ISP_SCK_AUTO						0	//---自动
+	#define ISP_SCK_KHZ_0_5						1	//---1ms
+	#define ISP_SCK_KHZ_1						2	//---500us
+	#define ISP_SCK_KHZ_2						3	//---250us
+	#define ISP_SCK_KHZ_4						4	//---125us
+	#define ISP_SCK_KHZ_8						5	//---64us
+	#define ISP_SCK_KHZ_16						6	//---32us
+	#define ISP_SCK_KHZ_32						7	//---16us
+	#define ISP_SCK_KHZ_64						8	//---8us
+	#define ISP_SCK_PRE_256						9	//---84M/256
+	#define ISP_SCK_PRE_128						10	//---84M/128
+	#define ISP_SCK_PRE_64						11	//---84M/64
+	#define ISP_SCK_PRE_32						12	//---84M/32
+	#define ISP_SCK_PRE_16						13	//---84M/16
+	#define ISP_SCK_PRE_8						14	//---84M/8
+	#define ISP_SCK_PRE_4						15	//---84M/4
+	#define ISP_SCK_PRE_2						16	//---84M/2
+	
+	//===最大的编程时钟
+	#define ISP_SCK_MAX_CLOCK					ISP_SCK_PRE_256
+	#define ISP_SCK_AUTO_MAX_COUNT				16
+	
+	//===编程最大字节数
+	#define ISP_COMM_MAX_SIZE					4
+	
+	//===定义结构体
 	typedef struct _ISP_HandlerType				ISP_HandlerType;
 
 	//===定义指针结构体

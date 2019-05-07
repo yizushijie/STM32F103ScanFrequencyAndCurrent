@@ -320,7 +320,7 @@ extern "C" {
 	#define RFASK_TASK_CLEAR							15
 	
 	//===结构体定义
-		typedef struct _FREQ_CURRENT_HandlerType			FREQ_CURRENT_HandlerType;
+	typedef struct _FREQ_CURRENT_HandlerType			FREQ_CURRENT_HandlerType;
 
 	//===指针结构体定义
 	typedef struct _FREQ_CURRENT_HandlerType			*pFREQ_CURRENT_HandlerType;

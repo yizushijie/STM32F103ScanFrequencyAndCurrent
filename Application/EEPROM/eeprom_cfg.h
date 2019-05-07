@@ -9,18 +9,18 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "flash_task.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===定义EEPROM使用的位置
-#if STM32_FLASH_SIZE<256
-#define	EEPROM_START_ADDR	( STM32_FLASH_BASE+(STM32_SECTOR_NUM-2)*STM32_SECTOR_SIZE )
-#define EEPROM_END_ADDR		( EEPROM_START_ADDR+STM32_SECTOR_SIZE )
-#else
-#define	EEPROM_START_ADDR	( STM32_FLASH_BASE+(STM32_SECTOR_NUM-1)*STM32_SECTOR_SIZE )
-#define EEPROM_END_ADDR		( EEPROM_START_ADDR+STM32_SECTOR_SIZE )
-#endif
+	#include "flash_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===定义EEPROM使用的位置
+	#if STM32_FLASH_SIZE<256
+		#define	EEPROM_START_ADDR	( STM32_FLASH_BASE+(STM32_SECTOR_NUM-2)*STM32_SECTOR_SIZE )
+		#define EEPROM_END_ADDR		( EEPROM_START_ADDR+STM32_SECTOR_SIZE )
+	#else
+		#define	EEPROM_START_ADDR	( STM32_FLASH_BASE+(STM32_SECTOR_NUM-1)*STM32_SECTOR_SIZE )
+		#define EEPROM_END_ADDR		( EEPROM_START_ADDR+STM32_SECTOR_SIZE )
+	#endif
 
-//===函数定义
+	//===函数定义
 	void     EEPROM_Init(void);
 	UINT16_T EEPROM_ReadHalfWord(UINT16_T addr);
 	void     EEPROM_ReadHalfWordData(UINT16_T addr, UINT16_T *pVal, UINT16_T length);

@@ -5,13 +5,13 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#ifdef USE_MCU_STM32
-#include "delay_task.h"
-#endif
-#include "one_wire_task.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===定义结构体
+	#include "complier_lib.h"
+	#ifdef USE_MCU_STM32
+	#include "delay_task.h"
+	#endif
+	#include "one_wire_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===定义结构体
 	typedef struct _DS18B20_HandlerType				DS18B20_HandlerType;
 
 	//===定义指针结构
@@ -28,9 +28,9 @@ extern "C" {
 	};
 
 	//===定义的任务函数
-#define DS18B20_TASK_ONE	pDS18B20Device0
-#define DS18B20_TASK_TWO	0
-#define DS18B20_TASK_THREE	0
+	#define DS18B20_TASK_ONE						pDS18B20Device0
+	#define DS18B20_TASK_TWO						0
+	#define DS18B20_TASK_THREE						0
 
 //===外部调用接口
 	extern DS18B20_HandlerType g_DS18B20Device0;

@@ -22,7 +22,7 @@ extern "C" {
 		#define	GPIO_ODR_OFFSET				0x0C
 		//====IO输如的偏移
 		#define	GPIO_IDR_OFFSET				0x08
-	#elif USE_MCU_STM32F4
+	#elif defined (USE_MCU_STM32F4)
 		//====IO输出的偏移
 		#define	GPIO_ODR_OFFSET				0x14
 		//====IO输如的偏移

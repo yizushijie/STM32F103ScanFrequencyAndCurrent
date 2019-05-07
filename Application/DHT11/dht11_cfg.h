@@ -9,11 +9,11 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#include "delay_task.h"
-#include "gpio_task.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===定义结构体
+	#include "complier_lib.h"
+	#include "delay_task.h"
+	#include "gpio_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===定义结构体
 	typedef struct _DHT11_HandlerType DHT11_HandlerType;
 
 	//===定义指针结构体
@@ -30,9 +30,9 @@ extern "C" {
 	};
 
 	//===定义的任务函数
-#define DHT11_TASK_ONE pDHT11Device0
-#define DHT11_TASK_TWO 0
-#define DHT11_TASK_THREE 0
+	#define DHT11_TASK_ONE					pDHT11Device0
+	#define DHT11_TASK_TWO					0
+	#define DHT11_TASK_THREE				0
 
 //===外部调用接口
 	extern DHT11_HandlerType g_DHT11Device0;

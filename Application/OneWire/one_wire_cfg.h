@@ -5,13 +5,11 @@
 extern "C" {
 #endif
 	///////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#ifdef USE_MCU_STM32
-#include "delay_task.h"
-#include "gpio_task.h"
-#endif
-
-//===定义结构体
+	#include "complier_lib.h"
+	#include "delay_task.h"
+	#include "gpio_task.h"
+	///////////////////////////////////////////////////////////////////////////////////////
+	//===定义结构体
 	typedef struct _OneWire_HandlerType		OneWire_HandlerType;
 
 	//===定义指针结构体

@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "w25qxx_cfg.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===函数定义
+	#include "w25qxx_cfg.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===函数定义
 	UINT8_T W25QXXLib_SPI_Init(W25QXX_HandlerType *W25QXXx, void(*pFuncDelayus)(UINT32_T delay), void(*pFuncDelayms)(UINT32_T delay), UINT32_T(*pFuncTimerTick)(void), UINT8_T isHW);
 	UINT8_T W25QXXLib_SPI_ReadRegSR1(W25QXX_HandlerType *W25QXXx);
 	UINT8_T W25QXXLib_SPI_ReadRegSR2(W25QXX_HandlerType *W25QXXx);

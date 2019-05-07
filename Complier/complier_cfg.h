@@ -6,16 +6,16 @@ extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
 	//===定义使用的头文件
-#include "stdbool.h"
-#include "stddef.h"
-#include "stdlib.h"
-#include "stdio.h"
-#include "string.h"
-#include "math.h"
-#include "stdarg.h"
-#include "stdint.h"
-
-//===无符号的8位数据
+	#include "stdbool.h"
+	#include "stddef.h"
+	#include "stdlib.h"
+	#include "stdio.h"
+	#include "string.h"
+	#include "math.h"
+	#include "stdarg.h"
+	#include "stdint.h"
+	
+	//===无符号的8位数据
 	typedef	unsigned char					UINT8_T;
 	typedef	unsigned char					U8;
 	typedef	unsigned char					u8;
@@ -38,97 +38,97 @@ extern "C" {
 	typedef	volatile  char					vltint8_t;
 
 	//===兼容不同位数的单片机
-#if (SIZE_MAX==0xFFFF)
-
-//===无符号的16位数据
-	typedef	unsigned  int					UINT16_T;
-	typedef	unsigned  int					U16;
-	typedef	unsigned  int					u16;
-
-	typedef	volatile unsigned  int			VLTUINT16_T;
-	typedef	volatile unsigned  int			vltuint16_t;
-	typedef	volatile unsigned  int			VLTU16;
-	typedef	volatile unsigned  int			vltu16;
-
-	//===有符号的16位数据
-	typedef	signed  int						INT16_T;
-	typedef	signed  int						S16;
-	typedef	signed  int						s16;
-
-	typedef	volatile signed  int			VLTINT16_T;
-	typedef	volatile signed  int			vltint16_t;
-	typedef	volatile signed  int			VLTS16;
-	typedef	volatile signed  int			vlts16;
-
-#else
-
-	typedef	unsigned short int				UINT16_T;
-	typedef	unsigned short int				U16;
-	typedef	unsigned short int				u16;
-
-	typedef	volatile unsigned short int		VLTUINT16_T;
-	typedef	volatile unsigned short int		vltuint16_t;
-	typedef	volatile unsigned short int		VLTU16;
-	typedef	volatile unsigned short int		vltu16;
-
-	//===有符号的16位数据
-	typedef	signed short int				INT16_T;
-	typedef	signed short int				S16;
-	typedef	signed short int				s16;
-
-	typedef	volatile signed short int		VLTINT16_T;
-	typedef	volatile signed short int		vltint16_t;
-	typedef	volatile signed short int		VLTS16;
-	typedef	volatile signed short int		vlts16;
-
-#endif
-
-	//===兼容不同位数的单片机
-#if (SIZE_MAX==0xFFFF)
-
-//---无符号的32位数据
-	typedef	unsigned long int				UINT32_T;
-	typedef	unsigned long int				U32;
-	typedef	unsigned long int				u32;
-
-	typedef	volatile unsigned long int		VLTUINT32_T;
-	typedef	volatile unsigned long int		vltuint32_t;
-	typedef	volatile unsigned long int		VLTU32;
-	typedef	volatile unsigned long	int		vltu32;
-
-	//===有符号的32位数据
-	typedef	signed	long int				INT32_T;
-	typedef	signed	long int				S32;
-	typedef	signed	long int				s32;
-
-	typedef	volatile signed	long int		VLTINT32_T;
-	typedef	volatile signed	long int		vltint32_t;
-	typedef	volatile signed	long int		VLTS32;
-	typedef	volatile signed	long int		vlts32;
-
-#else
-
-//===无符号的32位数据
-	typedef	unsigned  int					UINT32_T;
-	typedef	unsigned  int					U32;
-	typedef	unsigned  int					u32;
-
-	typedef	volatile unsigned  int			VLTUINT32_T;
-	typedef	volatile unsigned  int			vltuint32_t;
-	typedef	volatile unsigned  int			VLTU32;
-	typedef	volatile unsigned  int			vltu32;
-
-	//===有符号的32位数据
-	typedef	signed int						INT32_T;
-	typedef	signed int						S32;
-	typedef	signed int						s32;
-
-	typedef	volatile signed	int				VLTINT32_T;
-	typedef	volatile signed	int				vltint32_t;
-	typedef	volatile signed	int				VLTS32;
-	typedef	volatile signed	int				vlts32;
-
-#endif
+	#if (SIZE_MAX==0xFFFF)
+	
+	//===无符号的16位数据
+		typedef	unsigned  int					UINT16_T;
+		typedef	unsigned  int					U16;
+		typedef	unsigned  int					u16;
+	
+		typedef	volatile unsigned  int			VLTUINT16_T;
+		typedef	volatile unsigned  int			vltuint16_t;
+		typedef	volatile unsigned  int			VLTU16;
+		typedef	volatile unsigned  int			vltu16;
+	
+		//===有符号的16位数据
+		typedef	signed  int						INT16_T;
+		typedef	signed  int						S16;
+		typedef	signed  int						s16;
+	
+		typedef	volatile signed  int			VLTINT16_T;
+		typedef	volatile signed  int			vltint16_t;
+		typedef	volatile signed  int			VLTS16;
+		typedef	volatile signed  int			vlts16;
+	
+	#else
+	
+		typedef	unsigned short int				UINT16_T;
+		typedef	unsigned short int				U16;
+		typedef	unsigned short int				u16;
+	
+		typedef	volatile unsigned short int		VLTUINT16_T;
+		typedef	volatile unsigned short int		vltuint16_t;
+		typedef	volatile unsigned short int		VLTU16;
+		typedef	volatile unsigned short int		vltu16;
+	
+		//===有符号的16位数据
+		typedef	signed short int				INT16_T;
+		typedef	signed short int				S16;
+		typedef	signed short int				s16;
+	
+		typedef	volatile signed short int		VLTINT16_T;
+		typedef	volatile signed short int		vltint16_t;
+		typedef	volatile signed short int		VLTS16;
+		typedef	volatile signed short int		vlts16;
+	
+	#endif
+	
+		//===兼容不同位数的单片机
+	#if (SIZE_MAX==0xFFFF)
+	
+	//---无符号的32位数据
+		typedef	unsigned long int				UINT32_T;
+		typedef	unsigned long int				U32;
+		typedef	unsigned long int				u32;
+	
+		typedef	volatile unsigned long int		VLTUINT32_T;
+		typedef	volatile unsigned long int		vltuint32_t;
+		typedef	volatile unsigned long int		VLTU32;
+		typedef	volatile unsigned long	int		vltu32;
+	
+		//===有符号的32位数据
+		typedef	signed	long int				INT32_T;
+		typedef	signed	long int				S32;
+		typedef	signed	long int				s32;
+	
+		typedef	volatile signed	long int		VLTINT32_T;
+		typedef	volatile signed	long int		vltint32_t;
+		typedef	volatile signed	long int		VLTS32;
+		typedef	volatile signed	long int		vlts32;
+	
+	#else
+	
+	//===无符号的32位数据
+		typedef	unsigned  int					UINT32_T;
+		typedef	unsigned  int					U32;
+		typedef	unsigned  int					u32;
+	
+		typedef	volatile unsigned  int			VLTUINT32_T;
+		typedef	volatile unsigned  int			vltuint32_t;
+		typedef	volatile unsigned  int			VLTU32;
+		typedef	volatile unsigned  int			vltu32;
+	
+		//===有符号的32位数据
+		typedef	signed int						INT32_T;
+		typedef	signed int						S32;
+		typedef	signed int						s32;
+	
+		typedef	volatile signed	int				VLTINT32_T;
+		typedef	volatile signed	int				vltint32_t;
+		typedef	volatile signed	int				VLTS32;
+		typedef	volatile signed	int				vlts32;
+	
+	#endif
 
 	//===无符号的64位数据
 	typedef	unsigned long long int				UINT64_T;
@@ -407,51 +407,51 @@ extern "C" {
 	}WorkSTATE;
 
 	//===定义bool变量
-#if !defined(bool)
-#define false	0
-#define true	1
-	typedef enum
-	{
-		false,
-		true,
-	}bool;
-#endif
-
-	//===两个数据比较大小
-#define MAX(a,b)								( (a) > (b) ? (a) : (b) )
-#define MIN(a,b)								( (a) < (b) ? (a) : (b) )
-
-//===数据的绝对值
-#define ABS(a)									( (a)>=0?(a):-(a) )
-
-//===范围内的最小值
-#define RANGE(x, a, b)							( MIN( MAX( x, a ), b ) )
-
-//===数据的绝对差
-#define ABS_SUB(a,b)							( (a)>(b)?((a)-(b)):((b)-(a)) )
-
-//===利用__DATE__获取当前日期，占用12个字节，包括字符串结束符
-#define	VERSION_DATE_SIZE						12
-
-//===利用__TIME__获取当前时间，占用9个字节，包括字符串结束符
-#define VERSION_TIME_SIZE						9
-
-//===判断是否是闰年
-#define YEAR_TYPE(a)							( ((a%100!=0)&&(a%4==0))||(a%400==0) )
-
-//===使用的单片机的型号
-//#define USE_MCU_AVR
-#define USE_MCU_STM32
-
-#ifdef USE_MCU_STM32
-#include "stm32_cfg.h"
-#endif // USE_MCU_STM32
-
-#ifdef USE_MCU_AVR
-#include "avr_cfg.h"
-#endif
-
-//===外部调用接口
+	#if !defined(bool)
+		#define false	0
+		#define true	1
+			typedef enum
+			{
+				false,
+				true,
+			}bool;
+	#endif
+	
+		//===两个数据比较大小
+	#define MAX(a,b)								( (a) > (b) ? (a) : (b) )
+	#define MIN(a,b)								( (a) < (b) ? (a) : (b) )
+	
+	//===数据的绝对值
+	#define ABS(a)									( (a)>=0?(a):-(a) )
+	
+	//===范围内的最小值
+	#define RANGE(x, a, b)							( MIN( MAX( x, a ), b ) )
+	
+	//===数据的绝对差
+	#define ABS_SUB(a,b)							( (a)>(b)?((a)-(b)):((b)-(a)) )
+	
+	//===利用__DATE__获取当前日期，占用12个字节，包括字符串结束符
+	#define	VERSION_DATE_SIZE						12
+	
+	//===利用__TIME__获取当前时间，占用9个字节，包括字符串结束符
+	#define VERSION_TIME_SIZE						9
+	
+	//===判断是否是闰年
+	#define YEAR_TYPE(a)							( ((a%100!=0)&&(a%4==0))||(a%400==0) )
+	
+	//===使用的单片机的型号
+	//#define USE_MCU_AVR
+	#define USE_MCU_STM32
+	
+	#ifdef USE_MCU_STM32
+		#include "stm32_cfg.h"
+	#endif // USE_MCU_STM32
+	
+	#ifdef USE_MCU_AVR
+		#include "avr_cfg.h"
+	#endif
+	
+	//===外部调用接口
 	extern const UINT8_T  g_VersionDate[VERSION_DATE_SIZE];
 	extern const UINT8_T  g_VersionTime[VERSION_TIME_SIZE];
 

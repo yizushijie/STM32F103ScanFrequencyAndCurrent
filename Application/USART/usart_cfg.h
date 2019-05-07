@@ -5,13 +5,10 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-	//===头文件定义
-#include "complier_lib.h"
-#ifdef USE_MCU_STM32
-#include "gpio_task.h"
-#endif
-#include "crc_task.h"
-
+	#include "complier_lib.h"
+	#include "gpio_task.h"
+	#include "crc_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
 	typedef struct _USART_HandlerType						USART_HandlerType;
 	typedef struct _USART_HandlerType						* pUSART_HandlerType;
 
@@ -47,9 +44,9 @@ extern "C" {
 	};
 
 	//===传输过程中判断判断是否需要初始化GPIO
-#define  USART_INIT_GPIO
+	#define  USART_INIT_GPIO
 
-//===串口数据定义
+	//===串口数据定义
 	struct _USART_HandlerType
 	{
 		UINT8_T								msgIndex;			//---USART端口的索引号
@@ -71,61 +68,61 @@ extern "C" {
 	};
 
 	//===是否重映射printf函数
-#define USE_USART_PRINTF
-
-//===重映射printf之后的数据缓存区
-#ifdef USE_USART_PRINTF
-#define USART_PRINTF_SIZE					1024
-#endif
-
-//===使用的校验方式
-#define USART_CRC_NONE						0
-#define USART_CRC_CHECKSUM					1
-
-//===自适应CRC校验等级
-#ifdef USE_CRC8
-#define USART_CRC_CRC8						2
-#elif defined(USART_CRC_CHECKSUM)
-#define USART_CRC_CRC8						USART_CRC_CHECKSUM
-#else
-#define USART_CRC_CRC8						USART_CRC_NONE
-#endif
-
-#ifdef USE_CRC16
-#define USART_CRC_CRC16						3
-#elif defined(USART_CRC_CHECKSUM)
-#define USART_CRC_CRC16						USART_CRC_CHECKSUM
-#else
-#define USART_CRC_CRC16						USART_CRC_NONE
-#endif
-
-#ifdef USE_CRC32
-#define USART_CRC_CRC32						4
-#elif defined(USART_CRC_CHECKSUM)
-#define USART_CRC_CRC32						USART_CRC_CHECKSUM
-#else
-#define USART_CRC_CRC32						USART_CRC_NONE
-#endif
-
-//===发送端口的配置
-#define USART_TXGPIO_SET_INPUT					0
-#define USART_TXGPIO_SET_OUTPUT					1
-
-//===485数据端口的控制使能
-#define USART_485_RX_ENABLE						0
-#define USART_485_TX_ENABLE						1
-
-//===串口的状态
-#define USART_BUSY								0
-#define USART_OK								1
-#define USART_ERROR								2
-
-//===定义的任务函数
-#define USART_TASK_ONE							pUSART1
-#define USART_TASK_TWO							0
-#define USART_TASK_THREE						0
-
-//===外部调用接口
+	#define USE_USART_PRINTF
+	
+	//===重映射printf之后的数据缓存区
+	#ifdef USE_USART_PRINTF
+	#define USART_PRINTF_SIZE					1024
+	#endif
+	
+	//===使用的校验方式
+	#define USART_CRC_NONE						0
+	#define USART_CRC_CHECKSUM					1
+	
+	//===自适应CRC校验等级
+	#ifdef USE_CRC8
+	#define USART_CRC_CRC8						2
+	#elif defined(USART_CRC_CHECKSUM)
+	#define USART_CRC_CRC8						USART_CRC_CHECKSUM
+	#else
+	#define USART_CRC_CRC8						USART_CRC_NONE
+	#endif
+	
+	#ifdef USE_CRC16
+	#define USART_CRC_CRC16						3
+	#elif defined(USART_CRC_CHECKSUM)
+	#define USART_CRC_CRC16						USART_CRC_CHECKSUM
+	#else
+	#define USART_CRC_CRC16						USART_CRC_NONE
+	#endif
+	
+	#ifdef USE_CRC32
+	#define USART_CRC_CRC32						4
+	#elif defined(USART_CRC_CHECKSUM)
+	#define USART_CRC_CRC32						USART_CRC_CHECKSUM
+	#else
+	#define USART_CRC_CRC32						USART_CRC_NONE
+	#endif
+	
+	//===发送端口的配置
+	#define USART_TXGPIO_SET_INPUT					0
+	#define USART_TXGPIO_SET_OUTPUT					1
+	
+	//===485数据端口的控制使能
+	#define USART_485_RX_ENABLE						0
+	#define USART_485_TX_ENABLE						1
+	
+	//===串口的状态
+	#define USART_BUSY								0
+	#define USART_OK								1
+	#define USART_ERROR								2
+	
+	//===定义的任务函数
+	#define USART_TASK_ONE							pUSART1
+	#define USART_TASK_TWO							0
+	#define USART_TASK_THREE						0
+	
+	//===外部调用接口
 	extern USART_HandlerType						g_USART1;
 	extern pUSART_HandlerType						pUSART1;
 

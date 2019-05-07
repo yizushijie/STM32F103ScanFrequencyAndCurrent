@@ -5,32 +5,32 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-#include "i2c_task.h"
-#include "delay_task.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===OLED的显存
-//===存放格式如下.
-//---[0]0 1 2 3 ... 127
-//---[1]0 1 2 3 ... 127
-//---[2]0 1 2 3 ... 127
-//---[3]0 1 2 3 ... 127
-//---[4]0 1 2 3 ... 127
-//---[5]0 1 2 3 ... 127
-//---[6]0 1 2 3 ... 127
-//---[7]0 1 2 3 ... 127
-//===定义大小
-#define OLED_PAGE_SIZE					8
-#define OLED_MAX_COL					128
-#define OLED_MAX_ROW					64
-
-#define OLED_XLevelL					0x02
-#define OLED_XLevelH					0x10
-#define OLED_Brightness					0xFF
-#define OLED_X_WIDTH					128
-#define OLED_Y_WIDTH					64
-
-//===结构体定义
+	#include "complier_lib.h"
+	#include "i2c_task.h"
+	#include "delay_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===OLED的显存
+	//===存放格式如下.
+	//---[0]0 1 2 3 ... 127
+	//---[1]0 1 2 3 ... 127
+	//---[2]0 1 2 3 ... 127
+	//---[3]0 1 2 3 ... 127
+	//---[4]0 1 2 3 ... 127
+	//---[5]0 1 2 3 ... 127
+	//---[6]0 1 2 3 ... 127
+	//---[7]0 1 2 3 ... 127
+	//===定义大小
+	#define OLED_PAGE_SIZE					8
+	#define OLED_MAX_COL					128
+	#define OLED_MAX_ROW					64
+	
+	#define OLED_XLevelL					0x02
+	#define OLED_XLevelH					0x10
+	#define OLED_Brightness					0xFF
+	#define OLED_X_WIDTH					128
+	#define OLED_Y_WIDTH					64
+	
+	//===结构体定义
 	typedef struct _OLED_IIC_HandlerType			OLED_IIC_HandlerType;
 
 	//===指针结构体定义
@@ -44,11 +44,11 @@ extern "C" {
 	};
 
 	//===定义的任务函数
-#define OLED_TASK_ONE							pOLEDDevice0
-#define OLED_TASK_TWO							0
-#define OLED_TASK_THREE							0
-
-//===外部调用接口
+	#define OLED_TASK_ONE							pOLEDDevice0
+	#define OLED_TASK_TWO							0
+	#define OLED_TASK_THREE							0
+	
+	//===外部调用接口
 	extern OLED_IIC_HandlerType						g_OLEDDevice0;
 	extern pOLED_IIC_HandlerType					pOLEDDevice0;
 

@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-	//===头文件定义
-#include "usart_cfg.h"
-#include "crc_task.h"
+	#include "usart_cfg.h"
+	#include "crc_task.h"
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	UINT8_T  USARTLib_Init(USART_HandlerType*  USARTx, UINT16_T rxSize, UINT8_T* pRxVal, UINT8_T rxCRCFlag, UINT16_T txSize, UINT8_T* pTxVal, UINT8_T txCRCFlag, UINT32_T(*pTimerTick)(void));
 	UINT8_T  USARTLib_DeInit(USART_HandlerType*  USARTx);

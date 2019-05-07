@@ -5,12 +5,13 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
+	#include "complier_lib.h"
+	//////////////////////////////////////////////////////////////////////////////////////
 
-//===外部调用接口
-#ifdef RNG
-	extern volatile UINT32_T g_HASH_RNG_Val;
-#endif
+	//===外部调用接口
+	#ifdef RNG
+		extern volatile UINT32_T g_HASH_RNG_Val;
+	#endif
 
 	//===函数定义
 	void Random_Init(void);

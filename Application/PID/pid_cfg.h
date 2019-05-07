@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "complier_lib.h"
-//////////////////////////////////////////////////////////////////////////////////////
-//===定义结构体
+	#include "complier_lib.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===定义结构体
 	typedef struct _PID_HandlerType			PID_HandlerType;
 
 	//===定义指针结构体
@@ -35,11 +35,11 @@ extern "C" {
 	};
 
 	//===定义的任务函数
-#define	PID_TASK_ONE			pPID0
-#define	PID_TASK_TWO			0
-#define	PID_TASK_THREE			0
-
-//===外部调用接口
+	#define	PID_TASK_ONE			pPID0
+	#define	PID_TASK_TWO			0
+	#define	PID_TASK_THREE			0
+	
+	//===外部调用接口
 	extern PID_HandlerType			g_PID0;
 	extern pPID_HandlerType			pPID0;
 

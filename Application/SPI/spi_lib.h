@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 	//////////////////////////////////////////////////////////////////////////////////////
-#include "spi_cfg.h"
-
-//===函数定义
+	#include "spi_cfg.h"
+	//////////////////////////////////////////////////////////////////////////////////////
+	//===函数定义
 	UINT8_T SPILib_MHW_PollMode_Init(SPI_HandlerType *SPIx, LL_SPI_InitTypeDef SPI_InitStruct);
 	void SPILib_MHW_SetTransferBitOrder(SPI_HandlerType *SPIx, UINT32_T BitOrder);
 	UINT8_T SPILib_MHW_GPIO_Init(SPI_HandlerType *SPIx);
