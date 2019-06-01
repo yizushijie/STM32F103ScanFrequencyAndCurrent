@@ -24,7 +24,7 @@ void RFASKTask_Init(RFASK_HandlerType* rfask, AT24CXX_HandlerType* AT24CXXx)
 	//---eeprom中保存的参数
 	if (AT24CXXx!=NULL)
 	{
-		//RFASK_EEPROMInit(rfask, AT24CXXx);
+		RFASK_EEPROMInit(rfask, AT24CXXx);
 	}
 	//---传递命令
 	RFASKLib_SetFreqCurrentPointCmd(&rfask->msgFreqCurrentPointOne, CMD_RFASK_CMD1_FREQ_CURRENT_POINT_ONE);

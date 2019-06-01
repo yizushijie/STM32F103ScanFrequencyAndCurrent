@@ -181,7 +181,7 @@ void RFASK_YSELInit(void)
 void RFASK_StructInit(RFASK_HandlerType *rfask)
 {
 	//---设备类型
-	rfask->msgDeviceType = SYN5XXR;								//1Byte
+	rfask->msgDeviceType = SYN590R;								//1Byte
 
 	//---激活的SITE信息
 	memset(rfask->msgActivateSite, 0, FREQ_CURRENT_MAX_SITE);

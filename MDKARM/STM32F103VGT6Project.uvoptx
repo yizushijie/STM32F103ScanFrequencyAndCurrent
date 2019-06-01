@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>d</Name>
+          <Name>?#9燩磜?#9燩磜?#9</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -152,73 +152,73 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>27</LineNumber>
+          <LineNumber>1283</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>134262930</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Application\RFASK\rfask_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1283</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>63</LineNumber>
+          <LineNumber>1263</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134224052</Address>
+          <Address>134262826</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Application\AT24Cxx\at24cxx_cfg.c</Filename>
+          <Filename>..\Application\RFASK\rfask_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\STM32F103VGT6Project\../Application/AT24Cxx/at24cxx_cfg.c\63</Expression>
+          <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1263</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>64</LineNumber>
+          <LineNumber>1253</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134224070</Address>
+          <Address>134262764</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Application\AT24Cxx\at24cxx_cfg.c</Filename>
+          <Filename>..\Application\RFASK\rfask_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\STM32F103VGT6Project\../Application/AT24Cxx/at24cxx_cfg.c\64</Expression>
+          <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1253</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>1174</LineNumber>
+          <LineNumber>1183</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223794</Address>
+          <Address>134262278</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Application\AT24Cxx\at24cxx_cfg.c</Filename>
+          <Filename>..\Application\RFASK\rfask_task.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\STM32F103VGT6Project\../Application/AT24Cxx/at24cxx_cfg.c\1174</Expression>
+          <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1183</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tempAddrX1</ItemText>
+          <ItemText>USART1_TX_BUFFER</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
@@ -270,7 +270,7 @@
         <Ww>
           <count>7</count>
           <WinNumber>2</WinNumber>
-          <ItemText>cfgVal,0x0A</ItemText>
+          <ItemText>freqX100MHz,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
@@ -3888,7 +3888,7 @@
 
   <Group>
     <GroupName>Application/RFASK</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3992,7 +3992,7 @@
 
   <Group>
     <GroupName>Application/RFASKHW</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -4424,7 +4424,7 @@
 
   <Group>
     <GroupName>Application/USART</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
