@@ -44,18 +44,18 @@ extern "C" {
 	UINT8_T SPI_GPIO_DeInit(SPI_HandlerType *spix);
 	UINT8_T SPI_DeInit(SPI_HandlerType *spix);
 	UINT8_T SPI_Clock(SPI_HandlerType *spix, UINT8_T isEnable);
-	UINT8_T SPI_MHW_PollMode_WriteByte(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
-	UINT8_T SPI_MHW_PollMode_WriteData(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
+	UINT8_T SPI_MHW_PollMode_WriteAndReadByte(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
+	UINT8_T SPI_MHW_PollMode_WriteAndReadData(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
 	UINT8_T SPI_MSW_WriteBitMSB(SPI_HandlerType *spix, UINT8_T wVal);
 	UINT8_T SPI_MSW_ReadBitMSB(SPI_HandlerType *SPIx, UINT8_T *pRVal);
 	UINT8_T SPI_MSW_WriteBitLSB(SPI_HandlerType *spix, UINT8_T wVal);
 	UINT8_T SPI_MSW_ReadBitLSB(SPI_HandlerType *SPIx, UINT8_T *pRVal);
 	UINT8_T SPI_MSW_SetClock(SPI_HandlerType *spix, UINT32_T clock);
 	UINT8_T SPI_MHW_SetClock(SPI_HandlerType *spix, UINT32_T clock);
-	UINT8_T SPI_MSW_SendByteMSB(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
-	UINT8_T SPI_MSW_SendByteLSB(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
-	UINT8_T SPI_MSW_SendDataMSB(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
-	UINT8_T SPI_MSW_SendDataLSB(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
+	UINT8_T SPI_MSW_WriteAndReadByteMSB(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
+	UINT8_T SPI_MSW_WriteAndReadByteLSB(SPI_HandlerType *spix, UINT8_T wVal, UINT8_T *pRVal);
+	UINT8_T SPI_MSW_WriteAndReadDataMSB(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
+	UINT8_T SPI_MSW_WriteAndReadBDataLSB(SPI_HandlerType *spix, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length);
 	//////////////////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus
 }

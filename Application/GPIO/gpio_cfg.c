@@ -275,64 +275,60 @@ void GPIO_Clock(GPIO_TypeDef *GPIOx, UINT8_T isEnable)
 void GPIO_Init(void)
 {
 	//---使能所有端口的时钟
-#ifdef GPIOA
-	GPIO_Clock(GPIOA, 1);
-#endif
-
-#ifdef GPIOB
-	GPIO_Clock(GPIOB, 1);
-#endif
-
-#ifdef GPIOC
-	GPIO_Clock(GPIOC, 1);
-#endif
-
-#ifdef GPIOD
-	GPIO_Clock(GPIOD, 1);
-#endif
-
-#ifdef GPIOE
-	GPIO_Clock(GPIOE, 1);
-#endif
-
-#ifdef GPIOF
-	GPIO_Clock(GPIOF, 1);
-#endif
-
-#ifdef GPIOG
-	GPIO_Clock(GPIOG, 1);
-#endif
-
-#ifdef GPIOH
-	GPIO_Clock(GPIOH, 1);
-#endif
-
-#ifdef GPIOI
-	GPIO_Clock(GPIOI, 1);
-#endif
-
+	#ifdef GPIOA
+		GPIO_Clock(GPIOA, 1);
+	#endif
+	
+	#ifdef GPIOB
+		GPIO_Clock(GPIOB, 1);
+	#endif
+	
+	#ifdef GPIOC
+		GPIO_Clock(GPIOC, 1);
+	#endif
+	
+	#ifdef GPIOD
+		GPIO_Clock(GPIOD, 1);
+	#endif
+	
+	#ifdef GPIOE
+		GPIO_Clock(GPIOE, 1);
+	#endif
+	
+	#ifdef GPIOF
+		GPIO_Clock(GPIOF, 1);
+	#endif
+	
+	#ifdef GPIOG
+		GPIO_Clock(GPIOG, 1);
+	#endif
+	
+	#ifdef GPIOH
+		GPIO_Clock(GPIOH, 1);
+	#endif
+	
+	#ifdef GPIOI
+		GPIO_Clock(GPIOI, 1);
+	#endif
+	
 	//---复用时钟
-#ifndef USE_MCU_STM32F1
-
-	//---使能复用时钟
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
-#else
-
-	//---使能端口复用时钟
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
-#endif
-
+	#ifndef USE_MCU_STM32F1
+		//---使能复用时钟
+		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
+	#else
+		//---使能端口复用时钟
+		LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
+	#endif
+	
 	//---是否使用SWD调试端口
-#ifdef USE_DEBUG_SWD
-#ifdef  USE_MCU_STM32F1
-
-	//---屏蔽JTAG端口，使能SWD端口
-	LL_GPIO_AF_Remap_SWJ_NOJTAG();
-
-	//---释放PB4端口
-	LL_GPIO_AF_Remap_SWJ_NONJTRST();
-#endif
-#endif
+	#ifdef USE_DEBUG_SWD
+		#ifdef  USE_MCU_STM32F1
+			//---屏蔽JTAG端口，使能SWD端口
+			LL_GPIO_AF_Remap_SWJ_NOJTAG();
+			//---释放PB4端口
+			LL_GPIO_AF_Remap_SWJ_NONJTRST();
+		#endif
+	#endif
 }
 
 #endif 

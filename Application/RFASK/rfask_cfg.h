@@ -225,11 +225,11 @@ extern "C" {
 	//===高电压下的起始频率点电流上限
 	#define FREQ_CURRENT_HIGH_START_IMAX_X100MA			450	
 	//===高电压下的起始频率点电流下限
-	#define FREQ_CURRENT_HIGH_START_IMIN_X100MA			250	
+	#define FREQ_CURRENT_HIGH_START_IMIN_X100MA			200	
 	//===高电压下的终止频率点电流上限
-	#define FREQ_CURRENT_HIGH_STOP_IMAX_X100MA			800	
+	#define FREQ_CURRENT_HIGH_STOP_IMAX_X100MA			550	
 	//===高电压下的终止频率点电流下限
-	#define FREQ_CURRENT_HIGH_STOP_IMIN_X100MA			500	
+	#define FREQ_CURRENT_HIGH_STOP_IMIN_X100MA			300	
 	//===高电压下的频率点个数
 	#define FREQ_CURRENT_HIGH_FX100MHZ_NUM				53	
 	//===高电压下的起始频率
@@ -246,13 +246,13 @@ extern "C" {
 	//===高电压下的ADC合格最小值
 	#define FREQ_CURRENT_HIGH_ADC_PASS_MIN				2	
 	//===低电压下的起始频率点电流上限
-	#define FREQ_CURRENT_LOW_START_IMAX_X100MA			800	
+	#define FREQ_CURRENT_LOW_START_IMAX_X100MA			450	
 	//===低电压下的起始频率点电流下限
-	#define FREQ_CURRENT_LOW_START_IMIN_X100MA			600	
+	#define FREQ_CURRENT_LOW_START_IMIN_X100MA			240	
 	//===低电压下的终止频率点电流上限
-	#define FREQ_CURRENT_LOW_STOP_IMAX_X100MA			1400	
+	#define FREQ_CURRENT_LOW_STOP_IMAX_X100MA			600	
 	//===低电压下的终止频率点电流下限
-	#define FREQ_CURRENT_LOW_STOP_IMIN_X100MA			1100	
+	#define FREQ_CURRENT_LOW_STOP_IMIN_X100MA			300	
 	//===低电压下的频率点个数
 	#define FREQ_CURRENT_LOW_FX100MHZ_NUM				22	
 	//===低电压下的起始频率
@@ -284,7 +284,7 @@ extern "C" {
 	//===设置第三频率点
 	#define FREQ_YSEL3_X100MHZ							31500	
 	//===设置第四频率点
-	#define FREQ_YSEL4_X100MHZ							23040	
+	#define FREQ_YSEL4_X100MHZ							23050	
 	//===设置默认频率点
 	#define FREQ_YSEL_X100MHz							2
 	

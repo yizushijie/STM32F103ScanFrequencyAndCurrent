@@ -165,7 +165,7 @@ extern "C" {
 	UINT8_T  USART_ClearWriteState(USART_HandlerType* USARTx);
 	UINT8_T  USART_ReadInit(USART_HandlerType*  USARTx);
 	UINT8_T  USART_WriteInit(USART_HandlerType*  USARTx);
-	UINT8_T USART_DeviceID(USART_HandlerType*USARTx);
+	UINT8_T  USART_DeviceID(USART_HandlerType*USARTx);
 	void     USART_Printf(USART_HandlerType*USARTx, char*fmt, ...);
 	void	 USART_PrintfClockFreq(USART_HandlerType*USARTx);
 	UINT8_T  USART_Clock(USART_TypeDef* USARTx, UINT8_T isEnable);

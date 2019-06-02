@@ -375,7 +375,7 @@ UINT8_T ISP_SW_SendCmd(ISP_HandlerType *ISPx, UINT8_T val1, UINT8_T Val2, UINT8_
 	ISPx->msgWriteByte[3] = val4;
 
 	//---数据发送，高位在前
-	return SPITask_MSW_SendDataMSB(&(ISPx->msgSPI), ISPx->msgWriteByte, ISPx->msgReadByte, ISP_COMM_MAX_SIZE);
+	return SPITask_MSW_WriteAndReadDataMSB(&(ISPx->msgSPI), ISPx->msgWriteByte, ISPx->msgReadByte, ISP_COMM_MAX_SIZE);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -398,7 +398,7 @@ UINT8_T ISP_HW_SendCmd(ISP_HandlerType *ISPx, UINT8_T val1, UINT8_T Val2, UINT8_
 	ISPx->msgWriteByte[3] = val4;
 
 	//---数据发送
-	return SPITask_MHW_PollMode_WriteData(&(ISPx->msgSPI), ISPx->msgWriteByte, ISPx->msgReadByte, ISP_COMM_MAX_SIZE);
+	return SPITask_MHW_PollMode_WriteAndReadData(&(ISPx->msgSPI), ISPx->msgWriteByte, ISPx->msgReadByte, ISP_COMM_MAX_SIZE);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

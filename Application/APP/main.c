@@ -1,7 +1,7 @@
 #include "main.h"
 
 //===频率电流扫描的小板版本
-#define LNW_FT_ASK_FI_VERSION		2
+#define LNW_FT_ASK_FI_VERSION		1
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：

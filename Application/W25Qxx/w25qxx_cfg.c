@@ -173,7 +173,7 @@ UINT8_T W25QXX_SPI_SW_Init(W25QXX_HandlerType *W25QXXx)
 UINT8_T W25QXX_SPI_HW_SendCmd(W25QXX_HandlerType *W25QXXx, UINT8_T cmd, UINT8_T *pRVal)
 {
 	//---数据发送
-	return SPITask_MHW_PollMode_WriteByte(&(W25QXXx->msgSPI), cmd, pRVal);
+	return SPITask_MHW_PollMode_WriteAndReadByte(&(W25QXXx->msgSPI), cmd, pRVal);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -186,7 +186,7 @@ UINT8_T W25QXX_SPI_HW_SendCmd(W25QXX_HandlerType *W25QXXx, UINT8_T cmd, UINT8_T 
 UINT8_T W25QXX_SPI_SW_SendCmd(W25QXX_HandlerType *W25QXXx, UINT8_T cmd, UINT8_T *pRVal)
 {
 	//---数据发送
-	return SPITask_MSW_SendByteMSB(&(W25QXXx->msgSPI), cmd, pRVal);
+	return SPITask_MSW_WriteAndReadByteMSB(&(W25QXXx->msgSPI), cmd, pRVal);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

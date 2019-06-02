@@ -79,9 +79,9 @@ UINT8_T SPILib_DeInit(SPI_HandlerType *SPIx)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MHW_PollMode_WriteByte(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
+UINT8_T SPILib_MHW_PollMode_WriteAndReadByte(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
 {
-	return  SPI_MHW_PollMode_WriteByte(SPIx, wVal, pRVal);
+	return  SPI_MHW_PollMode_WriteAndReadByte(SPIx, wVal, pRVal);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -91,9 +91,9 @@ UINT8_T SPILib_MHW_PollMode_WriteByte(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MHW_PollMode_WriteData(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
+UINT8_T SPILib_MHW_PollMode_WriteAndReadData(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
 {
-	return SPI_MHW_PollMode_WriteData(SPIx, pWVal, pRVal, length);
+	return SPI_MHW_PollMode_WriteAndReadData(SPIx, pWVal, pRVal, length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -174,9 +174,9 @@ UINT8_T SPILib_MHW_SetClock(SPI_HandlerType *SPIx, UINT32_T clock)
 //////输出参数:
 //////说		明：高位在前
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MSW_SendByteMSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
+UINT8_T SPILib_MSW_WriteAndReadByteMSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
 {
-	return SPI_MSW_SendByteMSB(SPIx, wVal, pRVal);
+	return SPI_MSW_WriteAndReadByteMSB(SPIx, wVal, pRVal);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -186,9 +186,9 @@ UINT8_T SPILib_MSW_SendByteMSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRV
 //////输出参数:
 //////说		明：低位在前
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MSW_SendByteLSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
+UINT8_T SPILib_MSW_WriteAndReadByteLSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRVal)
 {
-	return SPI_MSW_SendByteLSB(SPIx, wVal, pRVal);
+	return SPI_MSW_WriteAndReadByteLSB(SPIx, wVal, pRVal);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -198,9 +198,9 @@ UINT8_T SPILib_MSW_SendByteLSB(SPI_HandlerType *SPIx, UINT8_T wVal, UINT8_T *pRV
 //////输出参数:
 //////说		明：高位在前
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MSW_SendDataMSB(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
+UINT8_T SPILib_MSW_WriteAndReadDataMSB(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
 {
-	return SPI_MSW_SendDataMSB(SPIx, pWVal, pRVal, length);
+	return SPI_MSW_WriteAndReadDataMSB(SPIx, pWVal, pRVal, length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -210,7 +210,7 @@ UINT8_T SPILib_MSW_SendDataMSB(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *p
 //////输出参数:
 //////说		明：低位在前
 //////////////////////////////////////////////////////////////////////////////
-UINT8_T SPILib_MSW_SendDataLSB(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
+UINT8_T SPILib_MSW_WriteAndReadDataLSB(SPI_HandlerType *SPIx, UINT8_T *pWVal, UINT8_T *pRVal, UINT16_T length)
 {
-	return SPI_MSW_SendDataLSB(SPIx, pWVal, pRVal, length);
+	return SPI_MSW_WriteAndReadBDataLSB(SPIx, pWVal, pRVal, length);
 }

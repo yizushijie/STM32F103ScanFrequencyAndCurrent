@@ -12,11 +12,12 @@ extern "C" {
 	//////////////////////////////////////////////////////////////////////////////////////
 	//---ADS1256------MCU
 	//---RST----------NC(为了保证复位的彻底性，最好加上)
-	//---DRDY---------GPIO(必须)
-	//---CS-----------SPI_CS(必须)
-	//---CLK----------SPI_CLK(必须)
-	//---DIN----------SPI_MOSI(必须)
-	//---DOUT---------SPI_MISO(必须)
+	//---DRDY---------GPIO(必须)  PA3
+	//---CS-----------SPI_CS(必须) PA4
+	//---CLK----------SPI_CLK(必须) PA5
+	//---DIN----------SPI_MOSI(必须) PA7
+	//---DOUT---------SPI_MISO(必须) PA6
+	//---自动量产切换一次之后，耗时113ms
 	//////////////////////////////////////////////////////////////////////////////////////
 	//===退出睡眠模式
 	#define ADS1256_CMD_WAKEUP							0x00
@@ -175,8 +176,10 @@ extern "C" {
 	//===定义结构体
 	struct _ADS1256_HandlerType
 	{
-		UINT8_T msgDeviceReady;														//---设备是否准备就绪，0---工作正常；1---工作异常
+		UINT8_T msgReady;															//---设备是否准备就绪，0---工作正常；1---工作异常
+		UINT8_T msgChipID;															//---设备的ID信息
 		UINT8_T	msgGain;															//---增益设置
+		UINT8_T msgCalcError[ADS1256_CHANNEL_MAX];									//---是否需要校准偏差 0===不叫准，1---校准
 		UINT8_T msgNowChannel;														//---当前转换的通道
 		UINT8_T msgOldChannel;														//---上一次转换的通道
 		UINT8_T	msgIsPositive[ADS1256_CHANNEL_MAX];									//---0---无数据，1---是负数，2---是正值

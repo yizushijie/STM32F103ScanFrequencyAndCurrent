@@ -130,6 +130,11 @@ extern "C" {
 				#ifndef LL_DMA_PRIORITY_VERYHIGH
 					#define LL_DMA_PRIORITY_VERYHIGH				LL_DMA_PRIORITY_HIGH
 				#endif
+				
+				//===定义端口无上下拉，F1系列只有上拉和下拉，这是为了兼容其他系列，直接定义使用上拉替代
+				#ifndef LL_GPIO_PULL_NO
+					#define LL_GPIO_PULL_NO				LL_GPIO_PULL_UP
+				#endif
 		
 			#elif defined(USE_MCU_STM32F2)
 				#include "stm32f2xx_ll.h"

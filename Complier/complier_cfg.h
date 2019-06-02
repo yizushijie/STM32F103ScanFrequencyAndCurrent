@@ -417,44 +417,50 @@ extern "C" {
 			}bool;
 	#endif
 	
-		//===两个数据比较大小
+    //===两个数据比较大小
 	#define MAX(a,b)								( (a) > (b) ? (a) : (b) )
 	#define MIN(a,b)								( (a) < (b) ? (a) : (b) )
-	
+	//===判断一个数据是不是奇数
+	#define ODD(x)									((x&0x01)==1?1:0)
+	//===判断一个数据是不是偶数
+	#define EVEN(x)									((x&0x01)!=1?1:0)
 	//===数据的绝对值
-	#define ABS(a)									( (a)>=0?(a):-(a) )
-	
+	#define ABS(a)									( (a)>=0?(a):-(a) )	
 	//===范围内的最小值
-	#define RANGE(x, a, b)							( MIN( MAX( x, a ), b ) )
-	
+	#define RANGE(x, a, b)							( MIN( MAX( x, a ), b ) )	
 	//===数据的绝对差
-	#define ABS_SUB(a,b)							( (a)>(b)?((a)-(b)):((b)-(a)) )
-	
+	#define ABS_SUB(a,b)							( (a)>(b)?((a)-(b)):((b)-(a)) )	
 	//===利用__DATE__获取当前日期，占用12个字节，包括字符串结束符
-	#define	VERSION_DATE_SIZE						12
-	
+	#define	VERSION_DATE_SIZE						12	
 	//===利用__TIME__获取当前时间，占用9个字节，包括字符串结束符
-	#define VERSION_TIME_SIZE						9
-	
+	#define VERSION_TIME_SIZE						9	
 	//===判断是否是闰年
-	#define YEAR_TYPE(a)							( ((a%100!=0)&&(a%4==0))||(a%400==0) )
+	#define YEAR_TYPE(a)							( ((a%100!=0)&&(a%4==0))||(a%400==0) )	
 	
-	//===使用的单片机的型号
+	//////////////////////////////////////////////////////////////////////////
+	//===依据MCU的型号不同，选择不同的头文件，暂时支持STM32和AVR
+	//===选择MCU的型号
 	//#define USE_MCU_AVR
-	#define USE_MCU_STM32
-	
-	#ifdef USE_MCU_STM32
+	#define USE_MCU_STM32	
+	//////////////////////////////////////////////////////////////////////////
+	//===依据MCU型号，包含不同的头文件
+	#if defined(USE_MCU_STM32)
 		#include "stm32_cfg.h"
-	#endif // USE_MCU_STM32
-	
-	#ifdef USE_MCU_AVR
+	#elif defined(USE_MCU_AVR)
 		#include "avr_cfg.h"
+	#else
+		#error "不支持型号的MCU."
+	#endif 
+	
+	//===使用编译器实现的版本
+	#define USE_COMPLIER_VERSION
+	//===编译的时间和日期信息
+	#ifdef USE_COMPLIER_VERSION
+		//===外部调用接口
+		extern const UINT8_T  g_VersionDate[VERSION_DATE_SIZE];
+		extern const UINT8_T  g_VersionTime[VERSION_TIME_SIZE];
 	#endif
 	
-	//===外部调用接口
-	extern const UINT8_T  g_VersionDate[VERSION_DATE_SIZE];
-	extern const UINT8_T  g_VersionTime[VERSION_TIME_SIZE];
-
 	//////////////////////////////////////////////////////////////////////////////////////
 #ifdef __cplusplus
 }
