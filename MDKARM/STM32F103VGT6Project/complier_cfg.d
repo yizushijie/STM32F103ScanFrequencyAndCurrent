@@ -1,15 +1,15 @@
 stm32f103vgt6project/complier_cfg.o: ..\Complier\complier_cfg.c \
   ..\Complier\complier_cfg.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stddef.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\string.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\math.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stdarg.h \
-  D:\Keil\ARM\ARMCLANG\Bin\..\include\stdint.h ..\STM32F1xx\stm32_cfg.h \
-  ..\STM32F1xx\stm32f1xx.h ..\STM32F1xx\stm32f103xg.h \
-  ..\Drivers\CMSIS\Include\core_cm3.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stddef.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdarg.h \
+  D:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  ..\STM32F1xx\stm32_cfg.h ..\STM32F1xx\stm32f1xx.h \
+  ..\STM32F1xx\stm32f103xg.h ..\Drivers\CMSIS\Include\core_cm3.h \
   ..\Drivers\CMSIS\Include\core_cmInstr.h \
   ..\Drivers\CMSIS\Include\cmsis_armcc_V6.h \
   ..\Drivers\CMSIS\Include\core_cmFunc.h ..\STM32F1xx\system_stm32f1xx.h \

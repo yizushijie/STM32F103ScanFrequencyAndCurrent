@@ -10,7 +10,7 @@ extern "C" {
 	//////////////////////////////////////////////////////////////////////////////////////
 	
 	//===使用的母板的版本，V1和V2是有区别的
-	#define LNW_FT_ASK_MBOARD_VERSION		1
+	#define LNW_FT_ASK_MBOARD_VERSION		2
 
 	//===YSEL0A
 	#define YSEL0A_PORT_D					GPIOE

@@ -10,12 +10,6 @@
     <Filter Include="Application\ADC">
       <UniqueIdentifier>{B086296C-1C12-9730-2523-1A25912DF330}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\ADS1256">
-      <UniqueIdentifier>{0EA12ADF-7A02-08ED-0370-4E9F6FD03EAC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ADS8688">
-      <UniqueIdentifier>{1E892EDF-8AEA-0BED-1358-529F7FB842AC}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\APP">
       <UniqueIdentifier>{4988296C-B513-9730-BE24-1A252A2FF330}</UniqueIdentifier>
     </Filter>
@@ -48,9 +42,6 @@
     </Filter>
     <Filter Include="Application\EERPOM">
       <UniqueIdentifier>{309CD4BA-1C80-9510-85E0-8F6371E37F92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\ENC28J60">
-      <UniqueIdentifier>{18A80F52-0437-991B-AD55-AD1699C3A9C1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Encode">
       <UniqueIdentifier>{F661C4BD-E245-8513-4BA6-7F6637A96F95}</UniqueIdentifier>
@@ -124,9 +115,6 @@
     <Filter Include="Application\Random">
       <UniqueIdentifier>{690E32DB-55F2-F230-BE52-ED83AA55DDB2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\SHT2x">
-      <UniqueIdentifier>{812CEE1D-ED42-ECB3-36BA-77D5A20FBD3B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\SPI">
       <UniqueIdentifier>{D4D4296C-4060-9730-4971-1A25B57BF330}</UniqueIdentifier>
     </Filter>
@@ -138,9 +126,6 @@
     </Filter>
     <Filter Include="Application\USART">
       <UniqueIdentifier>{D718181E-432F-16B4-8CA6-A1D5F8FBE63B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\W25Qxx">
-      <UniqueIdentifier>{A7C869E3-93AC-2A39-FC0C-258CE80F15BB}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\WM8510">
       <UniqueIdentifier>{DA8253E5-C666-143B-2FC7-0E8E1BCAFEBC}</UniqueIdentifier>
@@ -191,24 +176,6 @@
     </ClInclude>
     <ClInclude Include="..\Application\ADC\adc_task.h">
       <Filter>Application\ADC</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS1256\ads1256_cfg.h">
-      <Filter>Application\ADS1256</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS1256\ads1256_lib.h">
-      <Filter>Application\ADS1256</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS1256\ads1256_task.h">
-      <Filter>Application\ADS1256</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS8688\ads8688_cfg.h">
-      <Filter>Application\ADS8688</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS8688\ads8688_lib.h">
-      <Filter>Application\ADS8688</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ADS8688\ads8688_task.h">
-      <Filter>Application\ADS8688</Filter>
     </ClInclude>
     <ClInclude Include="..\Application\APP\config.h">
       <Filter>Application\APP</Filter>
@@ -305,15 +272,6 @@
     </ClInclude>
     <ClInclude Include="..\Application\EEPROM\eeprom_task.h">
       <Filter>Application\EERPOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ENC28J60\enc28j60_cfg.h">
-      <Filter>Application\ENC28J60</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ENC28J60\enc28j60_lib.h">
-      <Filter>Application\ENC28J60</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\ENC28J60\enc28j60_task.h">
-      <Filter>Application\ENC28J60</Filter>
     </ClInclude>
     <ClInclude Include="..\Application\Encode\encode_cfg.h">
       <Filter>Application\Encode</Filter>
@@ -522,15 +480,6 @@
     <ClInclude Include="..\Application\Random\random_task.h">
       <Filter>Application\Random</Filter>
     </ClInclude>
-    <ClInclude Include="..\Application\SHT2x\sht2x_cfg.h">
-      <Filter>Application\SHT2x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\SHT2x\sht2x_lib.h">
-      <Filter>Application\SHT2x</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\SHT2x\sht2x_task.h">
-      <Filter>Application\SHT2x</Filter>
-    </ClInclude>
     <ClInclude Include="..\Application\SPI\spi_cfg.h">
       <Filter>Application\SPI</Filter>
     </ClInclude>
@@ -575,15 +524,6 @@
     </ClInclude>
     <ClInclude Include="..\Application\USART\usart_task.h">
       <Filter>Application\USART</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\W25Qxx\w25qxx_cfg.h">
-      <Filter>Application\W25Qxx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\W25Qxx\w25qxx_lib.h">
-      <Filter>Application\W25Qxx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Application\W25Qxx\w25qxx_task.h">
-      <Filter>Application\W25Qxx</Filter>
     </ClInclude>
     <ClInclude Include="..\Application\WM8510\wm8510_cfg.h">
       <Filter>Application\WM8510</Filter>
@@ -710,24 +650,6 @@
     <ClCompile Include="..\Application\ADC\adc_task.c">
       <Filter>Application\ADC</Filter>
     </ClCompile>
-    <ClCompile Include="..\Application\ADS1256\ads1256_cfg.c">
-      <Filter>Application\ADS1256</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ADS1256\ads1256_lib.c">
-      <Filter>Application\ADS1256</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ADS1256\ads1256_task.c">
-      <Filter>Application\ADS1256</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ADS8688\ads8688_cfg.c">
-      <Filter>Application\ADS8688</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ADS8688\ads8688_lib.c">
-      <Filter>Application\ADS8688</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ADS8688\ads8688_task.c">
-      <Filter>Application\ADS8688</Filter>
-    </ClCompile>
     <ClCompile Include="..\Application\APP\main.c">
       <Filter>Application\APP</Filter>
     </ClCompile>
@@ -820,15 +742,6 @@
     </ClCompile>
     <ClCompile Include="..\Application\EEPROM\eeprom_task.c">
       <Filter>Application\EERPOM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ENC28J60\enc28j60_cfg.c">
-      <Filter>Application\ENC28J60</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ENC28J60\enc28j60_lib.c">
-      <Filter>Application\ENC28J60</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\ENC28J60\enc28j60_task.c">
-      <Filter>Application\ENC28J60</Filter>
     </ClCompile>
     <ClCompile Include="..\Application\Encode\encode_cfg.c">
       <Filter>Application\Encode</Filter>
@@ -1037,15 +950,6 @@
     <ClCompile Include="..\Application\Random\random_task.c">
       <Filter>Application\Random</Filter>
     </ClCompile>
-    <ClCompile Include="..\Application\SHT2x\sht2x_cfg.c">
-      <Filter>Application\SHT2x</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\SHT2x\sht2x_lib.c">
-      <Filter>Application\SHT2x</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\SHT2x\sht2x_task.c">
-      <Filter>Application\SHT2x</Filter>
-    </ClCompile>
     <ClCompile Include="..\Application\SPI\spi_cfg.c">
       <Filter>Application\SPI</Filter>
     </ClCompile>
@@ -1090,15 +994,6 @@
     </ClCompile>
     <ClCompile Include="..\Application\USART\usart_task.c">
       <Filter>Application\USART</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\W25Qxx\w25qxx_cfg.c">
-      <Filter>Application\W25Qxx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\W25Qxx\w25qxx_lib.c">
-      <Filter>Application\W25Qxx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Application\W25Qxx\w25qxx_task.c">
-      <Filter>Application\W25Qxx</Filter>
     </ClCompile>
     <ClCompile Include="..\Application\WM8510\wm8510_cfg.c">
       <Filter>Application\WM8510</Filter>

@@ -17,9 +17,9 @@ extern "C" {
 	#include "rfask_eeprom.h" 
 	//////////////////////////////////////////////////////////////////////////////////////
 	//===获取编译时间和版本信息
-	#define CMD_RFASK_CMD1_VERSIOM								0x00
+	#define CMD_RFASK_CMD1_VERSIOM									0x00
 	//===设置WM8510的输出---主命令
-	#define CMD_RFASK_CMD1_FREQ_WM8510							0x01
+	#define CMD_RFASK_CMD1_FREQ_WM8510								0x01
 	//===设置WM8510输出频率
 	#define CMD_RFASK_CMD2_SET_WM8510								0x01
 	//===获取WM8510的输出频率
@@ -37,7 +37,7 @@ extern "C" {
 	//===时钟所有输出通道的使能控制
 	#define CMD_RFASK_CMD2_CHANNELS_WM8510							0x08
 	//===设置默认频率点输出
-	#define CMD_RFASK_CMD1_YSEL_FREQ							0x02
+	#define CMD_RFASK_CMD1_YSEL_FREQ								0x02
 	//===设置预设频率点1
 	#define CMD_RFASK_CMD2_YSEL1_FREQ_SET							0x01
 	//===设置预设频率点2
@@ -67,7 +67,7 @@ extern "C" {
 	//===设置预设频率点4输出
 	#define CMD_RFASK_CMD2_YSEL4_FREQ_OUT							0x0E
 	//===频率电流测试，基本参数的配置
-	#define CMD_RFASK_CMD1_FREQ_CURRENT							0x03
+	#define CMD_RFASK_CMD1_FREQ_CURRENT								0x03
 	//===设备类型
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_TYPE_GET				0x01
 	//===采样电阻
@@ -84,10 +84,10 @@ extern "C" {
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_GET					0x07
 	//===设备的基本参数设置
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_DEVICE_SET					0x08
-	//===第一个频率电流扫描电压点
-	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_ONE				0x04
+	//===第一个频率电流扫描电压点	
+	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_ONE					0x04
 	//===第二个频率电流扫描电压点
-	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_TWO				0x05
+	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_TWO					0x05
 	//===获取频率参数
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_FREQ_GET				0x01
 	//===设置频率参数
@@ -98,6 +98,9 @@ extern "C" {
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_CURRENT_SET			0x04
 	//===频率电流扫描工作
 	#define CMD_RFASK_CMD1_FREQ_CURRENT_POINT_DO					0x05
+
+	//===允许连续相等的点的个数	
+	#define RFASK_FREQ_CURRENT_CONT_EQUAL_POINT_MAX_NUM				3
 	
 	//===函数定义
 	void     RFASKTask_Init(RFASK_HandlerType *rfask, AT24CXX_HandlerType* AT24CXXx);

@@ -741,76 +741,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Application/ADS1256</GroupName>
-          <Files>
-            <File>
-              <FileName>ads1256_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_cfg.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads1256_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>ads1256_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads1256_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>ads1256_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads1256_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS1256\ads1256_task.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Application/ADS8688</GroupName>
-          <Files>
-            <File>
-              <FileName>ads8688_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_cfg.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads8688_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads8688_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>ads8688_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>ads8688_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>ads8688_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ADS8688\ads8688_task.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Application/APP</GroupName>
           <Files>
             <File>
@@ -1177,41 +1107,6 @@
               <FileName>eeprom_task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Application\EEPROM\eeprom_task.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Application/ENC28J60</GroupName>
-          <Files>
-            <File>
-              <FileName>enc28j60_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_cfg.c</FilePath>
-            </File>
-            <File>
-              <FileName>enc28j60_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>enc28j60_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>enc28j60_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>enc28j60_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>enc28j60_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\ENC28J60\enc28j60_task.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2026,41 +1921,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Application/SHT2x</GroupName>
-          <Files>
-            <File>
-              <FileName>sht2x_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_cfg.c</FilePath>
-            </File>
-            <File>
-              <FileName>sht2x_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>sht2x_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>sht2x_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>sht2x_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>sht2x_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\SHT2x\sht2x_task.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Application/SPI</GroupName>
           <Files>
             <File>
@@ -2227,41 +2087,6 @@
               <FileName>usart_dma_cfg.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Application\USART\usart_dma_cfg.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Application/W25Qxx</GroupName>
-          <Files>
-            <File>
-              <FileName>w25qxx_cfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_cfg.c</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx_lib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_lib.h</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>w25qxx_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Application\W25Qxx\w25qxx_task.h</FilePath>
             </File>
           </Files>
         </Group>

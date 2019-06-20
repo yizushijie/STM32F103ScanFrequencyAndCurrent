@@ -229,30 +229,30 @@ extern "C" {
 	//===高电压下的终止频率点电流上限
 	#define FREQ_CURRENT_HIGH_STOP_IMAX_X100MA			800	
 	//===高电压下的终止频率点电流下限
-	#define FREQ_CURRENT_HIGH_STOP_IMIN_X100MA			400	
+	#define FREQ_CURRENT_HIGH_STOP_IMIN_X100MA			500	
 	//===高电压下的频率点个数
-	#define FREQ_CURRENT_HIGH_FX100MHZ_NUM				36	
+	#define FREQ_CURRENT_HIGH_FX100MHZ_NUM				53	
 	//===高电压下的起始频率
 	#define FREQ_CURRENT_HIGH_FSTART_X100MHZ			21000	
 	//===高电压下的频率步进
-	#define FREQ_CURRENT_HIGH_FSTEP_X100MHZ				300	
+	#define FREQ_CURRENT_HIGH_FSTEP_X100MHZ				200	
 	//===高电压的电压值
 	#define FREQ_CURRENT_HIGH_POWER_MV					3600	
 	//===高电压下的ADC间隔个数
 	#define FREQ_CURRENT_HIGH_ADC_POINT_NUM				6	
 
 	//===高电压下的ADC合格最大值，可以看做是电流的差值，单位是10倍的微安，比如是20，则是200uA的电流差值
-	#define FREQ_CURRENT_HIGH_ADC_PASS_MAX				36	
+	#define FREQ_CURRENT_HIGH_ADC_PASS_MAX				20	
 	//===高电压下的ADC合格最小值
 	#define FREQ_CURRENT_HIGH_ADC_PASS_MIN				2	
 	//===低电压下的起始频率点电流上限
-	#define FREQ_CURRENT_LOW_START_IMAX_X100MA			900	
+	#define FREQ_CURRENT_LOW_START_IMAX_X100MA			800	
 	//===低电压下的起始频率点电流下限
 	#define FREQ_CURRENT_LOW_START_IMIN_X100MA			600	
 	//===低电压下的终止频率点电流上限
-	#define FREQ_CURRENT_LOW_STOP_IMAX_X100MA			1100	
+	#define FREQ_CURRENT_LOW_STOP_IMAX_X100MA			1400	
 	//===低电压下的终止频率点电流下限
-	#define FREQ_CURRENT_LOW_STOP_IMIN_X100MA			700	
+	#define FREQ_CURRENT_LOW_STOP_IMIN_X100MA			1100	
 	//===低电压下的频率点个数
 	#define FREQ_CURRENT_LOW_FX100MHZ_NUM				22	
 	//===低电压下的起始频率
