@@ -1720,6 +1720,10 @@ UINT8_T RFASKTask_KeyTask(USART_HandlerType*USARTx, RFASK_HandlerType *rfask, WM
 			//---没有SITE激活，
 			return ERROR_3;
 		}
+		
+		//---关闭解码
+		DecodeTask_STOP();
+		
 		//---SOT输出高,清楚状态标志位，避免下次进入的时候状态保留的事上一状态
 		EOT_CTR_OUT_1;
 		BIN_CTR_OUT_1;

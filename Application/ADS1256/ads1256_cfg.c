@@ -211,7 +211,7 @@ UINT8_T ADS1256_SPI_HW_Init(ADS1256_HandlerType *ADS1256x)
 	//---ADS1256的SPI的最高时钟为输入时钟的四分之一，因此SPI的时钟不能过快，否则容易通讯失败
 	if (SPI_InitStruct.BaudRate< LL_SPI_BAUDRATEPRESCALER_DIV256)
 	{
-		SPI_InitStruct.BaudRate < LL_SPI_BAUDRATEPRESCALER_DIV256
+		SPI_InitStruct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV256;
 	}
 	//---初始化查询方式的SPI
 	SPITask_MHW_PollMode_Init(&(ADS1256x->msgSPI), SPI_InitStruct);

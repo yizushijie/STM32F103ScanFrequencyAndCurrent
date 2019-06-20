@@ -3,7 +3,7 @@
 <title>Static Call Graph - [STM32F103VGT6Project\STM32F103VGT6Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image STM32F103VGT6Project\STM32F103VGT6Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6120001: Last Updated: Sat Jun  1 16:11:20 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6120001: Last Updated: Wed Jun 19 21:32:50 2019
 <BR><P>
 <H3>Maximum Stack Usage =       1208 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1339,7 +1339,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecodeLib_STOP
 </UL>
-<BR>[Called By]<UL><LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKTask_FreqCurrentScan
+<BR>[Called By]<UL><LI><a href="#[20d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKTask_KeyTask
+<LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKTask_FreqCurrentScan
 </UL>
 
 <P><STRONG><a name="[106]"></a>DecodeTask_ScanRST</STRONG> (Thumb, 8 bytes, Stack size 8 bytes, decode_task.o(.text.DecodeTask_ScanRST))
@@ -2923,10 +2924,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[24f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sys_Init
 </UL>
 
-<P><STRONG><a name="[20d]"></a>RFASKTask_KeyTask</STRONG> (Thumb, 1162 bytes, Stack size 192 bytes, rfask_task.o(.text.RFASKTask_KeyTask))
+<P><STRONG><a name="[20d]"></a>RFASKTask_KeyTask</STRONG> (Thumb, 1172 bytes, Stack size 192 bytes, rfask_task.o(.text.RFASKTask_KeyTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 824<LI>Call Chain = RFASKTask_KeyTask &rArr; RFASKTask_FreqCurrentScan &rArr; RFASKTask_SitesCurrent &rArr; ADCTask_RFASKTask_GetADC &rArr; ADCLib_HandleChannelVal &rArr; ADC_HandleChannelVal &rArr; CalcAvgFun1 &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecodeTask_START
+<BR>[Calls]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecodeTask_STOP
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecodeTask_START
 <LI><a href="#[207]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WM8510Task_I2C_Reset
 <LI><a href="#[20f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKTask_SetClockFreq
 <LI><a href="#[20e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKTask_ScanYSEL
@@ -3117,7 +3119,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASKLib_SetFreqCurrentPointCmd
 </UL>
 
-<P><STRONG><a name="[21f]"></a>RFASK_StructInit</STRONG> (Thumb, 452 bytes, Stack size 8 bytes, rfask_cfg.o(.text.RFASK_StructInit))
+<P><STRONG><a name="[21f]"></a>RFASK_StructInit</STRONG> (Thumb, 458 bytes, Stack size 8 bytes, rfask_cfg.o(.text.RFASK_StructInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RFASK_StructInit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RFASK_Init
@@ -3240,7 +3242,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[229]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysRTCLib_SoftBuildHandle
 </UL>
 
-<P><STRONG><a name="[22c]"></a>SysRTC_SoftBuildInit</STRONG> (Thumb, 210 bytes, Stack size 32 bytes, rtc_cfg.o(.text.SysRTC_SoftBuildInit))
+<P><STRONG><a name="[22c]"></a>SysRTC_SoftBuildInit</STRONG> (Thumb, 222 bytes, Stack size 32 bytes, rtc_cfg.o(.text.SysRTC_SoftBuildInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = SysRTC_SoftBuildInit &rArr; SysRTC_CalcWeekDay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[235]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysRTC_CalcWeekDay

@@ -119,11 +119,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
-          <Name>?#9燩磜?#9燩磜?#9</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -154,7 +149,7 @@
           <Type>0</Type>
           <LineNumber>1283</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134262930</Address>
+          <Address>134262002</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -170,7 +165,7 @@
           <Type>0</Type>
           <LineNumber>1263</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134262826</Address>
+          <Address>134261898</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -186,7 +181,7 @@
           <Type>0</Type>
           <LineNumber>1253</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134262764</Address>
+          <Address>134261836</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -196,22 +191,6 @@
           <Filename>..\Application\RFASK\rfask_task.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1253</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>1183</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134262278</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Application\RFASK\rfask_task.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\STM32F103VGT6Project\../Application/RFASK/rfask_task.c\1183</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
