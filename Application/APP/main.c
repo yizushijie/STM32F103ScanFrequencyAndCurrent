@@ -1,7 +1,7 @@
 #include "main.h"
 
 //===频率电流扫描的小板版本
-#define LNW_FT_ASK_FI_VERSION		2
+#define LNW_FT_ASK_FI_VERSION		1
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
@@ -194,7 +194,7 @@ void Sys_Init(void)
 	//---使能Flash读保护
 	//FlashTask_LockRead();
 	//---开启看门狗
-	IWDGTask_Init();
+	//IWDGTask_Init();
 
 	//---启动解码逻辑
 	//DecodeTask_START();
@@ -239,6 +239,14 @@ int main(void)
 		#endif
 		//---模拟RTC处理,并进行复位时间宽度的监控
 		SysRTCTask_SoftBuildTask(pSysSoftRTC, SysTickTask_GetTick());
+
+		TimerTask_CalcFreq_Task(0);
+
+		//---打印初始化信息
+		USART_Printf(pUSART1, "当前频率是：%fKHz\r\n",pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel]);
+
+		DelayTask_ms(300);
+			
 		//---喂狗
 		WDT_RESET();
 	}

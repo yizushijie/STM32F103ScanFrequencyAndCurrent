@@ -1007,7 +1007,7 @@
                     <item>pAT24CxxPageByteBuffer</item>
                     <item>g_SysSoftRTC</item>
                     <item>eepromTemp</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

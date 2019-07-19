@@ -13,7 +13,7 @@ pCalcFreq_HandlerType pCalcFreq = &g_CalcFreq;
 //////////////////////////////////////////////////////////////////////////////
 void Timer_CalcFreqMode_Init(void)
 {
-	LL_TIM_InitTypeDef TIM_InitStruct = { 0 };
+	//LL_TIM_InitTypeDef TIM_InitStruct = { 0 };
 	LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 	//---使能定时器时钟
@@ -39,6 +39,7 @@ void Timer_CalcFreqMode_Init(void)
 #endif
 	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+	/*
 	//---计数器的时钟的预分频
 	TIM_InitStruct.Prescaler = 0;
 
@@ -89,6 +90,8 @@ void Timer_CalcFreqMode_Init(void)
 
 	//---使能计数器
 	//LL_TIM_EnableCounter(TIM5);
+	*/
+	Timer_CalcFreqMode_DeInit();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -110,6 +113,95 @@ void Timer_CalcFreqMode_DeInit(void)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
+void Timer_CalcFreqMode_PreInit(UINT8_T ch)
+{
+	LL_TIM_InitTypeDef TIM_InitStruct = { 0 };
+
+	//---计数器的时钟的预分频
+	TIM_InitStruct.Prescaler = 0;
+
+	//---向上计数
+	TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+
+	//---自动装载值，自动装载值为空时，计数器不工作
+	TIM_InitStruct.Autoreload = 0xFFFFFF;
+
+	//---定时器时钟分频数
+	TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+
+	//---初始化定时器
+	LL_TIM_Init(TIM3, &TIM_InitStruct);
+
+	//---是能自动装载
+	LL_TIM_EnableARRPreload(TIM3);
+	//---通道选择
+	if (ch==0)
+	{
+		//---设置触发输入通道
+		LL_TIM_SetTriggerInput(TIM3, LL_TIM_TS_TI1FP1);
+
+		//---激活输入通道
+		LL_TIM_IC_SetActiveInput(TIM3, LL_TIM_CHANNEL_CH1, LL_TIM_ACTIVEINPUT_DIRECTTI);
+
+		//---设置适合时钟源
+		LL_TIM_SetClockSource(TIM3, LL_TIM_CLOCKSOURCE_EXT_MODE1);
+
+		//---禁用捕获/比较通道
+		LL_TIM_CC_DisableChannel(TIM3, LL_TIM_CHANNEL_CH1);
+
+		//---设置通道的滤波时间
+		LL_TIM_IC_SetFilter(TIM3, LL_TIM_CHANNEL_CH1, LL_TIM_IC_FILTER_FDIV1);
+
+		//---通道2的上升沿触发
+		LL_TIM_IC_SetPolarity(TIM3, LL_TIM_CHANNEL_CH1, LL_TIM_IC_POLARITY_RISING);
+
+		pCalcFreq->msgChannel = 0;
+	}
+	else 
+	{
+		//---设置触发输入通道
+		LL_TIM_SetTriggerInput(TIM3, LL_TIM_TS_TI2FP2);
+
+		//---激活输入通道
+		LL_TIM_IC_SetActiveInput(TIM3, LL_TIM_CHANNEL_CH2, LL_TIM_ACTIVEINPUT_DIRECTTI);
+
+		//---设置适合时钟源
+		LL_TIM_SetClockSource(TIM3, LL_TIM_CLOCKSOURCE_EXT_MODE1);
+
+		//---禁用捕获/比较通道
+		LL_TIM_CC_DisableChannel(TIM3, LL_TIM_CHANNEL_CH2);
+
+		//---设置通道的滤波时间
+		LL_TIM_IC_SetFilter(TIM3, LL_TIM_CHANNEL_CH2, LL_TIM_IC_FILTER_FDIV1_N2);
+
+		//---通道2的上升沿触发
+		LL_TIM_IC_SetPolarity(TIM3, LL_TIM_CHANNEL_CH2, LL_TIM_IC_POLARITY_RISING);
+		pCalcFreq->msgChannel = 1;
+	}
+
+	//---禁用触发中断（TIE）
+	LL_TIM_DisableIT_TRIG(TIM3);
+
+	//---禁用DMA触发中断（TIE）
+	LL_TIM_DisableDMAReq_TRIG(TIM3);
+
+	//---主模式选择复位
+	LL_TIM_SetTriggerOutput(TIM3, LL_TIM_TRGO_RESET);
+
+	//---不使能主从模式
+	LL_TIM_DisableMasterSlaveMode(TIM3);
+
+	//---使能计数器
+	//LL_TIM_EnableCounter(TIM5);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
+//////功		能：
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
 void Timer_CalcFreq_Init(void)
 {
 	VLTUINT32_T tempFreq = 0;
@@ -118,11 +210,11 @@ void Timer_CalcFreq_Init(void)
 	//---定时器溢出次数
 	static UINT8_T nOverCount = 0;
 	//---开始计数
-	if (pCalcFreq->msgStep == 0)
+	if (pCalcFreq->msgStep[pCalcFreq->msgChannel] == 0)
 	{
-		pCalcFreq->msgFreqKHz = 0;
-		pCalcFreq->msgFreqMHz = 0;
-		pCalcFreq->msgStep = 1;
+		pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] = 0;
+		pCalcFreq->msgFreqMHz[pCalcFreq->msgChannel] = 0;
+		pCalcFreq->msgStep[pCalcFreq->msgChannel] = 1;
 		//---清零触发器中断标记
 		LL_TIM_ClearFlag_TRIG(TIM3);
 		//---清零更新中断标记
@@ -134,22 +226,22 @@ void Timer_CalcFreq_Init(void)
 	}
 
 	//---读取初始值
-	else if (pCalcFreq->msgStep == 1)
+	else if (pCalcFreq->msgStep[pCalcFreq->msgChannel] == 1)
 	{
 		//---触发中断
 		if (LL_TIM_IsActiveFlag_TRIG(TIM3) != 0)
 		{
 			//---获取当前的计数结果
-			pCalcFreq->msgFreqKHz = LL_TIM_GetCounter(TIM3);
+			pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] = LL_TIM_GetCounter(TIM3);
 			//---清理中断标志
 			LL_TIM_ClearFlag_TRIG(TIM3);
-			pCalcFreq->msgStep = 2;
+			pCalcFreq->msgStep[pCalcFreq->msgChannel] = 2;
 			//---必须清零这两个数据，使用了类似全局变量，需要手动清除
 			nOverCount = 0;
 			nCount = 0;
 		}
 	}
-	else if (pCalcFreq->msgStep == 2)
+	else if (pCalcFreq->msgStep[pCalcFreq->msgChannel] == 2)
 	{
 		//---计数次数;多次计数能够提高获取频率的精准度
 		nCount++;
@@ -174,9 +266,9 @@ void Timer_CalcFreq_Init(void)
 			//---不使能计数器
 			LL_TIM_DisableCounter(TIM3);
 			//---操作完成
-			pCalcFreq->msgStep = 3;
+			pCalcFreq->msgStep[pCalcFreq->msgChannel] = 3;
 			//---计算频率
-			pCalcFreq->msgFreqKHz = (0xFFFF * nOverCount + tempFreq - pCalcFreq->msgFreqKHz);
+			pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] = (0xFFFF * nOverCount + tempFreq - pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel]);
 			//---必须清零这两个数据，使用了类似全局变量，需要手动清除
 			nOverCount=0;
 			nCount=0;
@@ -195,13 +287,25 @@ void Timer_CalcFreq_Init(void)
 //////输出参数:
 //////说		明：
 //////////////////////////////////////////////////////////////////////////////
-void Timer_CalcFreq_Task(void)
+void Timer_CalcFreq_Task(UINT8_T ch)
 {
+	//---初始化使用的定时器
+	Timer_CalcFreqMode_PreInit(ch);
+	
+	/*
 	//---保存当前滴答定时器的任务
 	pCalcFreq->msgFuncTask = pSysTick->msgFuncTick;
 	
 	//---重新注册当前滴答定时器的任务，获取输入信号的频率---1ms采集到上升沿的格式，比如采集到1个就是1KHz，暂不支持1KHz一下的信号
 	SysTickTask_FuncTick(Timer_CalcFreq_Init);
+	*/
+	UINT8_T _return = SysTickTask_CreateTickTask(Timer_CalcFreq_Init);
+
+	if (_return!=0)
+	{
+		pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] = 0;
+		goto GoToExit;
+	}
 
 	//---读取当前滴答定时时间
 	UINT32_T nowTime = 0;
@@ -209,7 +313,7 @@ void Timer_CalcFreq_Task(void)
 	UINT32_T cnt = 0;
 
 	//---等待计数器计数完成
-	while (pCalcFreq->msgStep != 3)
+	while (pCalcFreq->msgStep[pCalcFreq->msgChannel] != 3)
 	{
 		//---当前时间
 		nowTime = SysTickTask_GetTick();
@@ -224,7 +328,7 @@ void Timer_CalcFreq_Task(void)
 			cnt = nowTime - oldTime;
 		}
 
-		//---判断是否超时
+		//---判断是否超时,超时100ms
 		if (cnt > 100)
 		{
 			//---发送发生超时错误
@@ -232,23 +336,33 @@ void Timer_CalcFreq_Task(void)
 		}
 	}
 
-	//---恢复滴答定时器的任务
-	SysTickTask_FuncTick(pCalcFreq->msgFuncTask);
-
-	//---注销任务句柄
-	pCalcFreq->msgFuncTask = NULL;
-
 	//---发生超时错误
 	if (cnt > 100)
 	{
-		pCalcFreq->msgFreqKHz = 0xFFFF;
+		pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] = 0;
+	}
+	else
+	{
+		pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel] *= 0.099983;
 	}
 
-	//---清零数据
-	pCalcFreq->msgStep = 0;
+	/*
+	//---恢复滴答定时器的任务
+	SysTickTask_FuncTick(pCalcFreq->msgFuncTask);
+	//---注销任务句柄
+	pCalcFreq->msgFuncTask = NULL;
+	*/
 
+	//---退出操作
+GoToExit:
+	//---注销任务函数
+	_return = SysTickTask_DeleteTickTask(Timer_CalcFreq_Init);
+	//---清零数据
+	pCalcFreq->msgStep[pCalcFreq->msgChannel] = 0;
 	//---换算之后的MHz
-	pCalcFreq->msgFreqMHz = (float)(pCalcFreq->msgFreqKHz) / 10000.0;
+	pCalcFreq->msgFreqMHz[pCalcFreq->msgChannel] = (float)(pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel]) / 1000.0;
+	//---销毁定时器的配置
+	Timer_CalcFreqMode_DeInit();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -260,7 +374,7 @@ void Timer_CalcFreq_Task(void)
 //////////////////////////////////////////////////////////////////////////////
 UINT32_T Timer_GetFreqKHz(void)
 {
-	return pCalcFreq->msgFreqKHz;
+	return pCalcFreq->msgFreqKHz[pCalcFreq->msgChannel];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -272,7 +386,7 @@ UINT32_T Timer_GetFreqKHz(void)
 //////////////////////////////////////////////////////////////////////////////
 float Timer_GetFreqMHz(void)
 {
-	return pCalcFreq->msgFreqMHz;
+	return pCalcFreq->msgFreqMHz[pCalcFreq->msgChannel];
 }
 
 ///////////////////////////////////////////////////////////////////////////////

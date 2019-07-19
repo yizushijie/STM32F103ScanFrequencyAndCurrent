@@ -5,9 +5,8 @@ SysTick_HandlerType		g_SysTick = { 0 };
 pSysTick_HandlerType	pSysTick = &g_SysTick;
 
 #if defined (USE_HAL_DRIVER)
-
-//---外部调用的Hal库延时变量
-extern HAL_TickFreqTypeDef uwTickFreq;
+	//---外部调用的Hal库延时变量
+	extern HAL_TickFreqTypeDef uwTickFreq;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,11 +46,19 @@ UINT8_T SysTick_Resume(void)
 //////////////////////////////////////////////////////////////////////////////
 UINT8_T SysTick_StructInit(SysTick_HandlerType *sysTickx)
 {
+	UINT8_T i = 0;
 	sysTickx->msgIncTick = 0;
 	sysTickx->msgDecTick = 0;
 	sysTickx->msgIncTickOVF = 0;
-	sysTickx->msgHalIncTick = NULL;
-	sysTickx->msgFuncTick = NULL;
+	//sysTickx->msgHalIncTick = NULL;
+	//sysTickx->msgFuncTick = NULL;
+
+	for (i=0;i< SYSTICK_FUNC_TASK_MAX_NUM;i++)
+	{
+		sysTickx->msgTickTaskFlag[i] = 0;
+		sysTickx->msgTickTask[i] = NULL;
+	}
+
 	return OK_0;
 }
 
@@ -86,8 +93,11 @@ UINT8_T SysTick_Init(void)
 	//---Hal库用于延时计算
 	uwTickFreq = HAL_TICK_FREQ_DEFAULT;
 
+	SysTick_CreateTickTask(HAL_IncTick);
+
 	//---注册Hal库计数器
-	pSysTick->msgHalIncTick = HAL_IncTick;
+	//pSysTick->msgHalIncTick = HAL_IncTick;
+
 #endif
 	return OK_0;
 }
@@ -108,6 +118,83 @@ UINT8_T SysTick_DeInit(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
+//////功		能：创建滴答任务函数
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysTick_CreateTickTask(void(*pFuncTick)(void))
+{
+	UINT8_T _return = ERROR_1;
+	if (pFuncTick!=NULL)
+	{
+		for (_return = 0; _return < SYSTICK_FUNC_TASK_MAX_NUM; _return++)
+		{
+			if (pSysTick->msgTickTaskFlag[_return]==0)
+			{
+				pSysTick->msgTickTask[_return] = pFuncTick;
+				pSysTick->msgTickTaskFlag[_return] = 1;
+				break;
+			}
+		}
+		//---返回结果
+		_return = (_return < SYSTICK_FUNC_TASK_MAX_NUM) ? OK_0 : ERROR_2;
+	}
+	return _return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
+//////功		能：销毁任务函数
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
+UINT8_T SysTick_DeleteTickTask(void(*pFuncTick)(void))
+{
+	UINT8_T _return = ERROR_1;
+	if (pFuncTick != NULL)
+	{
+		for (_return =0; _return < SYSTICK_FUNC_TASK_MAX_NUM; _return++)
+		{
+			if (pSysTick->msgTickTask[_return] == pFuncTick)
+			{
+				pSysTick->msgTickTask[_return] = NULL;
+				pSysTick->msgTickTaskFlag[_return] = 0;
+				break;
+			}
+		}
+		//---返回结果
+		_return = (_return < SYSTICK_FUNC_TASK_MAX_NUM) ? OK_0 : ERROR_2;
+	}
+	return _return;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
+//////功		能：轮询任务函数
+//////输入参数:
+//////输出参数:
+//////说		明：
+//////////////////////////////////////////////////////////////////////////////
+void SysTick_PollTickTask(void)
+{
+	UINT8_T index = 0;
+	for (index= 0; index< SYSTICK_FUNC_TASK_MAX_NUM; index++)
+	{
+		if (pSysTick->msgTickTaskFlag[index] !=0)
+		{
+			if (pSysTick->msgTickTask[index] != NULL)
+			{
+				pSysTick->msgTickTask[index]();
+			}
+		}
+	}
+}
+
+/*
+///////////////////////////////////////////////////////////////////////////////
+//////函		数：
 //////功		能：
 //////输入参数:
 //////输出参数:
@@ -122,6 +209,7 @@ UINT8_T SysTick_FuncTick(void(*pFuncTick)(void))
 	}
 	return OK_0;
 }
+*/
 
 ///////////////////////////////////////////////////////////////////////////////
 //////函		数：
@@ -231,6 +319,7 @@ UINT8_T SysTick_IRQTick(void)
 		pSysTick->msgIncTickOVF++;
 	}
 
+	/*
 	//---任务函数
 	if (pSysTick->msgFuncTick != NULL)
 	{
@@ -242,6 +331,9 @@ UINT8_T SysTick_IRQTick(void)
 	{
 		pSysTick->msgHalIncTick();
 	}
+	*/
+	//---轮询执行任务函数
+	SysTick_PollTickTask();
 
 	//---递减计数
 	if (pSysTick->msgDecTick != 0)

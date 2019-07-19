@@ -9,6 +9,9 @@ extern "C" {
 	#include "gpio_task.h"
 	#include "systick_task.h"
 
+	//===定义使用的外部计数模式的通道数
+	#define	CALC_FREQ_EXTERN_COUNT_MODE_CHANNEL_NUM			2
+
 	//===结构体定义
 	typedef struct _CalcFreq_HandlerType				CalcFreq_HandlerType;
 
@@ -18,10 +21,11 @@ extern "C" {
 	//===计算频率的数据结构体
 	struct  _CalcFreq_HandlerType
 	{
-		VLTUINT8_T  msgStep;			//---操作步序
-		float		msgFreqMHz;			//---MHz频率
-		VLTUINT32_T msgFreqKHz;			//---KHz频率
-		void(*msgFuncTask)(void);		//---操作任务
+		VLTUINT8_T  msgChannel;														//---操作通道
+		VLTUINT8_T  msgStep[CALC_FREQ_EXTERN_COUNT_MODE_CHANNEL_NUM];				//---操作步序
+		float		msgFreqMHz[CALC_FREQ_EXTERN_COUNT_MODE_CHANNEL_NUM];			//---MHz频率
+		float		msgFreqKHz[CALC_FREQ_EXTERN_COUNT_MODE_CHANNEL_NUM];			//---KHz频率
+		//void(*msgFuncTask)(void);													//---操作任务
 	};
 
 	//===外部调用接口
@@ -29,7 +33,8 @@ extern "C" {
 	extern pCalcFreq_HandlerType pCalcFreq;
 
 	//===函数定义
-	void Timer_CalcFreq_Task(void);
+	void Timer_CalcFreqMode_DeInit(void);
+	void Timer_CalcFreq_Task(UINT8_T ch);
 	UINT32_T Timer_GetFreqKHz(void);
 	float Timer_GetFreqMHz(void);
 	void Timer_Init(void);

@@ -9,7 +9,7 @@ extern "C" {
 	//////////////////////////////////////////////////////////////////////////////////////
 	//===º¯Êý¶¨Òå
 	void TimerLib_Init(void);
-	void TimerLib_CalcFreq_Task(void);
+	void TimerLib_CalcFreq_Task(UINT8_T ch);
 	UINT32_T TimerLib_GetFreqKHz(void);
 	float TimerLib_GetFreqMHz(void);
 	void TimerLib_Clock(TIM_TypeDef *TIMx, UINT8_T isEnable);

@@ -137,9 +137,9 @@ UINT8_T  RFASKTask_WM8510Task(USART_HandlerType*USARTx, WM8510_HandlerType *WM85
 			//---读取WM8510设置的输出频率
 		case CMD_RFASK_CMD2_GET_WM8510:
 			//---外部计数模式进行脉冲的计数
-			TimerTask_CalcFreq_Task();
+			TimerTask_CalcFreq_Task(1);
 			//---获取当前输出的频率KHz,增加获取脉冲的时间为10ms，牺牲时间换取精度
-			freqTemp =(UINT32_T)(TimerTask_GetFreqKHz()/10);// TimerTask_GetFreqKHz();
+			freqTemp = TimerTask_GetFreqKHz(); // (UINT32_T)(TimerTask_GetFreqKHz()/10);
 			//---获取当前输出的频率Hz
 			freqTemp *= 1000;
 			USARTTask_RealTime_AddByteSize(USARTx, 7);

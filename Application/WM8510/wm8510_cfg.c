@@ -770,10 +770,10 @@ GoToExit:
 //////////////////////////////////////////////////////////////////////////////
 UINT8_T WM8510_CalibrateFreqKHzOutPut(WM8510_HandlerType *WM8510x)
 {
-	TimerTask_CalcFreq_Task();
+	TimerTask_CalcFreq_Task(1);
 
 	//---获取当前输出的频率
-	UINT32_T freq = (UINT32_T)(TimerTask_GetFreqKHz()/10);
+	UINT32_T freq = TimerTask_GetFreqKHz(); //(UINT32_T)(TimerTask_GetFreqKHz()/10);
 	if (freq > WM8510x->freqKHz)
 	{
 		//---冗余计算
@@ -842,14 +842,14 @@ UINT8_T WM8510_I2C_CalibrateClock(WM8510_HandlerType *WM8510x)
 	if (WM8510_I2C_SetFreqHzWithAllFreqReg(WM8510x, outFreqKHz * 1000) == OK_0)
 	{
 		//---开启时钟校准程序
-		TimerTask_CalcFreq_Task();
+		TimerTask_CalcFreq_Task(1);
 
 		//---获取当前输出的频率
-		UINT32_T freq = (TimerTask_GetFreqKHz()-10);
+		UINT32_T freq = (TimerTask_GetFreqKHz()-1);
 		
 		if(freq!=0xFFFF)
 		{
-			outFreqKHz *= 10;
+			//outFreqKHz *= 10;
 
 			//---频率大小的绝对误差
 			UINT32_T freqDelta = ABS_SUB(outFreqKHz, freq);
@@ -867,7 +867,7 @@ UINT8_T WM8510_I2C_CalibrateClock(WM8510_HandlerType *WM8510x)
 			//---实际频率大于12M
 			else
 			{
-				WM8510x->refOSC = WM8510_MCLK_HZ + ((freqDelta + 5) / 10) * 100;
+				WM8510x->refOSC = WM8510_MCLK_HZ + ((freqDelta + 5)) * 10;
 			}
 
 		}

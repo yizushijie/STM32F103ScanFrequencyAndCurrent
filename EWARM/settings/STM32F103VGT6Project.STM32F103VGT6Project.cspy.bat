@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.general.xcl" --backend -f "J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "H:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.general.xcl" --backend -f "H:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\common\bin\cspybat" -f "J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.general.xcl" "--debug_file=%~1" --backend -f "J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "H:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.general.xcl" "--debug_file=%~1" --backend -f "H:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\settings\STM32F103VGT6Project.STM32F103VGT6Project.driver.xcl" 
 
 @echo off 
 :end

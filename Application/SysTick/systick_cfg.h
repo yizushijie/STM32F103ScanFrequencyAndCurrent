@@ -7,6 +7,10 @@ extern "C" {
 	//////////////////////////////////////////////////////////////////////////////////////
 	#include "complier_lib.h"
 	//////////////////////////////////////////////////////////////////////////////////////
+
+	//===定义滴答定时器支持的任务调度函数的个数
+	#define SYSTICK_FUNC_TASK_MAX_NUM															4
+
 	//===定义结构体
 	typedef struct _SysTick_HandlerType			SysTick_HandlerType;
 
@@ -16,11 +20,14 @@ extern "C" {
 	//===结构体定义
 	struct _SysTick_HandlerType
 	{
-		VLTUINT32_T				msgIncTick;																				//---递加计数器
-		VLTUINT32_T				msgDecTick;																				//---递减计数器
-		VLTUINT32_T				msgIncTickOVF;																			//---递加计数器溢出
-		void(*msgHalIncTick)(void);																					//---Hal库用到的计数器
-		void(*msgFuncTick)(void);																						//---任务函数
+		VLTUINT8_T				msgTickTaskFlag[SYSTICK_FUNC_TASK_MAX_NUM];						//---滴答任务标签，0---可用，1---不可用
+		VLTUINT32_T				msgIncTick;														//---递加计数器
+		VLTUINT32_T				msgDecTick;														//---递减计数器
+		VLTUINT32_T				msgIncTickOVF;													//---递加计数器溢出
+		//void(*msgHalIncTick)(void);																//---Hal库用到的计数器
+		//void(*msgFuncTick)(void);																//---任务函数
+
+		void(*msgTickTask[SYSTICK_FUNC_TASK_MAX_NUM])(void);									//---函数指针数组
 	};
 
 	//===外部调用接口
@@ -30,7 +37,10 @@ extern "C" {
 	//===函数定义
 	UINT8_T  SysTick_Init(void);
 	UINT8_T  SysTick_DeInit(void);
-	UINT8_T  SysTick_FuncTick(void(*pFuncTick)(void));
+	UINT8_T	SysTick_CreateTickTask(void(*pFuncTick)(void));
+	UINT8_T SysTick_DeleteTickTask(void(*pFuncTick)(void));
+	void	SysTick_PollTickTask(void);
+	//UINT8_T  SysTick_FuncTick(void(*pFuncTick)(void));
 	UINT8_T  SysTick_IRQDecTick(UINT32_T waitDecTick);
 	UINT8_T  SysTick_DecTick(UINT32_T waitDecTick);
 	UINT32_T SysTick_GetTick(void);

@@ -29,7 +29,10 @@ void LEDWork_Init(void)
 	LED_WORK_OUT_0;
 
 	//---×¢²áÉÁµÆ³ÌÐò
+	/*
 	SysTickTask_FuncTick(LEDWork_Task);
+	*/
+	SysTickTask_CreateTickTask(LEDWork_Task);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

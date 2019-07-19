@@ -1,14 +1,14 @@
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armproc.dll" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\bin\armproc.dll" 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armjlink2.dll" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\bin\armjlink2.dll" 
 
-"J:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\STM32F103VGT6Project\Exe\STM32F103VGT6Project.out" 
+"H:\STM32_MCU\STM32F103\STM32F103VGT6Project\STM32F103VGT6Project\EWARM\STM32F103VGT6Project\Exe\STM32F103VGT6Project.out" 
 
---plugin="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\bin\armbat.dll" 
+--plugin="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\bin\armbat.dll" 
 
---device_macro="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\debugger\ST\STM32F1xx.dmac" 
+--device_macro="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\config\debugger\ST\STM32F1xx.dmac" 
 
---flash_loader="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.2\arm\config\flashloader\ST\FlashSTM32F10xxG.board" 
+--flash_loader="D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\config\flashloader\ST\FlashSTM32F10xxG.board" 
 
 
 
